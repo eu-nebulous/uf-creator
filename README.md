@@ -20,3 +20,13 @@ Then, the user specifies the weights of each utility metrics. These weights shou
 
 ### Method used to agregation of user preferences is Analytic Hierarchy Process: 
 [Analytic Hierarchy Process](https://pl.wikipedia.org/wiki/Analytic_Hierarchy_Process)
+
+## Research aspect:
+- Testing the effectiveness of the ahp method
+- Calculating  the  weights  of  each  utility  dimension
+
+## Team:
+
+Jan Marchel (leader)
+
+Damian Folga
