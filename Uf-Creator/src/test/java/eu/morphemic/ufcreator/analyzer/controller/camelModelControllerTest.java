@@ -47,27 +47,10 @@ class camelModelControllerTest {
     @MockBean
     private CamelModelService camelModelService;
 
-    @Autowired
-    private MockMvc mvc;
-    @MockBean
-    private CamelModelService service;
 
     @Test
     void testGetRawMetrics() throws Exception {
-        when(this.camelModelService.getRawMetrics((String) any())).thenReturn(new ArrayList<RawMetric>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/camel-model/{resourceName}/rawMetrics",
-                "Resource Name");
-        MockMvcBuilders.standaloneSetup(this.camelModelController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
-    }
-
-    @Test
-    void testGetRawMetrics2() throws Exception {
-        when(this.camelModelService.getRawMetrics((String) any())).thenReturn(new ArrayList<RawMetric>());
+        when(this.camelModelService.getRawMetrics(any())).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/camel-model/{resourceName}/rawMetrics",
                 "Resource Name");
         MockMvcBuilders.standaloneSetup(this.camelModelController)
@@ -80,7 +63,7 @@ class camelModelControllerTest {
 
     @Test
     void testGetCompositeMetrics() throws Exception {
-        when(this.camelModelService.getCompositeMetrics((String) any())).thenReturn(new ArrayList<CompositeMetric>());
+        when(this.camelModelService.getCompositeMetrics(any())).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/camel-model/{resourceName}/compositeMetrics", "Resource Name");
         MockMvcBuilders.standaloneSetup(this.camelModelController)
@@ -93,7 +76,7 @@ class camelModelControllerTest {
 
     @Test
     void testGetVariables() throws Exception {
-        when(this.camelModelService.getVariables((String) any())).thenReturn(new ArrayList<MetricVariableImpl>());
+        when(this.camelModelService.getVariables(any())).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/camel-model/{resourceName}/variables",
                 "Resource Name");
         MockMvcBuilders.standaloneSetup(this.camelModelController)
@@ -103,13 +86,21 @@ class camelModelControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
-
-
-
+    @Test
+    void testGetCamelModel() throws Exception {
+        CamelModel camelModel=mock(CamelModel.class);
+        when(this.camelModelService.getCamelModel(any())).thenReturn(camelModel);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/camel-model/{resourceName}/","Resource Name");
+        MockMvcBuilders.standaloneSetup(this.camelModelController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"));
+    }
 
     @Test
     void testGetAllCamelModels() throws Exception {
-        when(this.camelModelService.getCamelModelNames()).thenReturn(new ArrayList<String>());
+        when(this.camelModelService.getCamelModelNames()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/camel-model/");
         MockMvcBuilders.standaloneSetup(this.camelModelController)
                 .build()

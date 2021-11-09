@@ -42,7 +42,6 @@ public class CdoServiceImpl implements CdoService{
         List<String> result = new ArrayList<>();
         CDOView cdoView = null;
         try {
-
             CDOClient client = getCdoClient();
             cdoView = client.openView();
 

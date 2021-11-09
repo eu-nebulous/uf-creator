@@ -7,7 +7,6 @@ import camel.metric.MetricModel;
 import camel.metric.RawMetric;
 import camel.metric.impl.MetricTypeModelImpl;
 import camel.metric.impl.MetricVariableImpl;
-import camel.metric.impl.RawMetricImpl;
 import eu.morphemic.ufcreator.analyzer.service.cdo.CdoService;
 import eu.morphemic.ufcreator.communication.cdo.CdoServerApi;
 import eu.paasage.mddb.cdo.client.exp.CDOSessionX;
