@@ -5,6 +5,9 @@ import camel.metric.CompositeMetric;
 import camel.metric.Metric;
 import camel.metric.RawMetric;
 import camel.metric.impl.MetricVariableImpl;
+import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
+import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
+import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
 
 import java.util.List;
 
@@ -16,11 +19,11 @@ public interface CamelModelService {
 
     CompositeMetric getCompositeMetric(String resourceName, String metricName);
 
-    List<MetricVariableImpl> getVariables(String resourceName);
+    List<VariableDTO> getVariables(String resourceName);
 
-    List<RawMetric> getRawMetrics(String resourceName);
+    List<RawMetricDTO> getRawMetrics(String resourceName);
 
-    List<CompositeMetric> getCompositeMetrics(String resourceName);
+    List<CompositeMetricDTO> getCompositeMetrics(String resourceName);
 
     List<Metric> getAllMetrics(CamelModel camelModel);
 

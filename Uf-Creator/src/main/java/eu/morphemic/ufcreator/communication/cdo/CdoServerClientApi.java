@@ -1,5 +1,6 @@
 package eu.morphemic.ufcreator.communication.cdo;
 
+
 import camel.core.CamelModel;
 import eu.paasage.mddb.cdo.client.exp.CDOClientX;
 import eu.paasage.mddb.cdo.client.exp.CDOSessionX;

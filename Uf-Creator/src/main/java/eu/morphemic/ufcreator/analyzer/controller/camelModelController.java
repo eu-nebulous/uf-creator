@@ -4,6 +4,9 @@ import camel.core.CamelModel;
 import camel.metric.CompositeMetric;
 import camel.metric.RawMetric;
 import camel.metric.impl.MetricVariableImpl;
+import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
+import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
+import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
 import eu.morphemic.ufcreator.analyzer.service.camel.CamelModelService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,21 +39,21 @@ public class camelModelController {
 
     @GetMapping("/{resourceName}/rawMetrics")
     @ResponseStatus(HttpStatus.OK)
-    public List<RawMetric> getRawMetrics(@PathVariable(value = "resourceName") String resourceName) {
+    public List<RawMetricDTO> getRawMetrics(@PathVariable(value = "resourceName") String resourceName) {
         log.info("GET request for raw metrics for {}", resourceName);
         return camelModelService.getRawMetrics(resourceName);
     }
 
     @GetMapping("/{resourceName}/compositeMetrics")
     @ResponseStatus(HttpStatus.OK)
-    public List<CompositeMetric> getCompositeMetrics(@PathVariable(value = "resourceName") String resourceName) {
+    public List<CompositeMetricDTO> getCompositeMetrics(@PathVariable(value = "resourceName") String resourceName) {
         log.info("GET request for raw metrics for {}", resourceName);
         return camelModelService.getCompositeMetrics(resourceName);
     }
 
     @GetMapping("/{resourceName}/variables")
     @ResponseStatus(HttpStatus.OK)
-    public List<MetricVariableImpl> getVariables(@PathVariable(value = "resourceName") String resourceName) {
+    public List<VariableDTO> getVariables(@PathVariable(value = "resourceName") String resourceName) {
         log.info("GET request for raw metrics for {}", resourceName);
         return camelModelService.getVariables(resourceName);
     }
