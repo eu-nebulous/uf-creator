@@ -3,6 +3,7 @@ package eu.morphemic.ufcreator.communication.cdo;
 
 import camel.core.CamelModel;
 import eu.paasage.mddb.cdo.client.exp.CDOClientX;
+import eu.paasage.mddb.cdo.client.exp.CDOClientXImpl;
 import eu.paasage.mddb.cdo.client.exp.CDOSessionX;
 import eu.passage.upperware.commons.model.tools.CdoTool;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -16,11 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CdoServerClientApi implements CdoServerApi {
 
-    private CDOClientX cdoClient;
+    private CDOClientX cdoClient=new CDOClientXImpl();
 
     @Override
     public CDOSessionX openSession() {
-        return null;
+        return cdoClient.getSession();
     }
 
     @Override
@@ -30,7 +31,7 @@ public class CdoServerClientApi implements CdoServerApi {
 
     @Override
     public CDOTransaction openTransaction(CDOSessionX sessionX) {
-        return null;
+        return sessionX.openTransaction();
     }
 
     @Override
@@ -44,6 +45,7 @@ public class CdoServerClientApi implements CdoServerApi {
 
     @Override
     public void closeSession(CDOSessionX sessionX) {
+        sessionX.closeSession();
     }
 
 }

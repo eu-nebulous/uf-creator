@@ -29,5 +29,9 @@ public interface CamelModelService {
 
     List<String> getCamelModelNames();
 
-    List<RawMetricDTO> retrieveCamelModel(String resourceName);
+    List<RawMetricDTO> getRawMetricsFromCDO(String resourceName);
+
+    List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName);
+
+    List<VariableDTO> getVariablesFromCDO(String resourceName);
 }

@@ -7,6 +7,7 @@ import camel.metric.MetricModel;
 import camel.metric.RawMetric;
 import camel.metric.impl.MetricTypeModelImpl;
 import camel.metric.impl.MetricVariableImpl;
+import com.google.errorprone.annotations.Var;
 import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
@@ -102,9 +103,23 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .collect(Collectors.toList());
     }
 
-     public List<RawMetricDTO> retrieveCamelModel(String resourceName) {
-        CDOSessionX cdoSessionX = null;
-        CDOTransaction cdoTransaction = null;
+
+
+    public List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName) {
+        CDOSessionX cdoSessionX = cdoServerApi.openSession();
+        CDOTransaction cdoTransaction = cdoServerApi.openTransaction(cdoSessionX);
+        log.info("Loading camel model {}", resourceName);
+        CamelModel camelModel;
+        camelModel = cdoService.getCamelModel(resourceName, cdoTransaction);
+        List<CompositeMetricDTO> CompositeMetricDTOs = getCompositeMetrics(camelModel);
+        cdoSessionX.closeTransaction(cdoTransaction);
+        cdoSessionX.closeSession();
+        return CompositeMetricDTOs;
+    }
+
+     public List<RawMetricDTO> getRawMetricsFromCDO(String resourceName) {
+        CDOSessionX cdoSessionX = cdoServerApi.openSession();
+        CDOTransaction cdoTransaction = cdoServerApi.openTransaction(cdoSessionX);
         log.info("Loading camel model {}", resourceName);
         CamelModel camelModel;
         camelModel = cdoService.getCamelModel(resourceName, cdoTransaction);
@@ -112,5 +127,17 @@ public class CamelModelServiceImpl implements CamelModelService {
         cdoSessionX.closeTransaction(cdoTransaction);
         cdoSessionX.closeSession();
         return rawMetricDTOs;
+    }
+
+    public List<VariableDTO> getVariablesFromCDO(String resourceName) {
+        CDOSessionX cdoSessionX = cdoServerApi.openSession();
+        CDOTransaction cdoTransaction = cdoServerApi.openTransaction(cdoSessionX);
+        log.info("Loading camel model {}", resourceName);
+        CamelModel camelModel;
+        camelModel = cdoService.getCamelModel(resourceName, cdoTransaction);
+        List<VariableDTO> VariableDTOs = getVariables(camelModel);
+        cdoSessionX.closeTransaction(cdoTransaction);
+        cdoSessionX.closeSession();
+        return VariableDTOs;
     }
 }
