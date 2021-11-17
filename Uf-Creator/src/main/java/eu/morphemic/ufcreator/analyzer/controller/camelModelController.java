@@ -32,29 +32,29 @@ public class camelModelController {
     }
     @GetMapping("/{resourceName}")
     @ResponseStatus(HttpStatus.OK)
-    public CamelModel getCamelModel(@PathVariable(value = "resourceName") String resourceName) {
+    public List<RawMetricDTO> getCamelModel(@PathVariable(value = "resourceName") String resourceName) {
         log.info("GET request for camel model {}", resourceName);
-        return camelModelService.getCamelModel(resourceName);
+        return camelModelService.retrieveCamelModel(resourceName);
     }
 
-    @GetMapping("/{resourceName}/rawMetrics")
-    @ResponseStatus(HttpStatus.OK)
-    public List<RawMetricDTO> getRawMetrics(@PathVariable(value = "resourceName") String resourceName) {
-        log.info("GET request for raw metrics for {}", resourceName);
-        return camelModelService.getRawMetrics(resourceName);
-    }
-
-    @GetMapping("/{resourceName}/compositeMetrics")
-    @ResponseStatus(HttpStatus.OK)
-    public List<CompositeMetricDTO> getCompositeMetrics(@PathVariable(value = "resourceName") String resourceName) {
-        log.info("GET request for raw metrics for {}", resourceName);
-        return camelModelService.getCompositeMetrics(resourceName);
-    }
-
-    @GetMapping("/{resourceName}/variables")
-    @ResponseStatus(HttpStatus.OK)
-    public List<VariableDTO> getVariables(@PathVariable(value = "resourceName") String resourceName) {
-        log.info("GET request for raw metrics for {}", resourceName);
-        return camelModelService.getVariables(resourceName);
-    }
+//    @GetMapping("/{resourceName}/rawMetrics")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<RawMetricDTO> getRawMetrics(@PathVariable(value = "resourceName") String resourceName) {
+//        log.info("GET request for raw metrics for {}", resourceName);
+//        return camelModelService.getRawMetrics(resourceName);
+//    }
+//
+//    @GetMapping("/{resourceName}/compositeMetrics")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<CompositeMetricDTO> getCompositeMetrics(@PathVariable(value = "resourceName") String resourceName) {
+//        log.info("GET request for raw metrics for {}", resourceName);
+//        return camelModelService.getCompositeMetrics(resourceName);
+//    }
+//
+//    @GetMapping("/{resourceName}/variables")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<VariableDTO> getVariables(@PathVariable(value = "resourceName") String resourceName) {
+//        log.info("GET request for raw metrics for {}", resourceName);
+//        return camelModelService.getVariables(resourceName);
+//    }
 }

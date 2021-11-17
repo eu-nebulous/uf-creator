@@ -13,21 +13,21 @@ import java.util.List;
 
 public interface CamelModelService {
 
-    MetricVariableImpl getVariable(String resourceName, String variableName);
+    MetricVariableImpl getVariable(CamelModel camelModel, String variableName);
 
-    RawMetric getRawMetric(String resourceName, String metricName);
+    RawMetric getRawMetric(CamelModel camelModel, String metricName);
 
-    CompositeMetric getCompositeMetric(String resourceName, String metricName);
+    CompositeMetric getCompositeMetric(CamelModel camelModel, String metricName);
 
-    List<VariableDTO> getVariables(String resourceName);
+    List<VariableDTO> getVariables(CamelModel camelModel);
 
-    List<RawMetricDTO> getRawMetrics(String resourceName);
+    List<RawMetricDTO> getRawMetrics(CamelModel camelModel);
 
-    List<CompositeMetricDTO> getCompositeMetrics(String resourceName);
+    List<CompositeMetricDTO> getCompositeMetrics(CamelModel camelModel);
 
     List<Metric> getAllMetrics(CamelModel camelModel);
 
-    CamelModel getCamelModel(String resourceName);
-
     List<String> getCamelModelNames();
+
+    List<RawMetricDTO> retrieveCamelModel(String resourceName);
 }

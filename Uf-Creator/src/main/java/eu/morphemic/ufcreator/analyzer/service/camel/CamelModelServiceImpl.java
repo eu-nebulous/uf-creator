@@ -5,7 +5,6 @@ import camel.metric.CompositeMetric;
 import camel.metric.Metric;
 import camel.metric.MetricModel;
 import camel.metric.RawMetric;
-import camel.metric.impl.CompositeMetricImpl;
 import camel.metric.impl.MetricTypeModelImpl;
 import camel.metric.impl.MetricVariableImpl;
 import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
@@ -17,6 +16,7 @@ import eu.morphemic.ufcreator.communication.cdo.CdoServerApi;
 import eu.paasage.mddb.cdo.client.exp.CDOSessionX;
 import eu.passage.upperware.commons.model.tools.CamelModelTool;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.common.util.EList;
@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CamelModelServiceImpl implements CamelModelService {
 
@@ -41,33 +42,24 @@ public class CamelModelServiceImpl implements CamelModelService {
         return allXmiModels;
     }
 
-    public CamelModel getCamelModel(String resourceName) {
-        CDOSessionX cdoSessionX = cdoServerApi.openSession();
-        CDOTransaction transaction = cdoServerApi.openTransaction(cdoSessionX);
-        return cdoServerApi.getCamelModel(resourceName, transaction);
-    }
 
     @Override
-    public MetricVariableImpl getVariable(String resourceName, String variableName) {
-        CamelModel camelModel = getCamelModel(resourceName);
+    public MetricVariableImpl getVariable(CamelModel camelModel, String variableName) {
         return CamelModelTool.getVariable(camelModel, variableName).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
-    public RawMetric getRawMetric(String resourceName, String metricName) {
-        CamelModel camelModel = getCamelModel(resourceName);
+    public RawMetric getRawMetric(CamelModel camelModel, String metricName) {
         return CamelModelTool.getRawMetric(camelModel, metricName).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
-    public CompositeMetric getCompositeMetric(String resourceName, String metricName) {
-        CamelModel camelModel = getCamelModel(resourceName);
+    public CompositeMetric getCompositeMetric(CamelModel camelModel, String metricName) {
         return CamelModelTool.getCompositeMetric(camelModel, metricName).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
-    public List<VariableDTO> getVariables(String resourceName) {
-        CamelModel camelModel = getCamelModel(resourceName);
+    public List<VariableDTO> getVariables(CamelModel camelModel) {
         return  getAllMetrics(camelModel)
                 .stream()
                 .filter(metricModel -> metricModel instanceof MetricVariableImpl)
@@ -78,8 +70,7 @@ public class CamelModelServiceImpl implements CamelModelService {
 
 
     @Override
-    public List<RawMetricDTO> getRawMetrics(String resourceName) {
-        CamelModel camelModel = getCamelModel(resourceName);
+    public List<RawMetricDTO> getRawMetrics(CamelModel camelModel) {
         return getAllMetrics(camelModel)
                 .stream()
                 .filter(metric -> metric instanceof RawMetric)
@@ -89,8 +80,7 @@ public class CamelModelServiceImpl implements CamelModelService {
     }
 
     @Override
-    public List<CompositeMetricDTO> getCompositeMetrics(String resourceName) {
-        CamelModel camelModel = getCamelModel(resourceName);
+    public List<CompositeMetricDTO> getCompositeMetrics(CamelModel camelModel) {
         return getAllMetrics(camelModel)
                 .stream()
                 .filter(metric -> metric instanceof CompositeMetric)
@@ -110,5 +100,17 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .map(metricModel -> ((MetricTypeModelImpl) metricModel).getMetrics())
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
+    }
+
+     public List<RawMetricDTO> retrieveCamelModel(String resourceName) {
+        CDOSessionX cdoSessionX = null;
+        CDOTransaction cdoTransaction = null;
+        log.info("Loading camel model {}", resourceName);
+        CamelModel camelModel;
+        camelModel = cdoService.getCamelModel(resourceName, cdoTransaction);
+        List<RawMetricDTO> rawMetricDTOs = getRawMetrics(camelModel);
+        cdoSessionX.closeTransaction(cdoTransaction);
+        cdoSessionX.closeSession();
+        return rawMetricDTOs;
     }
 }
