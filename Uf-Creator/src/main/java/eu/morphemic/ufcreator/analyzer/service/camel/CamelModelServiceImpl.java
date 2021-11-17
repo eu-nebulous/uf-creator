@@ -5,9 +5,14 @@ import camel.metric.CompositeMetric;
 import camel.metric.Metric;
 import camel.metric.MetricModel;
 import camel.metric.RawMetric;
+import camel.metric.impl.CompositeMetricImpl;
 import camel.metric.impl.MetricTypeModelImpl;
 import camel.metric.impl.MetricVariableImpl;
+import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
+import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
+import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
 import eu.morphemic.ufcreator.analyzer.service.cdo.CdoService;
+import eu.morphemic.ufcreator.analyzer.service.mapper.CamelModelMapper;
 import eu.morphemic.ufcreator.communication.cdo.CdoServerApi;
 import eu.paasage.mddb.cdo.client.exp.CDOSessionX;
 import eu.passage.upperware.commons.model.tools.CamelModelTool;
@@ -61,33 +66,36 @@ public class CamelModelServiceImpl implements CamelModelService {
     }
 
     @Override
-    public List<MetricVariableImpl> getVariables(String resourceName) {
+    public List<VariableDTO> getVariables(String resourceName) {
         CamelModel camelModel = getCamelModel(resourceName);
         return  getAllMetrics(camelModel)
                 .stream()
                 .filter(metricModel -> metricModel instanceof MetricVariableImpl)
                 .map(metricModel -> (MetricVariableImpl) metricModel)
+                .map(CamelModelMapper::variableToVariableDTO)
                 .collect(Collectors.toList());
     }
 
 
     @Override
-    public List<RawMetric> getRawMetrics(String resourceName) {
+    public List<RawMetricDTO> getRawMetrics(String resourceName) {
         CamelModel camelModel = getCamelModel(resourceName);
         return getAllMetrics(camelModel)
                 .stream()
                 .filter(metric -> metric instanceof RawMetric)
                 .map(metricModel -> (RawMetric) metricModel)
+                .map(CamelModelMapper::rawMetricToRawMetricDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<CompositeMetric> getCompositeMetrics(String resourceName) {
+    public List<CompositeMetricDTO> getCompositeMetrics(String resourceName) {
         CamelModel camelModel = getCamelModel(resourceName);
         return getAllMetrics(camelModel)
                 .stream()
                 .filter(metric -> metric instanceof CompositeMetric)
                 .map(metricModel -> (CompositeMetric) metricModel)
+                .map(CamelModelMapper::compositeMetricToCompositeMetricDTO)
                 .collect(Collectors.toList());
     }
 
