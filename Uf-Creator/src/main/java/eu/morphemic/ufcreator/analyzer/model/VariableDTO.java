@@ -10,10 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VariableDTO {
-    String Name;
+    String name;
     Boolean isCurrentConfiguration;
 //    ComponentImpl component;
 //    MetricTemplateImpl metricTemplate;
-    String Formula;
+    String formula;
 
 }

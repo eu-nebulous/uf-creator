@@ -1,0 +1,5 @@
+html, body, mat-sidenav-container {
+  min-height: 100vh;
+  height: auto;
+  margin: 0;
+}

@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CompositeMetricDTO {
-    String Name;
-    String Component;
-    String Formula;
+    String name;
+    String component;
+    String formula;
 //    MetricTemplateImpl metricTemplate;
 
 }

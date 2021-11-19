@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.activeeon:scheduling-abstraction-layer:3.7-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/activeeon/scheduling-abstraction-layer/3.7-SNAPSHOT/scheduling-abstraction-layer-3.7-20211117.105921-26.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/activeeon/scheduling-abstraction-layer/3.7-SNAPSHOT/scheduling-abstraction-layer-3.7-20211117.105921-26-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/activeeon/scheduling-abstraction-layer/3.7-SNAPSHOT/scheduling-abstraction-layer-3.7-20211117.105921-26-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

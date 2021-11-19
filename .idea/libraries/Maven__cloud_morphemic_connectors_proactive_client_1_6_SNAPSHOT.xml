@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: cloud.morphemic.connectors:proactive_client:1.6-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cloud/morphemic/connectors/proactive_client/1.6-SNAPSHOT/proactive_client-1.6-20210909.095746-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/cloud/morphemic/connectors/proactive_client/1.6-SNAPSHOT/proactive_client-1.6-20210909.095746-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/cloud/morphemic/connectors/proactive_client/1.6-SNAPSHOT/proactive_client-1.6-20210909.095746-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

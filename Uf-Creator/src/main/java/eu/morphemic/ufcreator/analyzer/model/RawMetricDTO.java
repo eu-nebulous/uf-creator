@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RawMetricDTO {
-    String Name;
-    String Component;
+    String name;
+    String component;
 //    MetricTemplateImpl metricTemplate;
 
 }

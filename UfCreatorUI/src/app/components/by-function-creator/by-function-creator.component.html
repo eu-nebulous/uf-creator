@@ -1,0 +1,153 @@
+  <ng-container [ngSwitch]="stepperOrientation | async">
+    <div *ngSwitchCase="'horizontal'"></div>
+    <div *ngSwitchCase="'vertical'"></div>
+  </ng-container>
+
+  <mat-stepper
+    class="example-stepper"
+    id="stepper"
+    [orientation]="(stepperOrientation | async)!">
+    <mat-step  [stepControl]="firstFormGroup" label="Choose camel model">
+      <form [formGroup]="firstFormGroup">
+        <mat-form-field appearance="fill" >
+          <mat-label>Select camel model</mat-label>
+          <mat-select  required
+            #firstStep>
+            <mat-option *ngFor="let camelModel of camelModels" [value]="camelModel" >{{camelModel}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button  color="primary" matStepperNext (click)="firstStepComplete(firstStep.value)">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" label="Choose variables and metrics">
+
+      <form [formGroup]="secondFormGroup">
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Variables</mat-label>
+            <mat-select [formControl]="variables" multiple>
+              <mat-option *ngFor="let variable of variableList" [value]="variable">{{variable.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Raw Metrics</mat-label>
+            <mat-select [formControl]="rawMetrics" multiple>
+              <mat-option *ngFor="let rawMetric of rawMetricList" [value]="rawMetric">{{rawMetric.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Composite Metrics</mat-label>
+            <mat-select [formControl]="compositeMetrics" multiple>
+              <mat-option *ngFor="let compositeMetric of compositeMetricList" [value]="compositeMetric">{{compositeMetric.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button  color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup" label="Choose function" >
+      <form [formGroup]="thirdFormGroup">
+        <label id="example-radio-group-label">Pick template:</label>
+        <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="example-radio-group">
+
+          <label id="utility-label">Define Utility:</label>
+          <p>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Expected response time function</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Finish simulation on time function</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>RAM usage function</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>CPU usage function</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Cost per user function</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Cores cost utility function</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </p>
+        </mat-radio-group>
+        <div>
+          <button mat-button  color="primary" matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="forthFormGroup" label="Define weights">
+      <form [formGroup]="forthFormGroup">
+        <p>
+          <mat-form-field appearance="fill">
+            <input matInput formControlName="forthCtrl" placeholder="Finish simulation on time" required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <input matInput formControlName="forthCtrl" placeholder="Expected response time " required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <input matInput formControlName="forthCtrl" placeholder="Cost per user" required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <input matInput formControlName="forthCtrl" placeholder="Cores cost utility" required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <input matInput formControlName="forthCtrl" placeholder="CPU usage" required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <input matInput formControlName="forthCtrl" placeholder="RAM usage" required>
+          </mat-form-field>
+        </p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext color="primary">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You Created Function:</p>
+      <div>
+        <button mat-button  color="secondary" matStepperPrevious>Back</button>
+        <button mat-button  color="primary" matStepperPrevious>Save to Camel Model</button>
+      </div>
+    </mat-step>
+  </mat-stepper>

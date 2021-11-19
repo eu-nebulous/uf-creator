@@ -117,7 +117,7 @@ public class CamelModelServiceImpl implements CamelModelService {
         return CompositeMetricDTOs;
     }
 
-     public List<RawMetricDTO> getRawMetricsFromCDO(String resourceName) {
+    public List<RawMetricDTO> getRawMetricsFromCDO(String resourceName) {
         CDOSessionX cdoSessionX = cdoServerApi.openSession();
         CDOTransaction cdoTransaction = cdoServerApi.openTransaction(cdoSessionX);
         log.info("Loading camel model {}", resourceName);

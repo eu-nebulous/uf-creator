@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.ow2.proactive_grid_cloud_portal:rest-client:11.1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/proactive_grid_cloud_portal/rest-client/11.1.0-SNAPSHOT/rest-client-11.1.0-20210602.012332-555.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/proactive_grid_cloud_portal/rest-client/11.1.0-SNAPSHOT/rest-client-11.1.0-20210602.012332-555-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/proactive_grid_cloud_portal/rest-client/11.1.0-SNAPSHOT/rest-client-11.1.0-20210602.012332-555-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

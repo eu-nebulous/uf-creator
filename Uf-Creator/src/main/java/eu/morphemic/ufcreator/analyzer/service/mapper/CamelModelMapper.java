@@ -16,22 +16,22 @@ public class CamelModelMapper {
 
     public static CompositeMetricDTO compositeMetricToCompositeMetricDTO(CompositeMetric compositeMetric){
         return CompositeMetricDTO.builder()
-                .Name(compositeMetric.getName())
-                .Formula(compositeMetric.getFormula())
+                .name(compositeMetric.getName())
+                .formula(compositeMetric.getFormula())
                 .build();
 
     }
 
     public static RawMetricDTO rawMetricToRawMetricDTO(RawMetric rawMetric){
         return RawMetricDTO.builder()
-                .Name(rawMetric.getName())
+                .name(rawMetric.getName())
                 .build();
     }
 
     public static VariableDTO variableToVariableDTO(MetricVariable metricVariable){
         return VariableDTO.builder()
-                .Name(metricVariable.getName())
-                .Formula(metricVariable.getFormula())
+                .name(metricVariable.getName())
+                .formula(metricVariable.getFormula())
                 .isCurrentConfiguration(metricVariable.isCurrentConfiguration())
                 .build();
     }

@@ -1,0 +1,35 @@
+
+  <mat-toolbar color="primary">
+    <button (click)="sidenav.toggle()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-list-item routerLink="/by-function-creator">
+      <img src="https://www.morphemic.cloud/wp-content/uploads/2020/04/logo_morphemic.png" width="62" height="50"  alt="">
+    </mat-list-item>
+    <span class="example-spacer"></span>
+    <span>UF Creator</span>
+    <span class="example-spacer"></span>
+    <mat-icon class="mr-8">brightness_5</mat-icon>
+    <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
+    </mat-slide-toggle>
+    <mat-icon>bedtime</mat-icon>
+  </mat-toolbar>
+  <mat-sidenav-container color="primary" class="example-container">
+    <mat-sidenav #sidenav mode="side" opened="true" style="min-width:80px;" autosize fixedTopGap="56">
+      <mat-nav-list>
+        <h1>Create:</h1>
+        <a mat-list-item routerLink="/app-by-function-creator">
+          <h1>By Function</h1>
+        </a>
+        <a mat-list-item routerLink="/app-by-template-creator">
+          <h1>By Template</h1>
+        </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+      <img src="https://www.morphemic.cloud/wp-content/uploads/2020/06/morphemic-home.svg" class="attachment-full size-full" alt="" loading="lazy">
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
