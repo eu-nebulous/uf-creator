@@ -5,98 +5,108 @@
 
   <mat-stepper
     class="example-stepper"
-    id="stepper"
     [orientation]="(stepperOrientation | async)!">
-    <mat-step  [stepControl]="firstFormGroup" label="Choose camel model">
+    <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
       <form [formGroup]="firstFormGroup">
-        <mat-form-field appearance="fill" >
-          <mat-label>Select camel model</mat-label>
-          <mat-select  required
-            #firstStep>
-            <mat-option *ngFor="let camelModel of camelModels" [value]="camelModel" >{{camelModel}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <div>
-          <button mat-button  color="primary" matStepperNext (click)="firstStepComplete(firstStep.value)">Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Choose variables and metrics">
+        <div *ngFor="let camelModel of camelModelList">
+          <mat-form-field appearance="fill">
+            <mat-label>Select camel model</mat-label>
+              <mat-select [(ngModel)]="selectedCamelModel">
+                <mat-option [value]="camelModel">
+                  {{camelModelList}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
 
-      <form [formGroup]="secondFormGroup">
-        <p>
-          <mat-form-field appearance="fill">
-            <mat-label>Variables</mat-label>
-            <mat-select [formControl]="variables" multiple>
-              <mat-option *ngFor="let variable of variableList" [value]="variable">{{variable.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill">
-            <mat-label>Raw Metrics</mat-label>
-            <mat-select [formControl]="rawMetrics" multiple>
-              <mat-option *ngFor="let rawMetric of rawMetricList" [value]="rawMetric">{{rawMetric.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill">
-            <mat-label>Composite Metrics</mat-label>
-            <mat-select [formControl]="compositeMetrics" multiple>
-              <mat-option *ngFor="let compositeMetric of compositeMetricList" [value]="compositeMetric">{{compositeMetric.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </p>
+          <mat-list>
+            <mat-list-item>
+              <a>{{ getCompositeMetrics(camelModel) }} </a>
+            </mat-list-item>
+
+            <mat-list-item>
+              <a>{{ getRawMetrics(camelModel) }} </a>
+            </mat-list-item>
+
+            <mat-list-item>
+              <a>{{ getVariableMetrics(camelModel) }} </a>
+            </mat-list-item>
+          </mat-list>
+        </div>
         <div>
-          <button mat-button matStepperPrevious>Back</button>
           <button mat-button  color="primary" matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="thirdFormGroup" label="Choose function" >
+
+    <mat-step [stepControl]="thirdFormGroup" label="Choose function">
       <form [formGroup]="thirdFormGroup">
-        <label id="example-radio-group-label">Pick template:</label>
+        <label id="example-radio-group-label">Pick function:</label>
         <mat-radio-group
           aria-labelledby="example-radio-group-label"
           class="example-radio-group">
-
-          <label id="utility-label">Define Utility:</label>
           <p>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-radio-button class="example-radio-button">
               <mat-label>Expected response time function</mat-label>
-              <input matInput>
-            </mat-form-field>
+              <tr>
+               <img src="../../../assets/img/Utime.png">
+              </tr>
+            </mat-radio-button>
           </p>
           <p>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-radio-button class="example-radio-button">
               <mat-label>Finish simulation on time function</mat-label>
-              <input matInput>
-            </mat-form-field>
+              <tr>
+               <img src="../../../assets/img/Udeadline.png">
+              </tr>
+            </mat-radio-button>
           </p>
           <p>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-radio-button class="example-radio-button">
               <mat-label>RAM usage function</mat-label>
-              <input matInput>
-            </mat-form-field>
+              <tr>
+               <img src="../../../assets/img/Uram.png">
+              </tr>
+            </mat-radio-button>
           </p>
           <p>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-radio-button class="example-radio-button">
               <mat-label>CPU usage function</mat-label>
-              <input matInput>
-            </mat-form-field>
+              <tr>
+               <img src="../../../assets/img/Ucpu.png">
+              </tr>
+            </mat-radio-button>
           </p>
           <p>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-radio-button class="example-radio-button">
               <mat-label>Cost per user function</mat-label>
-              <input matInput>
-            </mat-form-field>
+              <tr>
+               <img src="../../../assets/img/Ucostuser.png">
+              </tr>
+            </mat-radio-button>
           </p>
           <p>
-            <mat-form-field class="example-full-width" appearance="fill">
+            <mat-radio-button class="example-radio-button">
               <mat-label>Cores cost utility function</mat-label>
-              <input matInput>
-            </mat-form-field>
+              <tr>
+                <img src="../../../assets/img/Ucorecost.png">
+              </tr>
+            </mat-radio-button>
+          </p>
+          <p>
+            <mat-radio-button class="example-radio-button">
+              <mat-label>Cores cost utility function</mat-label>
+              <tr>
+               <img src="../../../assets/img/Uprice.png">
+              </tr>
+            </mat-radio-button>
+          </p>
+          <p>
+            <mat-radio-button class="example-radio-button">
+              <mat-label>locality utility function</mat-label>
+              <tr>
+               <img src="../../../assets/img/Ulocality.png">
+              </tr>
+            </mat-radio-button>
           </p>
         </mat-radio-group>
         <div>

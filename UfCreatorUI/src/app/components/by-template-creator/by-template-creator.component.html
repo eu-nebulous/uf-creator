@@ -6,30 +6,30 @@
 
   <mat-stepper
     class="example-stepper"
-    id="stepper"
     [orientation]="(stepperOrientation | async)!">
-    <mat-step  [stepControl]="firstFormGroup" label="Choose camel model">
+    <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
       <form [formGroup]="firstFormGroup">
         <mat-form-field appearance="fill">
           <mat-label>Select camel model</mat-label>
-          <mat-select required
-                      #firstStep>
-            <mat-option *ngFor="let camelModel of camelModels" [value]="camelModel" >{{camelModel}}</mat-option>
+          <mat-select>
+            <mat-option>None</mat-option>
+            <mat-option value="option1">Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
           </mat-select>
         </mat-form-field>
         <div>
-          <button mat-button  color="primary" matStepperNext (click)="firstStepComplete(firstStep.value)">Next</button>
+          <button mat-button  color="primary" matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" label="Choose variables and metrics">
-
       <form [formGroup]="secondFormGroup">
         <p>
           <mat-form-field appearance="fill">
             <mat-label>Variables</mat-label>
             <mat-select [formControl]="variables" multiple>
-              <mat-option *ngFor="let variable of variableList" [value]="variable">{{variable.name}}</mat-option>
+              <mat-option *ngFor="let variable of variableList" [value]="variable">{{variable}}</mat-option>
             </mat-select>
           </mat-form-field>
         </p>
@@ -37,7 +37,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Raw Metrics</mat-label>
             <mat-select [formControl]="rawMetrics" multiple>
-              <mat-option *ngFor="let rawMetric of rawMetricList" [value]="rawMetric">{{rawMetric.name}}</mat-option>
+              <mat-option *ngFor="let rawMetric of rawMetricList" [value]="rawMetric">{{rawMetric}}</mat-option>
             </mat-select>
           </mat-form-field>
         </p>
@@ -45,7 +45,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Composite Metrics</mat-label>
             <mat-select [formControl]="compositeMetrics" multiple>
-              <mat-option *ngFor="let compositeMetric of compositeMetricList" [value]="compositeMetric">{{compositeMetric.name}}</mat-option>
+              <mat-option *ngFor="let compositeMetric of compositeMetricList" [value]="compositeMetric">{{compositeMetric}}</mat-option>
             </mat-select>
           </mat-form-field>
         </p>
@@ -61,7 +61,7 @@
         <mat-radio-group
           aria-labelledby="example-radio-group-label"
           class="example-radio-group"
-          >
+          [(ngModel)]="shape">
 
           <div *ngFor="let shape of shapes">
             <mat-radio-button class="example-radio-button" [value]="shape">
@@ -93,7 +93,7 @@
       <label id="weights-label">Define weight of each dimension:</label>
       <form [formGroup]="forthFormGroup">
         <mat-form-field appearance="fill">
-          <input matInput  required>
+          <input matInput formControlName="weightsCtrl" required>
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Back</button>
