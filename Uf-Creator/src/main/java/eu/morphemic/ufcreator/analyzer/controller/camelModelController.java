@@ -37,7 +37,6 @@ public class camelModelController {
         return camelModelService.getRawMetricsFromCDO(resourceName);
     }
 
-
     @GetMapping("/{resourceName}/compositeMetrics")
     @ResponseStatus(HttpStatus.OK)
     public List<CompositeMetricDTO> getCompositeMetrics(@PathVariable(value = "resourceName") String resourceName) {

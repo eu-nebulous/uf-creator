@@ -7,6 +7,10 @@ import {map} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {CamelService} from "../../service/camel.service";
 import {RawMetric} from "../../model/rawMetric";
+import {HttpErrorResponse} from "@angular/common/http";
+import {CompositeMetric} from "../../model/compositeMetric";
+import {Variable} from "@angular/compiler/src/render3/r3_ast";
+import {VariableMetric} from "../../model/variableMetric";
 
 @Component({
   selector: 'app-by-function-creator',
@@ -18,8 +22,10 @@ export class ByFunctionCreatorComponent implements OnInit{
   camelModelList: Array<string>
   compositeMetricList: Array<RawMetric>
   rawMetricList: Array<RawMetric>
-  selectedCamelModel: ''
-
+  variableList: Array<VariableMetric>
+  selectedCamelModel: string
+  mode = new FormControl('over');
+  stepperOrientation: Observable<StepperOrientation>;
 
   constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, breakpointObserver: BreakpointObserver, private camelModelService: CamelService) {
     this.stepperOrientation = breakpointObserver
@@ -33,14 +39,6 @@ export class ByFunctionCreatorComponent implements OnInit{
     })
   }
 
-  mode = new FormControl('over');
-  forthCtrl = new FormControl();
-  variables = new FormControl();
-  variableList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
-  rawMetrics = new FormControl();
-  compositeMetrics = new FormControl();
-
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -53,8 +51,6 @@ export class ByFunctionCreatorComponent implements OnInit{
   forthFormGroup = this._formBuilder.group({
     forthCtrl: ['', Validators.required],
   });
-  stepperOrientation: Observable<StepperOrientation>;
-
 
   public getRawMetrics(selectedCamelModel: string) {
     this.camelModelService.getRawMetricList(this.selectedCamelModel).subscribe(rawMetricsResponse => {
@@ -72,5 +68,35 @@ export class ByFunctionCreatorComponent implements OnInit{
     this.camelModelService.getCompositeMetricList(this.selectedCamelModel).subscribe(compositeMetricsResponse => {
       this.compositeMetricList = compositeMetricsResponse;
     });
+  }
+
+  firstStepComplete(firstStepValue:string) {
+    this.camelModelService.getVariableMetricList(firstStepValue).subscribe(
+      (response: any) => {
+        this.variableList = response;
+        console.log(response)
+        this.camelModelService.getCompositeMetricList(firstStepValue).subscribe(
+          (response: any) => {
+            this.compositeMetricList = response;
+            console.log(response)
+            this.camelModelService.getRawMetricList(firstStepValue).subscribe(
+              (response: any) => {
+                this.rawMetricList = response;
+                console.log(response)
+              },
+              (error: HttpErrorResponse) => {
+                console.log(error);
+              }
+            );
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error);
+          }
+        );
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
   }
 }

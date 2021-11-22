@@ -17,7 +17,7 @@ const httpOptions = {
 
 export class CamelService {
 
-  apiUrl = 'http://localhost:8080/camel-model/';
+  apiUrl = 'http://localhost:8080/camel-model';
 
   constructor(private http: HttpClient) {
   }

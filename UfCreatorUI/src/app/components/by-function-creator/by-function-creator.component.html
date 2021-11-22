@@ -1,163 +1,165 @@
-  <ng-container [ngSwitch]="stepperOrientation | async">
-    <div *ngSwitchCase="'horizontal'"></div>
-    <div *ngSwitchCase="'vertical'"></div>
-  </ng-container>
+<ng-container [ngSwitch]="stepperOrientation | async">
+  <div *ngSwitchCase="'horizontal'"></div>
+  <div *ngSwitchCase="'vertical'"></div>
+</ng-container>
 
-  <mat-stepper
-    class="example-stepper"
-    [orientation]="(stepperOrientation | async)!">
-    <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
-      <form [formGroup]="firstFormGroup">
-        <div *ngFor="let camelModel of camelModelList">
-          <mat-form-field appearance="fill">
-            <mat-label>Select camel model</mat-label>
-              <mat-select [(ngModel)]="selectedCamelModel">
-                <mat-option [value]="camelModel">
-                  {{camelModelList}}
-                </mat-option>
-              </mat-select>
-          </mat-form-field>
+<mat-stepper
+  [orientation]="(stepperOrientation | async)!"
+  class="example-stepper">
+  <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
+    <form [formGroup]="firstFormGroup">
+      <mat-form-field appearance="fill">
+      <mat-label>Select camel model</mat-label>
+        <mat-select #firstStep
+                    required >
+          <mat-option #first *ngFor="let camelModel of camelModelList" [value]="camelModel" (onSelectionChange)="firstStepComplete(first.value)">{{camelModel}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
+        <p>
           <mat-list>
-            <mat-list-item>
-              <a>{{ getCompositeMetrics(camelModel) }} </a>
-            </mat-list-item>
-
-            <mat-list-item>
-              <a>{{ getRawMetrics(camelModel) }} </a>
-            </mat-list-item>
-
-            <mat-list-item>
-              <a>{{ getVariableMetrics(camelModel) }} </a>
-            </mat-list-item>
+          <mat-label>Variables</mat-label>
+          <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
           </mat-list>
-        </div>
-        <div>
-          <button mat-button  color="primary" matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-
-    <mat-step [stepControl]="thirdFormGroup" label="Choose function">
-      <form [formGroup]="thirdFormGroup">
-        <label id="example-radio-group-label">Pick function:</label>
-        <mat-radio-group
-          aria-labelledby="example-radio-group-label"
-          class="example-radio-group">
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>Expected response time function</mat-label>
-              <tr>
-               <img src="../../../assets/img/Utime.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>Finish simulation on time function</mat-label>
-              <tr>
-               <img src="../../../assets/img/Udeadline.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>RAM usage function</mat-label>
-              <tr>
-               <img src="../../../assets/img/Uram.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>CPU usage function</mat-label>
-              <tr>
-               <img src="../../../assets/img/Ucpu.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>Cost per user function</mat-label>
-              <tr>
-               <img src="../../../assets/img/Ucostuser.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>Cores cost utility function</mat-label>
-              <tr>
-                <img src="../../../assets/img/Ucorecost.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>Cores cost utility function</mat-label>
-              <tr>
-               <img src="../../../assets/img/Uprice.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-          <p>
-            <mat-radio-button class="example-radio-button">
-              <mat-label>locality utility function</mat-label>
-              <tr>
-               <img src="../../../assets/img/Ulocality.png">
-              </tr>
-            </mat-radio-button>
-          </p>
-        </mat-radio-group>
-        <div>
-          <button mat-button  color="primary" matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="forthFormGroup" label="Define weights">
-      <form [formGroup]="forthFormGroup">
-        <p>
-          <mat-form-field appearance="fill">
-            <input matInput formControlName="forthCtrl" placeholder="Finish simulation on time" required>
-          </mat-form-field>
         </p>
         <p>
-          <mat-form-field appearance="fill">
-            <input matInput formControlName="forthCtrl" placeholder="Expected response time " required>
-          </mat-form-field>
+          <mat-list>
+          <mat-label>Raw Metrics</mat-label>
+          <mat-list-item *ngFor="let rawMetric of rawMetricList" >{{rawMetric.name}}</mat-list-item>
+          </mat-list>
         </p>
         <p>
-          <mat-form-field appearance="fill">
-            <input matInput formControlName="forthCtrl" placeholder="Cost per user" required>
-          </mat-form-field>
+          <mat-list>
+          <mat-label>Composite Metrics</mat-label>
+          <mat-list-item *ngFor="let compositeMetric of compositeMetricList">{{compositeMetric.name}}</mat-list-item>
+          </mat-list>
         </p>
-        <p>
-          <mat-form-field appearance="fill">
-            <input matInput formControlName="forthCtrl" placeholder="Cores cost utility" required>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill">
-            <input matInput formControlName="forthCtrl" placeholder="CPU usage" required>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill">
-            <input matInput formControlName="forthCtrl" placeholder="RAM usage" required>
-          </mat-form-field>
-        </p>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext color="primary">Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You Created Function:</p>
       <div>
-        <button mat-button  color="secondary" matStepperPrevious>Back</button>
-        <button mat-button  color="primary" matStepperPrevious>Save to Camel Model</button>
+        <button color="primary" mat-button matStepperNext>Next</button>
       </div>
-    </mat-step>
-  </mat-stepper>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="thirdFormGroup" label="Choose function">
+    <form [formGroup]="thirdFormGroup">
+      <label id="example-radio-group-label">Pick function:</label>
+      <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group">
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>Expected response time function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Utime.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>Finish simulation on time function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Udeadline.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>RAM usage function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Uram.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>CPU usage function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Ucpu.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>Cost per user function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Ucostuser.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>Cores cost utility function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Ucorecost.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>Cores cost utility function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Uprice.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+        <p>
+          <mat-radio-button class="example-radio-button">
+            <mat-label>locality utility function</mat-label>
+            <tr>
+              <img src="../../../assets/img/Ulocality.png">
+            </tr>
+          </mat-radio-button>
+        </p>
+      </mat-radio-group>
+      <div>
+        <button color="primary" mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="forthFormGroup" label="Define weights">
+    <form [formGroup]="forthFormGroup">
+      <p>
+        <mat-form-field appearance="fill">
+          <input formControlName="forthCtrl" matInput placeholder="Finish simulation on time" required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <input formControlName="forthCtrl" matInput placeholder="Expected response time " required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <input formControlName="forthCtrl" matInput placeholder="Cost per user" required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <input formControlName="forthCtrl" matInput placeholder="Cores cost utility" required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <input formControlName="forthCtrl" matInput placeholder="CPU usage" required>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <input formControlName="forthCtrl" matInput placeholder="RAM usage" required>
+        </mat-form-field>
+      </p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button color="primary" mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You Created Function:</p>
+    <div>
+      <button color="secondary" mat-button matStepperPrevious>Back</button>
+      <button color="primary" mat-button matStepperPrevious>Save to Camel Model</button>
+    </div>
+  </mat-step>
+</mat-stepper>
