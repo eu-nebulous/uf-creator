@@ -31,7 +31,7 @@ export class CamelService {
   }
 
   getCompositeMetricList(resourceName: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${resourceName}/compositeMetric`, httpOptions);
+    return this.http.get(`${this.apiUrl}/${resourceName}/compositeMetrics`, httpOptions);
   }
 
   getVariableMetricList(resourceName: string): Observable<any> {
