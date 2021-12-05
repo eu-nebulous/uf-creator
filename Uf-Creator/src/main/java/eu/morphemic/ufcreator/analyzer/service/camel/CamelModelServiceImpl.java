@@ -69,7 +69,6 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public List<RawMetricDTO> getRawMetrics(CamelModel camelModel) {
         return getAllMetrics(camelModel)
@@ -102,8 +101,6 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
-
-
 
     public List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName) {
         CDOSessionX cdoSessionX = cdoServerApi.openSession();
