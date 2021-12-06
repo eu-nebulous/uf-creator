@@ -5,6 +5,11 @@ import {StepperOrientation} from "@angular/cdk/stepper";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {map} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
+import {HttpErrorResponse} from "@angular/common/http";
+import {RawMetric} from "../../model/rawMetric";
+import {CompositeMetric} from "../../model/compositeMetric";
+import {Variable} from "@angular/compiler/src/render3/r3_ast";
+import {CamelService} from "../../service/camel.service";
 
 @Component({
   selector: 'app-by-template-creator',
@@ -15,17 +20,15 @@ export class ByTemplateCreatorComponent  {
 
   shape: string;
   shapes: string[] = ['S-Shaped', 'U-Shaped', 'Constant Shaped', 'Reverse S-Shaped', "Reverse U-Shaped", "Linear"];
-
+  camelModelList: Array<string>;
   mode = new FormControl('over');
-
+  forthCtrl = new FormControl();
   variables = new FormControl();
-  variableList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
+  variableList:Variable[];
   rawMetrics = new FormControl();
-  rawMetricList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
+  rawMetricList:RawMetric[];
   compositeMetrics = new FormControl();
-  compositeMetricList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  compositeMetricList:CompositeMetric[];
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -42,9 +45,52 @@ export class ByTemplateCreatorComponent  {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, breakpointObserver: BreakpointObserver) {
+  constructor(private camelModelService:CamelService, private _formBuilder: FormBuilder, public dialog: MatDialog, breakpointObserver: BreakpointObserver) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+  }
+  ngOnInit() {
+    this.getCamelModels();
+  }
+
+  firstStepComplete(firstStepValue:string) {
+    this.camelModelService.getVariableMetricList(firstStepValue).subscribe(
+      (response: Variable[]) => {
+        this.variableList = response;
+        this.camelModelService.getCompositeMetricList(firstStepValue).subscribe(
+          (response: CompositeMetric[]) => {
+            this.compositeMetricList = response;
+            this.camelModelService.getRawMetricList(firstStepValue).subscribe(
+              (response: RawMetric[]) => {
+                this.rawMetricList = response;
+              },
+              (error: HttpErrorResponse) => {
+                console.log(error);
+              }
+            );
+          },
+          (error: HttpErrorResponse) => {
+            console.log(error);
+          }
+        );
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+
+
+  }
+
+  public getCamelModels(): void {
+    this.camelModelService.getCamelModelList().subscribe(
+      (response: any) => {
+        this.camelModelList = response;
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
   }
 }

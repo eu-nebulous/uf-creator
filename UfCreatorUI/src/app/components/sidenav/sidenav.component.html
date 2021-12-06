@@ -1,1 +1,88 @@
+<h1 mat-dialog-title>Specify variables and metrics</h1>
+<mat-dialog-content class="mat-typography">
+  <mat-list-item *ngFor="let function of data.selectedOptions">
+    <mat-card>
+      <h2>{{function.value.name}}:</h2>
+      <p>
+        <mat-label>Variables:</mat-label>
+      </p>
+      <div class="example-wrapper">
+        <mat-list-item *ngFor="let variable of function.value.variableList">
+
+          <form [formGroup]="options">
+            <mat-form-field appearance="fill">
+              <mat-label>{{variable.name}}</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let variableFromCamel of data.variables">
+                  {{variableFromCamel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+
+
+        </mat-list-item>
+      </div>
+      <p>
+        <mat-label>Raw Metrics:</mat-label>
+      </p>
+      <div class="example-wrapper">
+
+      <mat-list-item *ngFor="let rawMetric of function.value.rawMetricList">
+
+        <form [formGroup]="options">
+          <mat-form-field appearance="fill">
+            <mat-label>{{rawMetric.name}}</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let rawMetricFromCamel of data.rawMetricList">
+                {{rawMetricFromCamel.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </mat-list-item>
+      </div>
+      <p>
+        <mat-label>Composite Metrics:</mat-label>
+      </p>
+      <div class="example-wrapper">
+
+        <mat-list-item *ngFor="let compositeMetric of function.value.compositeMetricList">
+
+          <form [formGroup]="options">
+            <mat-form-field appearance="fill">
+              <mat-label>{{compositeMetric.name}}</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let compositeMetricFromCamel of data.compositeMetricList">
+                  {{compositeMetricFromCamel.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+        </mat-list-item>
+      </div>
+        <p>
+          <mat-label>Constants:</mat-label>
+        </p>
+
+        <div class="example-container">
+          <mat-form-field appearance="fill"
+                          *ngFor="let constant of function.value.constantsList; let i = index" (click)="foo(constant)">
+            <mat-label>{{constant.name}}</mat-label>
+            <input matInput [id]="'person.name' + i" [(ngModel)]="constant.value" [name]="'person.name' + i"/>
+          </mat-form-field>
+        </div>
+
+        <!--      <mat-label>{{constant.name}}</mat-label>-->
+        <!--      <mat-form-field appearance="fill">-->
+        <!--        <input [value]="constant.value" (input)="constant.value=($event.target as HTMLInputElement).value"  matInput>-->
+        <!--      </mat-form-field>-->
+        <button mat-button (click)="foo(function.value.constantsList)">Print</button>
+
+    </mat-card>
+  </mat-list-item>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Next</button>
+</mat-dialog-actions>
 

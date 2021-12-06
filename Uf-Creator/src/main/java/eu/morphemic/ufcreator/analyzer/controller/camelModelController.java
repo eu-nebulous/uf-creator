@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -49,5 +50,11 @@ public class camelModelController {
     public List<VariableDTO> getVariables(@PathVariable(value = "resourceName") String resourceName) {
         log.info("GET request for raw metrics for {}", resourceName);
         return camelModelService.getVariablesFromCDO(resourceName);
+    }
+
+    @PostMapping("/map")
+    @ResponseStatus(HttpStatus.OK)
+    public void getMap(@RequestBody Map<String, Double> foo) {
+        log.info("POST request map", foo.entrySet());
     }
 }

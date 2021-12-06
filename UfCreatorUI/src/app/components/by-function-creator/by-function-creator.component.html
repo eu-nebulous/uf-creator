@@ -5,35 +5,62 @@
 
 <mat-stepper
   [orientation]="(stepperOrientation | async)!"
-  class="example-stepper">
-  <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
+  class="example-stepper" #stepper>
+  <mat-step [stepControl]="firstFormGroup" label="Choose camel model" >
+
     <form [formGroup]="firstFormGroup">
       <mat-form-field appearance="fill">
-      <mat-label>Select camel model</mat-label>
+        <mat-label>Select camel model</mat-label>
         <mat-select #firstStep
                     required >
           <mat-option #first *ngFor="let camelModel of camelModelList" [value]="camelModel" (onSelectionChange)="firstStepComplete(first.value)">{{camelModel}}</mat-option>
         </mat-select>
       </mat-form-field>
 
-        <p>
-          <mat-list>
+      <div *ngIf="isVariablesLoading else elseBlockVariables"
+           style="display: flex; justify-content: left; align-items: center;">
+        <mat-label>Variables</mat-label>
+        <mat-progress-spinner
+          color="accent"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+
+      <div *ngIf="isCompositeMetricsLoading else elseBlockCompositeMetrics"
+           style="display: flex; justify-content: left; align-items: center;">
+        <mat-label>Composite Metrics</mat-label>
+        <mat-progress-spinner
+          color="accent"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+
+      <div *ngIf="isRawMetricsLoading else elseBlockRawMetrics"
+           style="display: flex; justify-content: left; align-items: center;">
+        <mat-label>Raw Metrics</mat-label>
+        <mat-progress-spinner
+          color="accent"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+      <ng-template #elseBlockVariables>
+        <mat-list>
           <mat-label>Variables</mat-label>
-          <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
-          </mat-list>
-        </p>
-        <p>
-          <mat-list>
+          <mat-list-item *ngFor="let variable of variableList" >{{variable.name}}</mat-list-item>
+        </mat-list>
+      </ng-template>
+      <ng-template #elseBlockCompositeMetrics>
+        <mat-list>
           <mat-label>Raw Metrics</mat-label>
           <mat-list-item *ngFor="let rawMetric of rawMetricList" >{{rawMetric.name}}</mat-list-item>
-          </mat-list>
-        </p>
-        <p>
-          <mat-list>
+        </mat-list>
+      </ng-template>
+      <ng-template #elseBlockRawMetrics>
+        <mat-list>
           <mat-label>Composite Metrics</mat-label>
           <mat-list-item *ngFor="let compositeMetric of compositeMetricList">{{compositeMetric.name}}</mat-list-item>
-          </mat-list>
-        </p>
+        </mat-list>
+      </ng-template>
       <div>
         <button color="primary" mat-button matStepperNext>Next</button>
       </div>
@@ -43,76 +70,22 @@
   <mat-step [stepControl]="thirdFormGroup" label="Choose function">
     <form [formGroup]="thirdFormGroup">
       <label id="example-radio-group-label">Pick function:</label>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group">
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>Expected response time function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Utime.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>Finish simulation on time function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Udeadline.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>RAM usage function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Uram.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>CPU usage function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Ucpu.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>Cost per user function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Ucostuser.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>Cores cost utility function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Ucorecost.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>Cores cost utility function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Uprice.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-        <p>
-          <mat-radio-button class="example-radio-button">
-            <mat-label>locality utility function</mat-label>
-            <tr>
-              <img src="../../../assets/img/Ulocality.png">
-            </tr>
-          </mat-radio-button>
-        </p>
-      </mat-radio-group>
+      <mat-selection-list #predefinedFunctionSelectionList>
+        <mat-list-option *ngFor="let predefinedFunction of predefinedFunctions" [value]="predefinedFunction">
+          <p>
+            <mat-label> {{predefinedFunction.name}}</mat-label>
+<!--            <tr>-->
+<!--              <img src="{{predefinedFunction.src}}">-->
+<!--            </tr>-->
+          </p>
+        </mat-list-option>
+      </mat-selection-list>
+
+      <p>
+        Options selected: {{predefinedFunctionSelectionList.selectedOptions.selected.length}}
+      </p>
       <div>
-        <button color="primary" mat-button matStepperNext>Next</button>
+        <button color="primary" mat-button (click)="openDialog(predefinedFunctionSelectionList.selectedOptions.selected,stepper)">Next</button>
       </div>
     </form>
   </mat-step>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-// @ts-ignore
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
@@ -25,6 +24,10 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -34,33 +37,38 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     ByTemplateCreatorComponent,
     ByFunctionCreatorComponent,
   ],
-    imports: [
-        BrowserAnimationsModule,
-        BrowserAnimationsModule,
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        MatNativeDateModule,
-        ReactiveFormsModule,
-        MatStepperModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatDividerModule,
-        MatListModule,
-        RouterModule,
-        AppRoutingModule,
-        MatIconModule,
-        MatSelectModule,
-        MatDialogModule,
-        MatRadioModule,
-        HttpClientModule,
-        MatSlideToggleModule
+  imports: [
+    BrowserAnimationsModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatStepperModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatDividerModule,
+    MatListModule,
+    RouterModule,
+    AppRoutingModule,
+    MatIconModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatRadioModule,
+    HttpClientModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatGridListModule,
+    MatCardModule,
 
-    ],
+
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

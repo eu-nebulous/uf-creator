@@ -57,11 +57,13 @@ public class CamelModelServiceImpl implements CamelModelService {
     @Override
     public CompositeMetric getCompositeMetric(CamelModel camelModel, String metricName) {
         return CamelModelTool.getCompositeMetric(camelModel, metricName).orElseThrow(ResourceNotFoundException::new);
+
     }
 
     @Override
     public List<VariableDTO> getVariables(CamelModel camelModel) {
-        return  getAllMetrics(camelModel)
+
+        return getAllMetrics(camelModel)
                 .stream()
                 .filter(metricModel -> metricModel instanceof MetricVariableImpl)
                 .map(metricModel -> (MetricVariableImpl) metricModel)
@@ -102,7 +104,6 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
-
 
 
     public List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName) {
