@@ -31,6 +31,7 @@ public class camelModelController {
         log.info("GET request for all uploaded camel models");
         return camelModelService.getCamelModelNames();
     }
+
     @GetMapping("/{resourceName}/rawMetrics")
     @ResponseStatus(HttpStatus.OK)
     public List<RawMetricDTO> getCamelModel(@PathVariable(value = "resourceName") String resourceName) {
