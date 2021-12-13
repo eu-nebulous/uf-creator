@@ -15,6 +15,10 @@ import {SidenavComponent} from "../sidenav/sidenav.component";
 import {MatStepper} from "@angular/material/stepper";
 import {Variable} from "../../model/Variable";
 import {Constant} from "../../model/Constant";
+import {MatListOption} from "@angular/material/list";
+import {CommonModule} from "@angular/common";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {FunctionService} from "../../service/function.service";
 
 
 @Component({
@@ -37,9 +41,14 @@ export class ByFunctionCreatorComponent implements OnInit {
   isRawMetricsLoading = true;
   predefinedFunctions: Array<PredefinedFunction>;
   selectedOptions: Array<PredefinedFunction>;
+  selected = new Array<PredefinedFunction>();
+  sliderValues = new Array<number>();
+  sum: number;
+  isSendingRequest = false;
 
 
-  constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private camelModelService: CamelService, public dialog: MatDialog) {
+  constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private functionService: FunctionService,
+              private camelModelService: CamelService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -47,9 +56,13 @@ export class ByFunctionCreatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.camelModelService.getCamelModelList().subscribe(camelModelResponse => {
-      this.isCamelModelListLoading = false;
-      this.camelModelList = camelModelResponse;
-    })
+        this.isCamelModelListLoading = false;
+        this._snackBar.open("List of camel models loaded!", "Close", {duration: 5 * 1000,});
+        this.camelModelList = camelModelResponse;
+      },
+      (error: HttpErrorResponse) => {
+        this._snackBar.open(error.message, "Close", {duration: 10 * 1000,});
+      })
     this.predefinedFunctions = this.getPredefinedFunctions();
     console.log(this.selectedOptions);
   }
@@ -122,19 +135,24 @@ export class ByFunctionCreatorComponent implements OnInit {
 
   getPredefinedFunctions() {
     var predefined = new Array<PredefinedFunction>();
-    var simulationOnTimeVariables = [new Variable("number of instances", ""), new Variable("number of cores", "")];
+    var simulationOnTimeVariables = [new Variable("number of instances", "", "Cardinality"), new Variable("number of cores", "", "Cost")];
+    var simulationOnTimeVariables2 = [new Variable("number of instances", "", "Cardinality"), new Variable("number of cores", "", "Cost")];
     var constantsList = [new Constant("expected response time T^", "0"), new Constant("maximum acceptable response time T+", "0"), new Constant("default timeout time Td", "0")];
-    var rawMetricsList = [new RawMetric("Minimum cores number","",""),new RawMetric("Simulations left","","")];
-    var compositeMetricsList = [new CompositeMetric("Estimated Remaining Time", "", "","")];
+    var constantsList1 = [new Constant("expected response time T^", "0"), new Constant("maximum acceptable response time T+", "0"), new Constant("default timeout time Td", "0")];
+    var rawMetricsList = [new RawMetric("Minimum cores number", "", ""), new RawMetric("Simulations left", "", "")];
+    var rawMetricsList2 = [new RawMetric("Minimum cores number", "", ""), new RawMetric("Simulations left", "", "")];
+    var compositeMetricsList = [new CompositeMetric("Estimated Remaining Time", "", "", "")];
+    var compositeMetricsList2 = [new CompositeMetric("Estimated Remaining Time", "", "", "")];
 
     var simulationOnTime = new PredefinedFunction("Finish simulation on time function", "../../../assets/img/Udeadline.png", simulationOnTimeVariables, constantsList, rawMetricsList, compositeMetricsList);
+    var secondFunction = new PredefinedFunction("Second function", "../../../assets/img/Udeadline.png", simulationOnTimeVariables2, constantsList1, rawMetricsList2, compositeMetricsList2);
     // var ramUsage=new PredefinedFunction("RAM usage function","../../../assets/img/Uram.png");
     // var locality=new PredefinedFunction("locality utility function","../../../assets/img/Ulocality.png");
     // var costPerUser=new PredefinedFunction("Cost per user function","../../../assets/img/Ucostuser.png");
     // var cpuUsage=new PredefinedFunction("CPU usage function","../../../assets/img/Ucpu.png");
 
     predefined.push(simulationOnTime);
-    predefined.push(simulationOnTime);
+    predefined.push(secondFunction);
     // predefined.push(locality);
     // predefined.push(costPerUser);
     // predefined.push(cpuUsage);
@@ -143,10 +161,11 @@ export class ByFunctionCreatorComponent implements OnInit {
   }
 
 
-  openDialog(selections: any, stepper: MatStepper) {
+  openDialog(selections: MatListOption[], stepper: MatStepper) {
+    this.saveSelected(selections);
     const dialogRef = this.dialog.open(SidenavComponent, {
       data: {
-        selectedOptions: selections,
+        selectedOptions: this.selected,
         variables: this.variableList,
         rawMetricList: this.rawMetricList,
         compositeMetricList: this.compositeMetricList

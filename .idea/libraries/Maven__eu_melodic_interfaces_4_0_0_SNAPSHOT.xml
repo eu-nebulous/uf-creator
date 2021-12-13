@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: eu.melodic:interfaces:4.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/melodic/interfaces/4.0.0-SNAPSHOT/interfaces-4.0.0-20211206.155417-86.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/melodic/interfaces/4.0.0-SNAPSHOT/interfaces-4.0.0-20211206.155417-86-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/melodic/interfaces/4.0.0-SNAPSHOT/interfaces-4.0.0-20211206.155417-86-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

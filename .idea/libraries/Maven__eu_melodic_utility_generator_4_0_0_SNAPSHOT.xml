@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: eu.melodic:utility-generator:4.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/melodic/utility-generator/4.0.0-SNAPSHOT/utility-generator-4.0.0-20211201.161616-124.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/melodic/utility-generator/4.0.0-SNAPSHOT/utility-generator-4.0.0-20211201.161616-124-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/eu/melodic/utility-generator/4.0.0-SNAPSHOT/utility-generator-4.0.0-20211201.161616-124-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

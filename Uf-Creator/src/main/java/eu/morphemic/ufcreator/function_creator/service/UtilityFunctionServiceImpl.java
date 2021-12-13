@@ -4,10 +4,11 @@ import eu.melodic.upperware.utilitygenerator.utility_function.utility_templates_
 import eu.morphemic.ufcreator.function_creator.PredefinedFunctionProvider;
 import eu.morphemic.ufcreator.function_creator.controller.request.CreateFunctionRequest;
 import eu.morphemic.ufcreator.function_creator.function.*;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class UtilityFunctionServiceImpl implements UtilityFunctionService{
 
     public List<String> getAvailableFunctions(List<String> variableDtoList) {

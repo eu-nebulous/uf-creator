@@ -7,7 +7,7 @@ import camel.metric.MetricModel;
 import camel.metric.RawMetric;
 import camel.metric.impl.MetricTypeModelImpl;
 import camel.metric.impl.MetricVariableImpl;
-import com.google.errorprone.annotations.Var;
+import camel.mms.MmsObject;
 import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
@@ -37,12 +37,22 @@ public class CamelModelServiceImpl implements CamelModelService {
     private CdoServerApi cdoServerApi;
     private CdoService cdoService;
 
+    public static String getAnnotationOfMetricVariable(MetricVariableImpl metricVariable) {
+        EList<MmsObject> annotations = metricVariable.getMetricTemplate().getAttribute().getAnnotations();
+        if (annotations.isEmpty()) {
+            log.warn("Metric Variable {} has not definied annotation, returning empty String", metricVariable.getName());
+            return "";
+        }
+        String annotation = annotations.get(0).getId();
+        log.debug("Found annotation {} for metric: {}", metricVariable.getName(), annotation);
+        return annotation;
+    }
+
     public List<String> getCamelModelNames() {
         List<String> allXmiModels = cdoService.getAllXmi();
         allXmiModels.sort(String::compareTo);
         return allXmiModels;
     }
-
 
     @Override
     public MetricVariableImpl getVariable(CamelModel camelModel, String variableName) {
@@ -70,7 +80,6 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .map(CamelModelMapper::variableToVariableDTO)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<RawMetricDTO> getRawMetrics(CamelModel camelModel) {
@@ -104,7 +113,6 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
-
 
     public List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName) {
         CDOSessionX cdoSessionX = cdoServerApi.openSession();
@@ -141,4 +149,14 @@ public class CamelModelServiceImpl implements CamelModelService {
         cdoSessionX.closeSession();
         return VariableDTOs;
     }
+//    public static String getAnnotationOfRawMetric(RawMetricImpl rawMetric) {
+//        EList<MmsObject> annotations = rawMetric.getMetricTemplate().getAttribute().getAnnotations();
+//        if (annotations.isEmpty()) {
+//            log.warn("Metric Variable {} has not definied annotation, returning empty String", rawMetric.getName());
+//            return "";
+//        }
+//        String annotation = annotations.get(0).getId();
+//        log.debug("Found annotation {} for metric: {}", rawMetric.getName(), annotation);
+//        return annotation;
+//    }
 }

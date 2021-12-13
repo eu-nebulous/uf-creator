@@ -1,7 +1,6 @@
 package eu.morphemic.ufcreator.function_creator;
 
 import eu.melodic.upperware.utilitygenerator.cdo.cp_model.DTO.VariableDTO;
-import eu.morphemic.ufcreator.function_creator.function.ExpectedResponseTime;
 import eu.paasage.upperware.metamodel.cp.VariableType;
 import lombok.AllArgsConstructor;
 
@@ -42,8 +41,8 @@ public class PredefinedFunctionProvider {
 
     private static VariableType templateToVariableType(PredefinedUtilityFunctions type) {
         switch (type) {
-           // case ExpectedResponseTime:
-           // case FinishSimulationOnTime:
+            // case ExpectedResponseTime:
+            // case FinishSimulationOnTime:
             case LocalityUtility:
                 return VariableType.LOCATION;
             case RamUsage:
@@ -51,7 +50,7 @@ public class PredefinedFunctionProvider {
             case CpuUsage:
                 return VariableType.CPU;
             case CoreCostUtility:
-            // case CostPerUser:
+                // case CostPerUser:
         }
         throw new RuntimeException("Can't covert template " + type.name() + " to variable type");
     }

@@ -1,45 +1,45 @@
 <h1 mat-dialog-title>Specify variables and metrics</h1>
 <mat-dialog-content class="mat-typography">
-  <mat-list-item *ngFor="let function of data.selectedOptions">
+
+  <ng-container *ngFor="let predefinedFunction of dataFromFunctionCreator,let index = index; trackBy:trackByIndex;">
     <mat-card>
-      <h2>{{function.value.name}}:</h2>
+      <h2>{{predefinedFunction.name}}:</h2>
       <p>
         <mat-label>Variables:</mat-label>
       </p>
-      <div class="example-wrapper">
-        <mat-list-item *ngFor="let variable of function.value.variableList">
-
-          <form [formGroup]="options">
+        <ng-container *ngFor="let variable of dataFromFunctionCreator[index].variableList,let index2 = index; trackBy:trackByIndex;">
             <mat-form-field appearance="fill">
               <mat-label>{{variable.name}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let variableFromCamel of data.variables">
-                  {{variableFromCamel.name}}
-                </mat-option>
+              <mat-select [(ngModel)]="dataFromFunctionCreator[index].variableList[index2].value">
+                <ng-container *ngFor="let variableFromCamel of data.variables,let index3 = index; trackBy:trackByIndex;" >
+                  <ng-container  *ngIf="dataFromFunctionCreator[index].variableList[index2].type==data.variables[index3].type">
+                    <mat-option [value]="data.variables[index3].name" >
+                      {{data.variables[index3].name}}
+                    </mat-option>
+                  </ng-container>
+                </ng-container>
               </mat-select>
             </mat-form-field>
-          </form>
+        </ng-container>
 
 
-        </mat-list-item>
-      </div>
       <p>
         <mat-label>Raw Metrics:</mat-label>
       </p>
       <div class="example-wrapper">
 
-      <mat-list-item *ngFor="let rawMetric of function.value.rawMetricList">
+      <mat-list-item *ngFor="let rawMetric of dataFromFunctionCreator[index].rawMetricList,let index2 = index; trackBy:trackByIndex;">
 
-        <form [formGroup]="options">
           <mat-form-field appearance="fill">
             <mat-label>{{rawMetric.name}}</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let rawMetricFromCamel of data.rawMetricList">
-                {{rawMetricFromCamel.name}}
-              </mat-option>
+            <mat-select [(ngModel)]="dataFromFunctionCreator[index].rawMetricList[index2].value">
+              <ng-container *ngFor="let rawMetricFromCamel of data.rawMetricList,let index3 = index; trackBy:trackByIndex;">
+                  <mat-option [value]="data.rawMetricList[index3].name" >
+                    {{data.rawMetricList[index3].name}}
+                  </mat-option>
+              </ng-container>
             </mat-select>
           </mat-form-field>
-        </form>
       </mat-list-item>
       </div>
       <p>
@@ -47,18 +47,18 @@
       </p>
       <div class="example-wrapper">
 
-        <mat-list-item *ngFor="let compositeMetric of function.value.compositeMetricList">
+        <mat-list-item *ngFor="let compositeMetric of dataFromFunctionCreator[index].compositeMetricList,let index2 = index; trackBy:trackByIndex;">
 
-          <form [formGroup]="options">
             <mat-form-field appearance="fill">
               <mat-label>{{compositeMetric.name}}</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let compositeMetricFromCamel of data.compositeMetricList">
-                  {{compositeMetricFromCamel.name}}
-                </mat-option>
+              <mat-select [(ngModel)]="dataFromFunctionCreator[index].compositeMetricList[index2].value">
+                <ng-container *ngFor="let compositeMetricFromCamel of data.compositeMetricList,let index3 = index; trackBy:trackByIndex;" >
+                  <mat-option [value]="data.compositeMetricList[index3].name">
+                    {{data.compositeMetricList[index3].name}}
+                  </mat-option>
+                </ng-container>
               </mat-select>
             </mat-form-field>
-          </form>
         </mat-list-item>
       </div>
         <p>
@@ -67,20 +67,15 @@
 
         <div class="example-container">
           <mat-form-field appearance="fill"
-                          *ngFor="let constant of function.value.constantsList; let i = index" (click)="foo(constant)">
+                          *ngFor="let constant of dataFromFunctionCreator[index].constantsList; let index2 = index; trackBy:trackByIndex;">
             <mat-label>{{constant.name}}</mat-label>
-            <input matInput [id]="'person.name' + i" [(ngModel)]="constant.value" [name]="'person.name' + i"/>
+            <input matInput  [(ngModel)]="dataFromFunctionCreator[index].constantsList[index2].value" />
           </mat-form-field>
         </div>
 
-        <!--      <mat-label>{{constant.name}}</mat-label>-->
-        <!--      <mat-form-field appearance="fill">-->
-        <!--        <input [value]="constant.value" (input)="constant.value=($event.target as HTMLInputElement).value"  matInput>-->
-        <!--      </mat-form-field>-->
-        <button mat-button (click)="foo(function.value.constantsList)">Print</button>
-
     </mat-card>
-  </mat-list-item>
+  </ng-container>
+  <button (click)="updateConstants(dataFromFunctionCreator)"></button>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Next</button>

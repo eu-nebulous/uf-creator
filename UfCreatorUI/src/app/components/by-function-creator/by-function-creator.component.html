@@ -22,7 +22,8 @@
         <mat-label>Variables</mat-label>
         <mat-progress-spinner
           color="accent"
-          mode="indeterminate">
+          mode="indeterminate"
+        diameter="50">
         </mat-progress-spinner>
       </div>
 
@@ -31,7 +32,8 @@
         <mat-label>Composite Metrics</mat-label>
         <mat-progress-spinner
           color="accent"
-          mode="indeterminate">
+          mode="indeterminate"
+          diameter="50">
         </mat-progress-spinner>
       </div>
 
@@ -40,7 +42,8 @@
         <mat-label>Raw Metrics</mat-label>
         <mat-progress-spinner
           color="accent"
-          mode="indeterminate">
+          mode="indeterminate"
+          diameter="50">
         </mat-progress-spinner>
       </div>
       <ng-template #elseBlockVariables>
@@ -128,6 +131,7 @@
     </form>
   </mat-step>
   <mat-step>
+    <pre>{{selected | json}}</pre>
     <ng-template matStepLabel>Done</ng-template>
     <p>You Created Function:</p>
     <div>

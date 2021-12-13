@@ -15,5 +15,7 @@ public class VariableDTO {
 //    ComponentImpl component;
 //    MetricTemplateImpl metricTemplate;
     String formula;
+    String type;
+    String componentName;
 
 }

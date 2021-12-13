@@ -28,6 +28,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatCardModule} from "@angular/material/card";
+import {MatSliderModule} from "@angular/material/slider";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -37,38 +40,41 @@ import {MatCardModule} from "@angular/material/card";
     ByTemplateCreatorComponent,
     ByFunctionCreatorComponent,
   ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    MatNativeDateModule,
-    ReactiveFormsModule,
-    MatStepperModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatDividerModule,
-    MatListModule,
-    RouterModule,
-    AppRoutingModule,
-    MatIconModule,
-    MatSelectModule,
-    MatDialogModule,
-    MatRadioModule,
-    HttpClientModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatGridListModule,
-    MatCardModule,
+    imports: [
+        BrowserAnimationsModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        FormsModule,
+        HttpClientModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
+        MatStepperModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatDividerModule,
+        MatListModule,
+        RouterModule,
+        AppRoutingModule,
+        MatIconModule,
+        MatSelectModule,
+        MatDialogModule,
+        MatRadioModule,
+        HttpClientModule,
+        MatSlideToggleModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatGridListModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatSliderModule,
+        MatButtonToggleModule,
+        MatSnackBarModule,
 
-
-  ],
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

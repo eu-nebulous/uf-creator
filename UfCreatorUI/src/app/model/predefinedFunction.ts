@@ -10,6 +10,7 @@ export class PredefinedFunction {
   constantsList: Constant[]
   rawMetricList: RawMetric[]
   compositeMetricList: CompositeMetric[]
+  weight: number
 
   constructor(name: string, src: string, variableList: Variable[], constantsList: Constant[], rawMetricList: RawMetric[],compositeMetricList:CompositeMetric[]) {
     this.name = name;

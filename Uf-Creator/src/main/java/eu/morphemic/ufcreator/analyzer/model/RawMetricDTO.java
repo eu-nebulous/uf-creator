@@ -10,7 +10,6 @@ import lombok.Setter;
 @Setter
 public class RawMetricDTO {
     String name;
-    String component;
 //    MetricTemplateImpl metricTemplate;
 
 }

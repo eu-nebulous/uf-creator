@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.ow2.paasage:melodic-cache:4.0.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-cache/4.0.0-SNAPSHOT/melodic-cache-4.0.0-20211201.161223-125.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-cache/4.0.0-SNAPSHOT/melodic-cache-4.0.0-20211201.161223-125-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-cache/4.0.0-SNAPSHOT/melodic-cache-4.0.0-20211201.161223-125-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
