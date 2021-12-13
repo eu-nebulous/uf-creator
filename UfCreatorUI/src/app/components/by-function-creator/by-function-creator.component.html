@@ -6,14 +6,15 @@
 <mat-stepper
   [orientation]="(stepperOrientation | async)!"
   class="example-stepper" #stepper>
-  <mat-step [stepControl]="firstFormGroup" label="Choose camel model" >
+  <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
 
     <form [formGroup]="firstFormGroup">
       <mat-form-field appearance="fill">
         <mat-label>Select camel model</mat-label>
-        <mat-select #firstStep
-                    required >
-          <mat-option #first *ngFor="let camelModel of camelModelList" [value]="camelModel" (onSelectionChange)="firstStepComplete(first.value)">{{camelModel}}</mat-option>
+        <mat-select #firstStep [disabled]="isCamelModelListLoading"
+                    required>
+          <mat-option #first *ngFor="let camelModel of camelModelList" [value]="camelModel"
+                      (onSelectionChange)="firstStepComplete(first.value)">{{camelModel}}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -49,13 +50,13 @@
       <ng-template #elseBlockVariables>
         <mat-list>
           <mat-label>Variables</mat-label>
-          <mat-list-item *ngFor="let variable of variableList" >{{variable.name}}</mat-list-item>
+          <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
         </mat-list>
       </ng-template>
       <ng-template #elseBlockCompositeMetrics>
         <mat-list>
           <mat-label>Raw Metrics</mat-label>
-          <mat-list-item *ngFor="let rawMetric of rawMetricList" >{{rawMetric.name}}</mat-list-item>
+          <mat-list-item *ngFor="let rawMetric of rawMetricList">{{rawMetric.name}}</mat-list-item>
         </mat-list>
       </ng-template>
       <ng-template #elseBlockRawMetrics>
@@ -77,58 +78,44 @@
         <mat-list-option *ngFor="let predefinedFunction of predefinedFunctions" [value]="predefinedFunction">
           <p>
             <mat-label> {{predefinedFunction.name}}</mat-label>
-<!--            <tr>-->
-<!--              <img src="{{predefinedFunction.src}}">-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--              <img src="{{predefinedFunction.src}}">-->
+            <!--            </tr>-->
           </p>
         </mat-list-option>
       </mat-selection-list>
 
       <p>
-        Options selected: {{predefinedFunctionSelectionList.selectedOptions.selected.length}}
+        Options selected: {{ predefinedFunctionSelectionList.selectedOptions.selected.length}}
       </p>
       <div>
-        <button color="primary" mat-button (click)="openDialog(predefinedFunctionSelectionList.selectedOptions.selected,stepper)">Next</button>
+
+        <button color="primary" mat-button
+                (click)="openDialog(predefinedFunctionSelectionList.selectedOptions.selected,stepper)">Next
+        </button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="forthFormGroup" label="Define weights">
-    <form [formGroup]="forthFormGroup">
+    <ng-container  *ngFor="let selectedFunction of selected,let index = index; trackBy:trackByIndex;">
       <p>
-        <mat-form-field appearance="fill">
-          <input formControlName="forthCtrl" matInput placeholder="Finish simulation on time" required>
-        </mat-form-field>
+        <mat-label>{{selectedFunction.name}}</mat-label>
+        <mat-slider
+          #mySlider
+          (slideend)="fillSliderValues(mySlider.value,index)"
+          (pointerup)="fillSliderValues(mySlider.value,index)"
+          thumbLabel
+          [displayWith]="formatLabel"
+          tickInterval="1000"
+          step="0.1"
+          min="0"
+          max="1"
+          aria-label="units"></mat-slider>
       </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <input formControlName="forthCtrl" matInput placeholder="Expected response time " required>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <input formControlName="forthCtrl" matInput placeholder="Cost per user" required>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <input formControlName="forthCtrl" matInput placeholder="Cores cost utility" required>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <input formControlName="forthCtrl" matInput placeholder="CPU usage" required>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <input formControlName="forthCtrl" matInput placeholder="RAM usage" required>
-        </mat-form-field>
-      </p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button color="primary" mat-button matStepperNext>Next</button>
-      </div>
-    </form>
+  </ng-container>
+    <mat-label>Current weights sum: {{this.sum}}</mat-label>
+    <button mat-button (click)="validateValuesFromSliders(stepper)">Next</button>
+
   </mat-step>
   <mat-step>
     <pre>{{selected | json}}</pre>
@@ -136,7 +123,7 @@
     <p>You Created Function:</p>
     <div>
       <button color="secondary" mat-button matStepperPrevious>Back</button>
-      <button color="primary" mat-button matStepperPrevious>Save to Camel Model</button>
+      <button color="primary" mat-button (click)="onCreateFunctionClick(selected)">Save to Camel Model</button>
     </div>
   </mat-step>
 </mat-stepper>

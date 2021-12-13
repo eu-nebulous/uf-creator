@@ -178,4 +178,60 @@ export class ByFunctionCreatorComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  formatLabel(value: number) {
+    return value;
+  }
+
+  foo2(foo: any) {
+    console.log(foo);
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
+
+  saveSelected(selections: MatListOption[]) {
+    selections.forEach(x => {
+      this.selected.push(x.value);
+    });
+    console.log(this.selected);
+  }
+
+  fillSliderValues(value: any, index: number) {
+    this.sliderValues[index] = value;
+  }
+
+  validateValuesFromSliders(stepper: any) {
+    this.sum = 0;
+    this.sliderValues.forEach(x => {
+      this.sum += x;
+    })
+
+    if (this.sum == 1) {
+      this._snackBar.open("In a moment you'll see created utility function", "Close", {duration: 5 * 1000,});
+      for (let i=0;i<this.selected.length;i++){
+        this.selected[i].weight=this.sliderValues[i];
+      }
+      stepper.next();
+
+    } else {
+      this._snackBar.open("Weights should sum up to 1!", "Close", {duration: 5 * 1000,});
+    }
+  }
+
+  onCreateFunctionClick(predefinedFunctions: any) {
+    console.log('Create function request from by function creator component');
+    this.isSendingRequest = true;
+    this._snackBar.open("Your function is being created", "Close", {duration: 5 * 1000,});
+    this.functionService.createFunction(this.predefinedFunctions).subscribe(value => {
+        console.log(`Successful create function request request`);
+        this.isSendingRequest = false;
+      },
+      error1 => {
+        console.log(`Error by sending deployment request, message: ${error1.error.message}`);
+        this._snackBar.open(`${error1.error.message}`, 'Close', {duration: 1000000});
+        this.isSendingRequest = false;
+      });
+  }
 }

@@ -1,6 +1,10 @@
 package eu.morphemic.ufcreator.function_creator.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.morphemic.ufcreator.function_creator.controller.request.CreateFunctionRequest;
+import eu.morphemic.ufcreator.function_creator.function.PredefinedFunction;
+import eu.morphemic.ufcreator.function_creator.model.PredefinedFunctionDTO;
 import eu.morphemic.ufcreator.function_creator.service.UtilityFunctionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,17 +23,13 @@ public class utilityFunctionController {
 
     UtilityFunctionService utilityFunctionService;
 
-    @GetMapping("/availableFunctions")
+    @PostMapping(value = "/function")
     @ResponseStatus(HttpStatus.OK)
-    public List<String> getAllAvailableFunctions(@RequestParam("variableDto") List<String> listOfVariables){
-        log.info("GET request for all available predefined functions");
-        return utilityFunctionService.getAvailableFunctions(listOfVariables);
+    public String createUtilityFunction(@RequestBody String createFunctionRequest) throws JsonProcessingException {
+        ObjectMapper om = new ObjectMapper();
+        log.info(createFunctionRequest);
+      List<PredefinedFunctionDTO> predefinedFunctions = Arrays.asList(om.readValue(createFunctionRequest,PredefinedFunctionDTO[].class));
+      log.info("{}",predefinedFunctions);
+      return "";
     }
-
-    @PostMapping("/")
-    @ResponseStatus(HttpStatus.OK)
-    public List<String> createUtilityFunction(@RequestBody CreateFunctionRequest createFunctionRequest){
-        return utilityFunctionService.createUtilityFunction(createFunctionRequest);
-    }
-
 }

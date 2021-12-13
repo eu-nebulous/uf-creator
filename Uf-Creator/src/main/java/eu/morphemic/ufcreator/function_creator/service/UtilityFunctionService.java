@@ -6,7 +6,5 @@ import java.util.List;
 
 public interface UtilityFunctionService {
 
-     List<String> getAvailableFunctions(List<String> variableDtoList);
-
-//     void createUtilityFunction(CreateFunctionRequest createFunctionRequest);
+     String createUtilityFunction(CreateFunctionRequest createFunctionRequest);
 }

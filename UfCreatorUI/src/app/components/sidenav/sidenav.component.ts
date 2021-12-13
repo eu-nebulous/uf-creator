@@ -20,6 +20,7 @@ interface Animal {
 })
 export class SidenavComponent{
   options: FormGroup;
+
   hideRequiredControl = new FormControl(false);
   floatLabelControl = new FormControl('auto');
   constants: Constant[];
@@ -32,7 +33,7 @@ export class SidenavComponent{
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,fb: FormBuilder) {
-
+    this.variablesFromFunctionCreator = this.data.selectedOptions.variables;
     this.constants = this.data.selectedOptions.constants;
     this.dataFromFunctionCreator=this.data.selectedOptions;
     console.log(this.dataFromFunctionCreator);

@@ -13,16 +13,26 @@ const httpOptions = {
   providedIn: 'root'
 })
 
-
 export class FunctionService {
 
-  apiUrl = 'http://localhost:8080/utility-function';
+  apiUrl = 'http://localhost:8080/utility-function/';
 
   constructor(private http: HttpClient) {
-  }
 
-  getAvailableFunctions(variableList:string[]): Observable<any>{
-    httpOptions.params.append('variableDto', JSON.stringify(variableList));
-    return this.http.get(`${this.apiUrl}/availableFunctions`, httpOptions);
+  }
+  createFunction(createFunctionRequest: any): Observable<any> {
+    console.log(createFunctionRequest);
+    const requestUrl = this.apiUrl + 'function';
+    const httpDeploymentProcessHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.http.post(requestUrl, JSON.stringify(createFunctionRequest), httpDeploymentProcessHeader).pipe(
+      tap(() => console.log(
+          `Request for create function sent`
+        ),
+        e => console.log(`Error by creating function:`, e)
+      ));
   }
 }
