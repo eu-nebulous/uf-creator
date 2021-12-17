@@ -20,5 +20,6 @@ public abstract class PredefinedFunction {
     public List<ConstantsList> constantsList;
     public List<RawMetricList> rawMetricList;
     public List<CompositeMetricList> compositeMetricList;
+    public double weight;
 
 }

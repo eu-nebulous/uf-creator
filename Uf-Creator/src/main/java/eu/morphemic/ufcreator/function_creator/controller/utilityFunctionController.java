@@ -8,7 +8,7 @@ import eu.morphemic.ufcreator.function_creator.model.PredefinedFunctionDTO;
 import eu.morphemic.ufcreator.function_creator.service.UtilityFunctionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +25,14 @@ public class utilityFunctionController {
 
     @PostMapping(value = "/function")
     @ResponseStatus(HttpStatus.OK)
+
     public String createUtilityFunction(@RequestBody String createFunctionRequest) throws JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
-        log.info(createFunctionRequest);
-      List<PredefinedFunctionDTO> predefinedFunctions = Arrays.asList(om.readValue(createFunctionRequest,PredefinedFunctionDTO[].class));
-      log.info("{}",predefinedFunctions);
-      return "";
+        log.info("dev log createFunctionRequest: {}", createFunctionRequest);
+        List<PredefinedFunctionDTO> predefinedFunctions = Arrays.asList(om.readValue(createFunctionRequest, PredefinedFunctionDTO[].class));
+        log.info("dev log predefinedFunction dto: {}", predefinedFunctions);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("utilityFunction", utilityFunctionService.createUtilityFunction(predefinedFunctions));
+        return jsonObject.toString();
     }
 }

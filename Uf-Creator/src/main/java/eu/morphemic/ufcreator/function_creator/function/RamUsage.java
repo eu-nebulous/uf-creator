@@ -7,9 +7,10 @@ import eu.morphemic.ufcreator.function_creator.model.VariableList;
 
 import java.util.List;
 
-public class RamUsage extends PredefinedFunction{
+public class RamUsage extends PredefinedFunction {
 
-    public RamUsage(String functionName, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList) {
-        super(functionName, variableList, constantsList, rawMetricList, compositeMetricList);
+
+    public RamUsage(String name, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList, double weight) {
+        super(name, variableList, constantsList, rawMetricList, compositeMetricList, weight);
     }
 }

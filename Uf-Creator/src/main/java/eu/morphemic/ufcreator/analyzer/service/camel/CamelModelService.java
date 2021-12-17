@@ -34,4 +34,6 @@ public interface CamelModelService {
     List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName);
 
     List<VariableDTO> getVariablesFromCDO(String resourceName);
+
+    void saveUtility(String resourceName, String formula);
 }

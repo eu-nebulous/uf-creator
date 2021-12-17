@@ -7,20 +7,22 @@
       <p>
         <mat-label>Variables:</mat-label>
       </p>
-        <ng-container *ngFor="let variable of dataFromFunctionCreator[index].variableList,let index2 = index; trackBy:trackByIndex;">
-            <mat-form-field appearance="fill">
-              <mat-label>{{variable.name}}</mat-label>
-              <mat-select [(ngModel)]="dataFromFunctionCreator[index].variableList[index2].value">
-                <ng-container *ngFor="let variableFromCamel of data.variables,let index3 = index; trackBy:trackByIndex;" >
-                  <ng-container  *ngIf="dataFromFunctionCreator[index].variableList[index2].type==data.variables[index3].type">
-                    <mat-option [value]="data.variables[index3].name" >
-                      {{data.variables[index3].name}}
-                    </mat-option>
-                  </ng-container>
-                </ng-container>
-              </mat-select>
-            </mat-form-field>
-        </ng-container>
+      <ng-container
+        *ngFor="let variable of dataFromFunctionCreator[index].variableList,let index2 = index; trackBy:trackByIndex;">
+        <mat-form-field appearance="fill">
+          <mat-label>{{variable.name}}</mat-label>
+          <mat-select [(ngModel)]="dataFromFunctionCreator[index].variableList[index2].value">
+            <ng-container *ngFor="let variableFromCamel of data.variables,let index3 = index; trackBy:trackByIndex;">
+              <ng-container
+                *ngIf="dataFromFunctionCreator[index].variableList[index2].type==data.variables[index3].type">
+                <mat-option [value]="data.variables[index3].name">
+                  {{data.variables[index3].name}}
+                </mat-option>
+              </ng-container>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
 
 
       <p>
@@ -28,56 +30,59 @@
       </p>
       <div class="example-wrapper">
 
-      <mat-list-item *ngFor="let rawMetric of dataFromFunctionCreator[index].rawMetricList,let index2 = index; trackBy:trackByIndex;">
+        <mat-list-item
+          *ngFor="let rawMetric of dataFromFunctionCreator[index].rawMetricList,let index2 = index; trackBy:trackByIndex;">
 
           <mat-form-field appearance="fill">
             <mat-label>{{rawMetric.name}}</mat-label>
             <mat-select [(ngModel)]="dataFromFunctionCreator[index].rawMetricList[index2].value">
-              <ng-container *ngFor="let rawMetricFromCamel of data.rawMetricList,let index3 = index; trackBy:trackByIndex;">
-                  <mat-option [value]="data.rawMetricList[index3].name" >
-                    {{data.rawMetricList[index3].name}}
-                  </mat-option>
+              <ng-container
+                *ngFor="let rawMetricFromCamel of data.rawMetricList,let index3 = index; trackBy:trackByIndex;">
+                <mat-option [value]="data.rawMetricList[index3].name">
+                  {{data.rawMetricList[index3].name}}
+                </mat-option>
               </ng-container>
             </mat-select>
           </mat-form-field>
-      </mat-list-item>
+        </mat-list-item>
       </div>
       <p>
         <mat-label>Composite Metrics:</mat-label>
       </p>
       <div class="example-wrapper">
 
-        <mat-list-item *ngFor="let compositeMetric of dataFromFunctionCreator[index].compositeMetricList,let index2 = index; trackBy:trackByIndex;">
+        <mat-list-item
+          *ngFor="let compositeMetric of dataFromFunctionCreator[index].compositeMetricList,let index2 = index; trackBy:trackByIndex;">
 
-            <mat-form-field appearance="fill">
-              <mat-label>{{compositeMetric.name}}</mat-label>
-              <mat-select [(ngModel)]="dataFromFunctionCreator[index].compositeMetricList[index2].value">
-                <ng-container *ngFor="let compositeMetricFromCamel of data.compositeMetricList,let index3 = index; trackBy:trackByIndex;" >
-                  <mat-option [value]="data.compositeMetricList[index3].name">
-                    {{data.compositeMetricList[index3].name}}
-                  </mat-option>
-                </ng-container>
-              </mat-select>
-            </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>{{compositeMetric.name}}</mat-label>
+            <mat-select [(ngModel)]="dataFromFunctionCreator[index].compositeMetricList[index2].value">
+              <ng-container
+                *ngFor="let compositeMetricFromCamel of data.compositeMetricList,let index3 = index; trackBy:trackByIndex;">
+                <mat-option [value]="data.compositeMetricList[index3].name">
+                  {{data.compositeMetricList[index3].name}}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
         </mat-list-item>
       </div>
-        <p>
-          <mat-label>Constants:</mat-label>
-        </p>
+      <p>
+        <mat-label>Constants:</mat-label>
+      </p>
 
-        <div class="example-container">
-          <mat-form-field appearance="fill"
-                          *ngFor="let constant of dataFromFunctionCreator[index].constantsList; let index2 = index; trackBy:trackByIndex;">
-            <mat-label>{{constant.name}}</mat-label>
-            <input matInput  [(ngModel)]="dataFromFunctionCreator[index].constantsList[index2].value" />
-          </mat-form-field>
-        </div>
+      <div class="example-container">
+        <mat-form-field *ngFor="let constant of dataFromFunctionCreator[index].constantsList; let index2 = index; trackBy:trackByIndex;"
+                        appearance="fill">
+          <mat-label>{{constant.name}}</mat-label>
+          <input [(ngModel)]="dataFromFunctionCreator[index].constantsList[index2].value" matInput/>
+        </mat-form-field>
+      </div>
 
     </mat-card>
   </ng-container>
-  <button (click)="updateConstants(dataFromFunctionCreator)"></button>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Next</button>
+  <button [mat-dialog-close]="true" cdkFocusInitial mat-button>Next</button>
 </mat-dialog-actions>
 

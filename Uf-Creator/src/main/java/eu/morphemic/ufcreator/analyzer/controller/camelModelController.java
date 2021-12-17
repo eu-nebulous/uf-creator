@@ -1,9 +1,5 @@
 package eu.morphemic.ufcreator.analyzer.controller;
 
-import camel.core.CamelModel;
-import camel.metric.CompositeMetric;
-import camel.metric.RawMetric;
-import camel.metric.impl.MetricVariableImpl;
 import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
@@ -15,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -27,7 +22,7 @@ public class camelModelController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public List<String> getAllCamelModels(){
+    public List<String> getAllCamelModels() {
         log.info("GET request for all uploaded camel models");
         return camelModelService.getCamelModelNames();
     }

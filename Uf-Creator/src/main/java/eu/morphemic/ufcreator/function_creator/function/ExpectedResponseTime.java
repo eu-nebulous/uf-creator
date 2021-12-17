@@ -7,7 +7,6 @@ import eu.morphemic.ufcreator.function_creator.model.VariableList;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -16,7 +15,7 @@ import java.util.List;
 public class ExpectedResponseTime extends PredefinedFunction {
 
 
-    public ExpectedResponseTime(String functionName, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList) {
-        super(functionName, variableList, constantsList, rawMetricList, compositeMetricList);
+    public ExpectedResponseTime(String name, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList, double weight) {
+        super(name, variableList, constantsList, rawMetricList, compositeMetricList, weight);
     }
 }

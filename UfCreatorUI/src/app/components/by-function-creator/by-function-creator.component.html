@@ -4,8 +4,8 @@
 </ng-container>
 
 <mat-stepper
-  [orientation]="(stepperOrientation | async)!"
-  class="example-stepper" #stepper>
+  #stepper
+  [orientation]="(stepperOrientation | async)!" class="example-stepper">
   <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
 
     <form [formGroup]="firstFormGroup">
@@ -13,8 +13,9 @@
         <mat-label>Select camel model</mat-label>
         <mat-select #firstStep [disabled]="isCamelModelListLoading"
                     required>
-          <mat-option #first *ngFor="let camelModel of camelModelList" [value]="camelModel"
-                      (onSelectionChange)="firstStepComplete(first.value)">{{camelModel}}</mat-option>
+          <mat-option #first (onSelectionChange)="firstStepComplete(first.value)"
+                      *ngFor="let camelModel of camelModelList"
+                      [value]="camelModel">{{camelModel}}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -23,8 +24,8 @@
         <mat-label>Variables</mat-label>
         <mat-progress-spinner
           color="accent"
-          mode="indeterminate"
-        diameter="50">
+          diameter="50"
+          mode="indeterminate">
         </mat-progress-spinner>
       </div>
 
@@ -33,8 +34,8 @@
         <mat-label>Composite Metrics</mat-label>
         <mat-progress-spinner
           color="accent"
-          mode="indeterminate"
-          diameter="50">
+          diameter="50"
+          mode="indeterminate">
         </mat-progress-spinner>
       </div>
 
@@ -43,8 +44,8 @@
         <mat-label>Raw Metrics</mat-label>
         <mat-progress-spinner
           color="accent"
-          mode="indeterminate"
-          diameter="50">
+          diameter="50"
+          mode="indeterminate">
         </mat-progress-spinner>
       </div>
       <ng-template #elseBlockVariables>
@@ -74,7 +75,8 @@
   <mat-step [stepControl]="thirdFormGroup" label="Choose function">
     <form [formGroup]="thirdFormGroup">
       <label id="example-radio-group-label">Pick function:</label>
-      <mat-selection-list #predefinedFunctionSelectionList>
+      <mat-selection-list #predefinedFunctionSelectionList
+      >
         <mat-list-option *ngFor="let predefinedFunction of predefinedFunctions" [value]="predefinedFunction">
           <p>
             <mat-label> {{predefinedFunction.name}}</mat-label>
@@ -90,40 +92,40 @@
       </p>
       <div>
 
-        <button color="primary" mat-button
-                (click)="openDialog(predefinedFunctionSelectionList.selectedOptions.selected,stepper)">Next
+        <button (click)="openDialog(predefinedFunctionSelectionList.selectedOptions.selected,stepper)" color="primary"
+                mat-button>Next
         </button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="forthFormGroup" label="Define weights">
-    <ng-container  *ngFor="let selectedFunction of selected,let index = index; trackBy:trackByIndex;">
+    <ng-container *ngFor="let selectedFunction of selected,let index = index; trackBy:trackByIndex;">
       <p>
         <mat-label>{{selectedFunction.name}}</mat-label>
         <mat-slider
           #mySlider
-          (slideend)="fillSliderValues(mySlider.value,index)"
           (pointerup)="fillSliderValues(mySlider.value,index)"
-          thumbLabel
+          (slideend)="fillSliderValues(mySlider.value,index)"
           [displayWith]="formatLabel"
-          tickInterval="1000"
-          step="0.1"
-          min="0"
+          aria-label="units"
           max="1"
-          aria-label="units"></mat-slider>
+          min="0"
+          step="0.1"
+          thumbLabel
+          tickInterval="1000"></mat-slider>
       </p>
-  </ng-container>
+    </ng-container>
     <mat-label>Current weights sum: {{this.sum}}</mat-label>
-    <button mat-button (click)="validateValuesFromSliders(stepper)">Next</button>
+    <button (click)="validateValuesFromSliders(stepper)" mat-button>Next</button>
 
   </mat-step>
   <mat-step>
-    <pre>{{selected | json}}</pre>
     <ng-template matStepLabel>Done</ng-template>
     <p>You Created Function:</p>
+    {{this.utilityFunction}}
     <div>
       <button color="secondary" mat-button matStepperPrevious>Back</button>
-      <button color="primary" mat-button (click)="onCreateFunctionClick(selected)">Save to Camel Model</button>
+      <button (click)="onCreateFunctionClick(selected)" color="primary" mat-button>Save to Camel Model</button>
     </div>
   </mat-step>
 </mat-stepper>

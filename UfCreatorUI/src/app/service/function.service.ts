@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
@@ -20,19 +20,20 @@ export class FunctionService {
   constructor(private http: HttpClient) {
 
   }
+
   createFunction(createFunctionRequest: any): Observable<any> {
     console.log(createFunctionRequest);
     const requestUrl = this.apiUrl + 'function';
     const httpDeploymentProcessHeader = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
     };
-    return this.http.post(requestUrl, JSON.stringify(createFunctionRequest), httpDeploymentProcessHeader).pipe(
-      tap(() => console.log(
-          `Request for create function sent`
-        ),
-        e => console.log(`Error by creating function:`, e)
-      ));
+    return this.http.post<any>(requestUrl, JSON.stringify(createFunctionRequest), httpDeploymentProcessHeader).pipe(
+      tap((response: any) => {
+          console.log(`utility function request OK`);
+        },
+        e => console.log('Error by creating utility function', e)));
+    ;
   }
 }

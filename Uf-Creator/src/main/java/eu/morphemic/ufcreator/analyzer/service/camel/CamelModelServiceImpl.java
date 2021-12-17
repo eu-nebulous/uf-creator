@@ -70,6 +70,16 @@ public class CamelModelServiceImpl implements CamelModelService {
 
     }
 
+    public void saveUtilityFunction(CamelModel camelModel, String formula) {
+        MetricVariableImpl utility = (MetricVariableImpl) getAllMetrics(camelModel)
+                .stream()
+                .filter(metricModel -> metricModel instanceof MetricVariableImpl)
+                .filter(x -> x.getName().equals("Utility"))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(""));
+        utility.setFormula(formula);
+    }
+
     @Override
     public List<VariableDTO> getVariables(CamelModel camelModel) {
 
@@ -148,6 +158,17 @@ public class CamelModelServiceImpl implements CamelModelService {
         cdoSessionX.closeTransaction(cdoTransaction);
         cdoSessionX.closeSession();
         return VariableDTOs;
+    }
+
+    public void saveUtility(String resourceName, String formula) {
+        CDOSessionX cdoSessionX = cdoServerApi.openSession();
+        CDOTransaction cdoTransaction = cdoServerApi.openTransaction(cdoSessionX);
+        log.info("Loading camel model {}", resourceName);
+        CamelModel camelModel;
+        camelModel = cdoService.getCamelModel(resourceName, cdoTransaction);
+        this.saveUtilityFunction(camelModel, formula);
+        cdoSessionX.closeTransaction(cdoTransaction);
+        cdoSessionX.closeSession();
     }
 //    public static String getAnnotationOfRawMetric(RawMetricImpl rawMetric) {
 //        EList<MmsObject> annotations = rawMetric.getMetricTemplate().getAttribute().getAnnotations();

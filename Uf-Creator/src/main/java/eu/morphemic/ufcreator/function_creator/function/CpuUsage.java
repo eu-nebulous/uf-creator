@@ -7,15 +7,15 @@ import eu.morphemic.ufcreator.function_creator.model.VariableList;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
 @Setter
 
-public class CpuUsage extends PredefinedFunction{
+public class CpuUsage extends PredefinedFunction {
 
-    public CpuUsage(String functionName, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList) {
-        super(functionName, variableList, constantsList, rawMetricList, compositeMetricList);
+
+    public CpuUsage(String name, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList, double weight) {
+        super(name, variableList, constantsList, rawMetricList, compositeMetricList, weight);
     }
 }

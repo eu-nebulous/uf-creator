@@ -1,17 +1,20 @@
 package eu.morphemic.ufcreator.function_creator;
 
 import eu.melodic.upperware.utilitygenerator.cdo.cp_model.DTO.VariableDTO;
+import eu.morphemic.ufcreator.function_creator.function.PredefinedFunction;
 import eu.paasage.upperware.metamodel.cp.VariableType;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static eu.morphemic.ufcreator.function_creator.FormulaProvider.*;
 
 @AllArgsConstructor
+@Slf4j
 public class PredefinedFunctionProvider {
 
     public static String getTemplate(Collection<VariableDTO> variablesFromCamelModel, List<Map.Entry<PredefinedUtilityFunctions, Double>> dimensions) {
@@ -34,9 +37,11 @@ public class PredefinedFunctionProvider {
 
             case CoreCostUtility:
 
-            case CostPerUser:
+            case "CoreCostUtility":
+
+            case "CostPerUser":
         }
-        throw new RuntimeException("function type " + type.name() + " is not supported yet");
+        throw new RuntimeException("function type " + predefinedFunction.getName() + " is not supported yet");
     }
 
     private static VariableType templateToVariableType(PredefinedUtilityFunctions type) {
@@ -65,7 +70,8 @@ public class PredefinedFunctionProvider {
         return multiply(getComponentsCount(variablesFromConstraintProblem).toString(), String.join("+", distances));
     }
 
-    private static String getMinMaxPenalty(Collection<VariableDTO> variablesFromConstraintProblem, VariableType type) {
+    private static String getMinMaxPenalty(Collection<VariableDTO> variablesFromConstraintProblem, VariableType
+            type) {
         String maxOfType = getMax(getVariablesOfGivenType(type, variablesFromConstraintProblem));
         String minOfType = getMin(getVariablesOfGivenType(type, variablesFromConstraintProblem));
         return normalizedMinusArcTangens(minus(maxOfType, minOfType));

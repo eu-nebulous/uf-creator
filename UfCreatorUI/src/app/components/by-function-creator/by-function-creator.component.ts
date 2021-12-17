@@ -16,8 +16,7 @@ import {MatStepper} from "@angular/material/stepper";
 import {Variable} from "../../model/Variable";
 import {Constant} from "../../model/Constant";
 import {MatListOption} from "@angular/material/list";
-import {CommonModule} from "@angular/common";
-import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {FunctionService} from "../../service/function.service";
 
 
@@ -45,7 +44,19 @@ export class ByFunctionCreatorComponent implements OnInit {
   sliderValues = new Array<number>();
   sum: number;
   isSendingRequest = false;
-
+  utilityFunction: any;
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  thirdFormGroup = this._formBuilder.group({
+    thirdCtrl: ['', Validators.required],
+  });
+  forthFormGroup = this._formBuilder.group({
+    forthCtrl: ['', Validators.required],
+  });
 
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private functionService: FunctionService,
               private camelModelService: CamelService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
@@ -66,19 +77,6 @@ export class ByFunctionCreatorComponent implements OnInit {
     this.predefinedFunctions = this.getPredefinedFunctions();
     console.log(this.selectedOptions);
   }
-
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  thirdFormGroup = this._formBuilder.group({
-    thirdCtrl: ['', Validators.required],
-  });
-  forthFormGroup = this._formBuilder.group({
-    forthCtrl: ['', Validators.required],
-  });
 
   public getRawMetrics(selectedCamelModel: string) {
     this.camelModelService.getRawMetricList(this.selectedCamelModel).subscribe(rawMetricsResponse => {
@@ -102,18 +100,18 @@ export class ByFunctionCreatorComponent implements OnInit {
     this.camelModelService.getVariableMetricList(firstStepValue).subscribe(
       (response: any) => {
         this.isVariablesLoading = false;
-        this.isCompositeMetricsLoading = false;
-        this.isRawMetricsLoading = false;
+        this.isCompositeMetricsLoading = true;
+        this.isRawMetricsLoading = true;
         this.variableList = response;
-        this.compositeMetricList = response;
-        this.rawMetricList = response;
         console.log(response)
         this.camelModelService.getCompositeMetricList(firstStepValue).subscribe(
           (response: any) => {
+            this.isCompositeMetricsLoading = false;
             this.compositeMetricList = response;
             console.log(response)
             this.camelModelService.getRawMetricList(firstStepValue).subscribe(
               (response: any) => {
+                this.isRawMetricsLoading = false;
                 this.rawMetricList = response;
                 console.log(response)
               },
@@ -144,8 +142,8 @@ export class ByFunctionCreatorComponent implements OnInit {
     var compositeMetricsList = [new CompositeMetric("Estimated Remaining Time", "", "", "")];
     var compositeMetricsList2 = [new CompositeMetric("Estimated Remaining Time", "", "", "")];
 
-    var simulationOnTime = new PredefinedFunction("Finish simulation on time function", "../../../assets/img/Udeadline.png", simulationOnTimeVariables, constantsList, rawMetricsList, compositeMetricsList);
-    var secondFunction = new PredefinedFunction("Second function", "../../../assets/img/Udeadline.png", simulationOnTimeVariables2, constantsList1, rawMetricsList2, compositeMetricsList2);
+    var simulationOnTime = new PredefinedFunction("FinishSimulationOnTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables, constantsList, rawMetricsList, compositeMetricsList);
+    var secondFunction = new PredefinedFunction("ExpectedResponseTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables2, constantsList1, rawMetricsList2, compositeMetricsList2);
     // var ramUsage=new PredefinedFunction("RAM usage function","../../../assets/img/Uram.png");
     // var locality=new PredefinedFunction("locality utility function","../../../assets/img/Ulocality.png");
     // var costPerUser=new PredefinedFunction("Cost per user function","../../../assets/img/Ucostuser.png");
@@ -210,8 +208,8 @@ export class ByFunctionCreatorComponent implements OnInit {
 
     if (this.sum == 1) {
       this._snackBar.open("In a moment you'll see created utility function", "Close", {duration: 5 * 1000,});
-      for (let i=0;i<this.selected.length;i++){
-        this.selected[i].weight=this.sliderValues[i];
+      for (let i = 0; i < this.selected.length; i++) {
+        this.selected[i].weight = this.sliderValues[i];
       }
       stepper.next();
 

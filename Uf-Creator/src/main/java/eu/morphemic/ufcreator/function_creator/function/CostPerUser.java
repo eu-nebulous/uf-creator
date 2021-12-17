@@ -7,9 +7,10 @@ import eu.morphemic.ufcreator.function_creator.model.VariableList;
 
 import java.util.List;
 
-public class CostPerUser extends PredefinedFunction{
+public class CostPerUser extends PredefinedFunction {
 
-    public CostPerUser(String functionName, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList) {
-        super(functionName, variableList, constantsList, rawMetricList, compositeMetricList);
+
+    public CostPerUser(String name, List<VariableList> variableList, List<ConstantsList> constantsList, List<RawMetricList> rawMetricList, List<CompositeMetricList> compositeMetricList, double weight) {
+        super(name, variableList, constantsList, rawMetricList, compositeMetricList, weight);
     }
 }
