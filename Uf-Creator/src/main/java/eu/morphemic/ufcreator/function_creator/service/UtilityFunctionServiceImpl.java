@@ -14,8 +14,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UtilityFunctionServiceImpl implements UtilityFunctionService {
 
-    public String createUtilityFunction(CreateFunctionRequest createFunctionRequest) {
-//        return PredefinedFunctionProvider.getTemplate(createFunctionRequest);
-        return "";
+    public List<PredefinedFunction> createPredefinedFunctionList(List<PredefinedFunctionDTO> predefinedFunctionsDTOList) {
+        return predefinedFunctionsDTOList
+                .stream()
+                .map(FunctionFactory::createFunctionObj)
+                .collect(Collectors.toList());
+    }
+
+    public String createUtilityFunction(List<PredefinedFunctionDTO> predefinedFunctionDTOList) {
+        List<PredefinedFunction> predefinedFunctions = createPredefinedFunctionList(predefinedFunctionDTOList);
+        log.info("{}", predefinedFunctions);
+        return PredefinedFunctionProvider.getTemplate(predefinedFunctions);
     }
 }

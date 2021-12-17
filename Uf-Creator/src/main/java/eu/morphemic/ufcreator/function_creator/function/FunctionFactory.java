@@ -4,7 +4,7 @@ import eu.morphemic.ufcreator.function_creator.model.PredefinedFunctionDTO;
 
 public class FunctionFactory {
 
-    public static PredefinedFunction createFunctionObj(PredefinedFunction function) {
+    public static PredefinedFunction createFunctionObj(PredefinedFunctionDTO function) {
 
         switch (function.getName()) {
             case "CoreCostUtility":

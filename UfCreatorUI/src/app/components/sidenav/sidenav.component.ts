@@ -16,7 +16,6 @@ export class SidenavComponent {
   floatLabelControl = new FormControl('auto');
   constants: Constant[];
   variables: Variable[];
-  selectedVariables: Variable[]
   selectedValue: string;
   firstName = new FormControl();
   dataFromFunctionCreator: any;

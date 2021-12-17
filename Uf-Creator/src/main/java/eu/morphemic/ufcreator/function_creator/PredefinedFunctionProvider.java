@@ -17,47 +17,33 @@ import static eu.morphemic.ufcreator.function_creator.FormulaProvider.*;
 @Slf4j
 public class PredefinedFunctionProvider {
 
-    public static String getTemplate(Collection<VariableDTO> variablesFromCamelModel, List<Map.Entry<PredefinedUtilityFunctions, Double>> dimensions) {
-        return getSum(dimensions.stream().map((template) ->
-                multiply(template.getValue().toString(), getPredefinedFunctionFormula(variablesFromCamelModel, template.getKey()))
-        ).collect(Collectors.toList()));
+    public static String getTemplate(List<PredefinedFunction> predefinedFunctions) {
+        List<String> utilityFunction = new ArrayList<>();
+        for (PredefinedFunction predefinedfunction : predefinedFunctions) {
+            log.info("{}", predefinedfunction);
+            String formula = getPredefinedFunctionFormula(predefinedfunction);
+            utilityFunction.add(multiply(formula, String.valueOf(predefinedfunction.weight)));
+        }
+        return getSum(utilityFunction);
     }
 
-    private static String getPredefinedFunctionFormula(Collection<VariableDTO> variablesFromCamelModel, PredefinedUtilityFunctions type) {
-        switch (type) {
-            case ExpectedResponseTime:
+    private static String getPredefinedFunctionFormula(PredefinedFunction predefinedFunction) {
+        switch (predefinedFunction.getName()) {
+            case "ExpectedResponseTime":
+                return "2";
+            case "FinishSimulationOnTime":
+                return "1";
+            case "LocalityUtility":
 
-            case FinishSimulationOnTime:
+            case "RamUsage":
 
-            case LocalityUtility:
-
-            case RamUsage:
-
-            case CpuUsage:
-
-            case CoreCostUtility:
+            case "CpuUsage":
 
             case "CoreCostUtility":
 
             case "CostPerUser":
         }
         throw new RuntimeException("function type " + predefinedFunction.getName() + " is not supported yet");
-    }
-
-    private static VariableType templateToVariableType(PredefinedUtilityFunctions type) {
-        switch (type) {
-            // case ExpectedResponseTime:
-            // case FinishSimulationOnTime:
-            case LocalityUtility:
-                return VariableType.LOCATION;
-            case RamUsage:
-                return VariableType.RAM;
-            case CpuUsage:
-                return VariableType.CPU;
-            case CoreCostUtility:
-                // case CostPerUser:
-        }
-        throw new RuntimeException("Can't covert template " + type.name() + " to variable type");
     }
 
     private static String getOnlyCostUtility(Collection<VariableDTO> variablesFromConstraintProblem) {

@@ -2,8 +2,6 @@ package eu.morphemic.ufcreator.function_creator.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.morphemic.ufcreator.function_creator.controller.request.CreateFunctionRequest;
-import eu.morphemic.ufcreator.function_creator.function.PredefinedFunction;
 import eu.morphemic.ufcreator.function_creator.model.PredefinedFunctionDTO;
 import eu.morphemic.ufcreator.function_creator.service.UtilityFunctionService;
 import lombok.AllArgsConstructor;

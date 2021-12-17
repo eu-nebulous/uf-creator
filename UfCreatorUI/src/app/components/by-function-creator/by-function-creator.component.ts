@@ -190,10 +190,7 @@ export class ByFunctionCreatorComponent implements OnInit {
   }
 
   saveSelected(selections: MatListOption[]) {
-    selections.forEach(x => {
-      this.selected.push(x.value);
-    });
-    console.log(this.selected);
+    this.selected = selections.map(o => o.value);
   }
 
   fillSliderValues(value: any, index: number) {
@@ -223,6 +220,7 @@ export class ByFunctionCreatorComponent implements OnInit {
     this.isSendingRequest = true;
     this._snackBar.open("Your function is being created", "Close", {duration: 5 * 1000,});
     this.functionService.createFunction(this.predefinedFunctions).subscribe(value => {
+        this.utilityFunction = value.utilityFunction;
         console.log(`Successful create function request request`);
         this.isSendingRequest = false;
       },

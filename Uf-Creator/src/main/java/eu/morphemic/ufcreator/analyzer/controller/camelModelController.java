@@ -48,9 +48,9 @@ public class camelModelController {
         return camelModelService.getVariablesFromCDO(resourceName);
     }
 
-    @PostMapping("/map")
+    @PostMapping("/{resourceName}/saveUtility/{formula}")
     @ResponseStatus(HttpStatus.OK)
-    public void getMap(@RequestBody Map<String, Double> foo) {
-        log.info("POST request map", foo.entrySet());
+    public void saveUtility(@PathVariable(value = "resourceName") String resourceName, @PathVariable(value = "formula") String formula) {
+        camelModelService.saveUtility(resourceName, formula);
     }
 }
