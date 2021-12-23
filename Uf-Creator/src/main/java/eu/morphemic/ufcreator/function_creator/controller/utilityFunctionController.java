@@ -34,4 +34,16 @@ public class utilityFunctionController {
         jsonObject.put("utilityFunction", utilityFunctionService.createUtilityFunctionPredefined(predefinedFunctions));
         return jsonObject.toString();
     }
+
+    @PostMapping(value = "/byTemplate")
+    @ResponseStatus(HttpStatus.OK)
+    public String createUtilityFunctionByTemplate(@RequestBody String createFunctionRequest) throws JsonProcessingException {
+        ObjectMapper om = new ObjectMapper();
+        log.info("dev log createFunctionRequest: {}", createFunctionRequest);
+        List<ByTemplateFunctionDTO> byTemplateFunctions = Arrays.asList(om.readValue(createFunctionRequest, ByTemplateFunctionDTO[].class));
+        log.info("dev log predefinedFunction dto: {}", byTemplateFunctions);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("utilityFunction", utilityFunctionService.createUtilityFunctionByTemplate(byTemplateFunctions));
+        return jsonObject.toString();
+    }
 }

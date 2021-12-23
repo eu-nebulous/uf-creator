@@ -60,6 +60,15 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" label="Choose variables and metrics">
+    <mat-selection-list #selectedMetrics>
+      <!--      <mat-list-option *ngFor="let metric of metricList | slice:lowValue:highValue" [value]="metric">-->
+      <mat-list-option *ngFor="let metric of metricList" [value]="metric">
+        <p>
+          <mat-label> {{metric.name}}</mat-label>
+
+        </p>
+      </mat-list-option>
+    </mat-selection-list>
 
     <!--    <mat-paginator (page)="OnPageChange($event)" [length]="length"-->
     <!--                   [pageSize]=5>-->

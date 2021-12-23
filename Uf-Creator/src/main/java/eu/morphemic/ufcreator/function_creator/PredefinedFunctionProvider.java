@@ -2,6 +2,7 @@ package eu.morphemic.ufcreator.function_creator;
 
 import eu.melodic.upperware.utilitygenerator.cdo.cp_model.DTO.VariableDTO;
 import eu.morphemic.ufcreator.function_creator.function.PredefinedFunction;
+import eu.morphemic.ufcreator.function_creator.model.ByTemplateFunctionDTO;
 import eu.paasage.upperware.metamodel.cp.VariableType;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import static eu.morphemic.ufcreator.function_creator.FormulaProvider.*;
 @Slf4j
 public class PredefinedFunctionProvider {
 
-    public static String getTemplate(List<PredefinedFunction> predefinedFunctions) {
+    public static String getTemplate(ArrayList<PredefinedFunction> predefinedFunctions) {
         List<String> utilityFunction = new ArrayList<>();
         for (PredefinedFunction predefinedfunction : predefinedFunctions) {
             log.info("{}", predefinedfunction);
@@ -25,6 +26,34 @@ public class PredefinedFunctionProvider {
             utilityFunction.add(multiply(formula, String.valueOf(predefinedfunction.weight)));
         }
         return getSum(utilityFunction);
+    }
+
+    public static String getTemplate(List<ByTemplateFunctionDTO> byTemplateFunctionDTOList) {
+        List<String> utilityFunction = new ArrayList<>();
+        for (ByTemplateFunctionDTO byTemplateFunctionDTO : byTemplateFunctionDTOList) {
+            log.info("{}", byTemplateFunctionDTO);
+            String formula = getByTemplateFunctionFormula(byTemplateFunctionDTO);
+            utilityFunction.add(multiply(formula, String.valueOf(byTemplateFunctionDTO.weight)));
+        }
+        return getSum(utilityFunction);
+    }
+
+    private static String getByTemplateFunctionFormula(ByTemplateFunctionDTO byTemplateFunctionDTO) {
+        switch (byTemplateFunctionDTO.getShape()) {
+            case "S-Shaped":
+                return "1-" + FormulaProvider.add("1", "exponentialValue^(" + "prod(" + FormulaProvider.minus(byTemplateFunctionDTO.getMetricName(), String.valueOf(byTemplateFunctionDTO.getB())) + "(lnValue(" + "(div(" + minus("1", "exponentialValue") + ",exponentialValue))" + FormulaProvider.minus(String.valueOf(byTemplateFunctionDTO.getA()), String.valueOf(byTemplateFunctionDTO.getB()))) + ")^-1";
+            case "U-Shaped":
+                return "1-exponentialValue^prod(-1,div(" + byTemplateFunctionDTO.getMetricName() + " + " + byTemplateFunctionDTO.getA() + ")," + byTemplateFunctionDTO.getB() + ")";
+            case "Reverse S-Shaped":
+                return FormulaProvider.add("1", "exponentialValue^(" + "prod(" + FormulaProvider.minus(byTemplateFunctionDTO.getMetricName(), String.valueOf(byTemplateFunctionDTO.getB())) + "(lnValue(" + "(div(exponentialValue," + minus("1", "exponentialValue") + "))" + FormulaProvider.minus(String.valueOf(byTemplateFunctionDTO.getA()), String.valueOf(byTemplateFunctionDTO.getB()))) + ")^-1";
+            case "Reverse U-Shaped":
+                return "exponentialValue^prod(lnValue(exponentialValue),(" + byTemplateFunctionDTO.getMetricName() + "," + byTemplateFunctionDTO.getA() + "^2/(" + byTemplateFunctionDTO.getB() + byTemplateFunctionDTO.getA();
+            case "Linear":
+                return "5";
+            case "Constant Shaped":
+                return "6";
+        }
+        throw new RuntimeException("function type with shape:" + byTemplateFunctionDTO.getShape() + " is not supported yet");
     }
 
     private static String getPredefinedFunctionFormula(PredefinedFunction predefinedFunction) {

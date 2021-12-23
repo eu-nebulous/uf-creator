@@ -132,16 +132,11 @@ export class ByFunctionCreatorComponent implements OnInit {
 
     var simulationOnTime = new PredefinedFunction("FinishSimulationOnTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables, constantsList, rawMetricsList, compositeMetricsList);
     var secondFunction = new PredefinedFunction("ExpectedResponseTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables2, constantsList1, rawMetricsList2, compositeMetricsList2);
-    // var ramUsage=new PredefinedFunction("RAM usage function","../../../assets/img/Uram.png");
-    // var locality=new PredefinedFunction("locality utility function","../../../assets/img/Ulocality.png");
-    // var costPerUser=new PredefinedFunction("Cost per user function","../../../assets/img/Ucostuser.png");
-    // var cpuUsage=new PredefinedFunction("CPU usage function","../../../assets/img/Ucpu.png");
+    var localityUtility = new PredefinedFunction("LocalityUtility", "../../../assets/img/Udeadline.png", variableListLocality, constantsListLocality, rawMetricLocality, compositeMetricsLocality);
 
     predefined.push(simulationOnTime);
-    predefined.push(secondFunction);
-    // predefined.push(locality);
-    // predefined.push(costPerUser);
-    // predefined.push(cpuUsage);
+    predefined.push(localityUtility);
+
 
     return predefined;
   }
