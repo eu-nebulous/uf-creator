@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.common.util.EList;
 import org.jclouds.rest.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,13 +161,14 @@ public class CamelModelServiceImpl implements CamelModelService {
         return VariableDTOs;
     }
 
-    public void saveUtility(String resourceName, String formula) {
+    public void saveUtility(String resourceName, String formula) throws CommitException {
         CDOSessionX cdoSessionX = cdoServerApi.openSession();
         CDOTransaction cdoTransaction = cdoServerApi.openTransaction(cdoSessionX);
         log.info("Loading camel model {}", resourceName);
         CamelModel camelModel;
         camelModel = cdoService.getCamelModel(resourceName, cdoTransaction);
         this.saveUtilityFunction(camelModel, formula);
+        cdoTransaction.commit();
         cdoSessionX.closeTransaction(cdoTransaction);
         cdoSessionX.closeSession();
     }

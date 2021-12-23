@@ -6,6 +6,7 @@ import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
 import eu.morphemic.ufcreator.analyzer.service.camel.CamelModelService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class camelModelController {
 
     @PostMapping("/{resourceName}/saveUtility/{formula}")
     @ResponseStatus(HttpStatus.OK)
-    public void saveUtility(@PathVariable(value = "resourceName") String resourceName, @PathVariable(value = "formula") String formula) {
+    public void saveUtility(@PathVariable(value = "resourceName") String resourceName, @PathVariable(value = "formula") String formula) throws CommitException {
         camelModelService.saveUtility(resourceName, formula);
     }
 }

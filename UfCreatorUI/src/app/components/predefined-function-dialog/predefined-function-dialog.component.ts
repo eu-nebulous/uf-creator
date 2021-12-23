@@ -6,10 +6,10 @@ import {Variable} from "../../model/Variable";
 
 @Component({
   selector: 'app-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css']
+  templateUrl: './predefined-function-dialog.component.html',
+  styleUrls: ['./predefined-function-dialog.component.css']
 })
-export class SidenavComponent {
+export class PredefinedFunctionDialogComponent {
   options: FormGroup;
 
   hideRequiredControl = new FormControl(false);

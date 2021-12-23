@@ -21,9 +21,8 @@ export class FunctionService {
 
   }
 
-  createFunction(createFunctionRequest: any): Observable<any> {
-    console.log(createFunctionRequest);
-    const requestUrl = this.apiUrl + 'function';
+  createFunction(createFunctionRequest: any, requestType: string): Observable<any> {
+    let requestUrl = this.apiUrl + requestType;
     const httpDeploymentProcessHeader = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -31,9 +30,9 @@ export class FunctionService {
     };
     return this.http.post<any>(requestUrl, JSON.stringify(createFunctionRequest), httpDeploymentProcessHeader).pipe(
       tap((response: any) => {
+
           console.log(`utility function request OK`);
         },
         e => console.log('Error by creating utility function', e)));
-    ;
   }
 }

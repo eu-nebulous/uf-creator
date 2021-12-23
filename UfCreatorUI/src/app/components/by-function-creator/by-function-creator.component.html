@@ -18,54 +18,55 @@
                       [value]="camelModel">{{camelModel}}</mat-option>
         </mat-select>
       </mat-form-field>
-
-      <div *ngIf="isVariablesLoading else elseBlockVariables"
-           style="display: flex; justify-content: left; align-items: center;">
-        <mat-label>Variables</mat-label>
-        <mat-progress-spinner
-          color="accent"
-          diameter="50"
-          mode="indeterminate">
-        </mat-progress-spinner>
-      </div>
-
-      <div *ngIf="isCompositeMetricsLoading else elseBlockCompositeMetrics"
-           style="display: flex; justify-content: left; align-items: center;">
-        <mat-label>Composite Metrics</mat-label>
-        <mat-progress-spinner
-          color="accent"
-          diameter="50"
-          mode="indeterminate">
-        </mat-progress-spinner>
-      </div>
-
-      <div *ngIf="isRawMetricsLoading else elseBlockRawMetrics"
-           style="display: flex; justify-content: left; align-items: center;">
-        <mat-label>Raw Metrics</mat-label>
-        <mat-progress-spinner
-          color="accent"
-          diameter="50"
-          mode="indeterminate">
-        </mat-progress-spinner>
-      </div>
-      <ng-template #elseBlockVariables>
-        <mat-list>
+      <div *ngIf="!isCamelModelListLoading">
+        <div *ngIf="isVariablesLoading else elseBlockVariables"
+             style="display: flex; justify-content: left; align-items: center;">
           <mat-label>Variables</mat-label>
-          <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
-        </mat-list>
-      </ng-template>
-      <ng-template #elseBlockCompositeMetrics>
-        <mat-list>
-          <mat-label>Raw Metrics</mat-label>
-          <mat-list-item *ngFor="let rawMetric of rawMetricList">{{rawMetric.name}}</mat-list-item>
-        </mat-list>
-      </ng-template>
-      <ng-template #elseBlockRawMetrics>
-        <mat-list>
+          <mat-progress-spinner
+            color="accent"
+            diameter="50"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+
+        <div *ngIf="isCompositeMetricsLoading else elseBlockCompositeMetrics"
+             style="display: flex; justify-content: left; align-items: center;">
           <mat-label>Composite Metrics</mat-label>
-          <mat-list-item *ngFor="let compositeMetric of compositeMetricList">{{compositeMetric.name}}</mat-list-item>
-        </mat-list>
-      </ng-template>
+          <mat-progress-spinner
+            color="accent"
+            diameter="50"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+
+        <div *ngIf="isRawMetricsLoading else elseBlockRawMetrics"
+             style="display: flex; justify-content: left; align-items: center;">
+          <mat-label>Raw Metrics</mat-label>
+          <mat-progress-spinner
+            color="accent"
+            diameter="50"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+        <ng-template #elseBlockVariables>
+          <mat-list>
+            <mat-label>Variables</mat-label>
+            <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
+          </mat-list>
+        </ng-template>
+        <ng-template #elseBlockRawMetrics>
+          <mat-list>
+            <mat-label>Raw Metrics</mat-label>
+            <mat-list-item *ngFor="let rawMetric of rawMetricList">{{rawMetric.name}}</mat-list-item>
+          </mat-list>
+        </ng-template>
+        <ng-template #elseBlockCompositeMetrics>
+          <mat-list>
+            <mat-label>Composite Metrics</mat-label>
+            <mat-list-item *ngFor="let compositeMetric of compositeMetricList">{{compositeMetric.name}}</mat-list-item>
+          </mat-list>
+        </ng-template>
+      </div>
       <div>
         <button color="primary" mat-button matStepperNext>Next</button>
       </div>
@@ -104,6 +105,7 @@
         <mat-label>{{selectedFunction.name}}</mat-label>
         <mat-slider
           #mySlider
+          (input)="fillSliderValues(mySlider.value,index)"
           (pointerup)="fillSliderValues(mySlider.value,index)"
           (slideend)="fillSliderValues(mySlider.value,index)"
           [displayWith]="formatLabel"

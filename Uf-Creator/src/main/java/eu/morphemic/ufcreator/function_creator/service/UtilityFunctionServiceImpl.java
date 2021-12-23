@@ -7,6 +7,7 @@ import eu.morphemic.ufcreator.function_creator.model.PredefinedFunctionDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +22,9 @@ public class UtilityFunctionServiceImpl implements UtilityFunctionService {
                 .collect(Collectors.toList());
     }
 
-    public String createUtilityFunction(List<PredefinedFunctionDTO> predefinedFunctionDTOList) {
+    public String createUtilityFunctionPredefined(List<PredefinedFunctionDTO> predefinedFunctionDTOList) {
         List<PredefinedFunction> predefinedFunctions = createPredefinedFunctionList(predefinedFunctionDTOList);
         log.info("{}", predefinedFunctions);
-        return PredefinedFunctionProvider.getTemplate(predefinedFunctions);
+        return PredefinedFunctionProvider.getTemplate((ArrayList<PredefinedFunction>) predefinedFunctions);
     }
 }

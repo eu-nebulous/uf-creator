@@ -34,7 +34,8 @@ public class PredefinedFunctionProvider {
             case "FinishSimulationOnTime":
                 return "1";
             case "LocalityUtility":
-
+                return "1/(1 + acos(prod(sin(prod(" + predefinedFunction.getConstantsList().get(0).value + ",(π/180))), (sin(prod(" + predefinedFunction.getConstantsList().get(2).value + ",(π/180))) + (prod(cos(prod(" + predefinedFunction.getConstantsList().get(0).value + ",(π/180))),(cos(prod(" + predefinedFunction.getConstantsList().get(1).value + ",(π/180))))," +
+                        "cos(" + predefinedFunction.getConstantsList().get(3).value + "π/180 -" + predefinedFunction.getConstantsList().get(1).value + "π/180)) ⋅ 6371000)";
             case "RamUsage":
 
             case "CpuUsage":

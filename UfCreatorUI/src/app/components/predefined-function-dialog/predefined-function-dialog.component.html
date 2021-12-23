@@ -72,8 +72,9 @@
       </p>
 
       <div class="example-container">
-        <mat-form-field *ngFor="let constant of dataFromFunctionCreator[index].constantsList; let index2 = index; trackBy:trackByIndex;"
-                        appearance="fill">
+        <mat-form-field
+          *ngFor="let constant of dataFromFunctionCreator[index].constantsList; let index2 = index; trackBy:trackByIndex;"
+          appearance="fill">
           <mat-label>{{constant.name}}</mat-label>
           <input [(ngModel)]="dataFromFunctionCreator[index].constantsList[index2].value" matInput/>
         </mat-form-field>
