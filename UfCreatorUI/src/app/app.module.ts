@@ -31,6 +31,8 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {ByPlottingComponent} from './components/by-plotting/by-plotting.component';
+import {NgxMathFunctionPlotterModule} from "ngx-math-function-plotter";
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     PredefinedFunctionDialogComponent,
     ByTemplateCreatorComponent,
     ByFunctionCreatorComponent,
+    ByPlottingComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -74,7 +77,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatButtonToggleModule,
     MatSnackBarModule,
     MatPaginatorModule,
-    MatRippleModule
+    MatRippleModule,
+    NgxMathFunctionPlotterModule,
+
 
   ],
   providers: [],
