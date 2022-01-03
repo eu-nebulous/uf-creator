@@ -1,0 +1,155 @@
+<ng-container [ngSwitch]="stepperOrientation | async">
+  <div *ngSwitchCase="'horizontal'"></div>
+  <div *ngSwitchCase="'vertical'"></div>
+</ng-container>
+
+<mat-stepper
+  #stepper
+  [orientation]="(stepperOrientation | async)!"
+  class="example-stepper"
+  id="stepper">
+  <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
+    <form [formGroup]="firstFormGroup">
+      <mat-form-field appearance="fill">
+        <mat-label>Select camel model</mat-label>
+        <mat-select #firstStep [disabled]="isCamelModelListLoading"
+                    required>
+          <mat-option #first (onSelectionChange)="firstStepComplete(first.value)"
+                      *ngFor="let camelModel of camelModelList"
+                      [value]="camelModel">{{camelModel}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="!isCamelModelListLoading">
+
+        <div *ngIf="isCompositeMetricsLoading"
+             style="display: flex; justify-content: left; align-items: center;">
+          <mat-label>Composite Metrics</mat-label>
+          <mat-progress-spinner
+            color="accent"
+            diameter="50"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+
+        <div *ngIf="isRawMetricsLoading"
+             style="display: flex; justify-content: left; align-items: center;">
+          <mat-label>Raw Metrics</mat-label>
+          <mat-progress-spinner
+            color="accent"
+            diameter="50"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+      </div>
+      <div *ngIf="!isRawMetricsLoading && rawMetricList!=null">
+        <mat-list>
+          <mat-label>Raw Metrics</mat-label>
+          <mat-list-item *ngFor="let rawMetric of rawMetricList">{{rawMetric.name}}</mat-list-item>
+        </mat-list>
+      </div>
+      <div *ngIf="!isCompositeMetricsLoading && compositeMetricList!=null">
+        <mat-list>
+          <mat-label>Composite Metrics</mat-label>
+          <mat-list-item *ngFor="let compositeMetric of compositeMetricList">{{compositeMetric.name}}</mat-list-item>
+        </mat-list>
+      </div>
+
+      <div>
+        <button color="primary" mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" label="Choose variables and metrics">
+    <mat-selection-list #selectedMetrics>
+      <!--      <mat-list-option *ngFor="let metric of metricList | slice:lowValue:highValue" [value]="metric">-->
+      <mat-list-option *ngFor="let metric of metricList" [value]="metric">
+        <p>
+          <mat-label> {{metric.name}}</mat-label>
+
+        </p>
+      </mat-list-option>
+    </mat-selection-list>
+
+    <!--    <mat-paginator (page)="OnPageChange($event)" [length]="length"-->
+    <!--                   [pageSize]=5>-->
+    <!--    </mat-paginator>-->
+    <button (click)="saveSelected(selectedMetrics.selectedOptions.selected)" mat-button matStepperNext>Next</button>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup" label="Specify template">
+    <ng-container *ngFor="let selection of byTemplateFunctionList">
+      <mat-card style="margin-top:25px">
+        <h2>{{selection.metricName}}</h2>
+
+        <p><label id="example-radio-group-label">Specify function:</label>
+          <mat-form-field style="margin-left: 1rem" appearance="fill" class="example-full-width">
+            <input [(ngModel)]="mathFunctionToBePlotted" matInput required>
+          </mat-form-field>
+        </p>
+        <div>
+        <ngx-math-function-plotter [functionInput]="mathFunctionToBePlotted" [maxDisplayValue]="10" [width]="600" [height]="600" >
+        </ngx-math-function-plotter>
+        </div>
+        <label id="utility-label">Define a and b:</label>
+        <p>
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>a</mat-label>
+            <input [(ngModel)]="selection.a" matInput required>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>b</mat-label>
+            <input [(ngModel)]="selection.b" matInput required>
+          </mat-form-field>
+        </p>
+
+      </mat-card>
+    </ng-container>
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+
+  </mat-step>
+  <mat-step [stepControl]="forthFormGroup" label="Define weights">
+    <ng-container *ngFor="let selectedFunction of byTemplateFunctionList,let index = index; trackBy:trackByIndex;">
+      {{byTemplateFunctionList | json}}
+      <div>
+        <mat-label>Current weight of {{selectedFunction.metricName}}: {{mySlider.value}}</mat-label>
+      </div>
+      <mat-label>{{selectedFunction.metricName}}</mat-label>
+      <mat-slider
+        #mySlider
+        (input)="fillSliderValues(mySlider.value,index)"
+        (pointerup)="fillSliderValues(mySlider.value,index)"
+        (slideend)="fillSliderValues(mySlider.value,index)"
+        [displayWith]="formatLabel"
+        aria-label="units"
+        max="1"
+        min="0"
+        step="0.1"
+        thumbLabel
+        tickInterval="1000"></mat-slider>
+      <mat-divider></mat-divider>
+    </ng-container>
+    <mat-label>Current weights sum: {{this.sum}}
+    </mat-label>
+    <button (click)="validateValuesFromSliders(stepper)" mat-button>Next</button>
+
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You Created Function:</p>
+    {{this.utilityFunction}}
+    <div>
+      <button color="secondary" mat-button matStepperPrevious>Back</button>
+      <button (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"
+              class="example-ripple-container mat-elevation-z4"
+              mat-fab
+              matRipple>
+        <mat-icon>save alt icon</mat-icon>
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>
+
+
+
