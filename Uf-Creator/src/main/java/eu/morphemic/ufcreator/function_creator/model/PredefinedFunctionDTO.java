@@ -17,10 +17,8 @@ public class PredefinedFunctionDTO {
     public List<VariableList> variableList;
     @JsonProperty("constantsList")
     public List<ConstantsList> constantsList;
-    @JsonProperty("rawMetricList")
-    public List<RawMetricList> rawMetricList;
-    @JsonProperty("compositeMetricList")
-    public List<CompositeMetricList> compositeMetricList;
+    @JsonProperty("metricList")
+    public List<MetricList> metricList;
     @JsonProperty("weight")
     public double weight;
 

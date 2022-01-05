@@ -17,6 +17,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "function-plot",
+              "is-safe-integer",
+              "nextafter"
+            ],
             "outputPath": "dist/UfCreatorUI",
             "index": "src/index.html",
             "main": "src/main.ts",

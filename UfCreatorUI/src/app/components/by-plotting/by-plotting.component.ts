@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
 import {StepperOrientation} from "@angular/cdk/stepper";
@@ -20,7 +20,7 @@ import {UtilityShape} from "../../model/UtilityShape";
   templateUrl: './by-plotting.component.html',
   styleUrls: ['./by-plotting.component.css']
 })
-export class ByPlottingComponent {
+export class ByPlottingComponent implements OnInit{
 
   shape: string;
   shapes: UtilityShape[] = [new UtilityShape('S-Shaped', "S-shaped.png"), new UtilityShape('U-Shaped', "Ushaped.png"), new UtilityShape('Reverse S-Shaped', "reversedSshaped.png"), new UtilityShape("Reverse U-Shaped", "reversedUshaped.png"), new UtilityShape("Linear", ""), new UtilityShape('Constant Shaped', "")];

@@ -7,7 +7,6 @@ import {map} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Metric} from "../../model/Metric";
-import {Variable} from "@angular/compiler/src/render3/r3_ast";
 import {CamelService} from "../../service/camel.service";
 import {FunctionService} from "../../service/function.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -23,12 +22,11 @@ import {UtilityShape} from "../../model/UtilityShape";
 export class ByTemplateCreatorComponent {
 
   shape: string;
-  shapes: UtilityShape[] = [new UtilityShape('S-Shaped', "S-shaped.png"), new UtilityShape('U-Shaped', "Ushaped.png"), new UtilityShape('Reverse S-Shaped', "reversedSshaped.png"), new UtilityShape("Reverse U-Shaped", "reversedUshaped.png"), new UtilityShape("Linear", ""), new UtilityShape('Constant Shaped', "")];
+  shapes: UtilityShape[] = [new UtilityShape('S-Shaped', "x^2"), new UtilityShape('U-Shaped', "x"), new UtilityShape('Reverse S-Shaped', "x"), new UtilityShape("Reverse U-Shaped", "x"), new UtilityShape("Linear", "x"), new UtilityShape('Constant Shaped', "x")];
   camelModelList: Array<string>;
   mode = new FormControl('over');
   forthCtrl = new FormControl();
   variables = new FormControl();
-  variableList: Variable[];
   rawMetrics = new FormControl();
   metrics = new FormControl();
   rawMetricList: Metric[];
@@ -39,11 +37,6 @@ export class ByTemplateCreatorComponent {
   isRawMetricsLoading: any;
   selectedCamelModel: string
   metricList: Metric[];
-  // length = 0;
-  // showFirstLastButtons = true
-  // lowValue = 0;
-  // highValue = 5;
-  // pageEvent: PageEvent;
   sliderValues = new Array<number>();
   sum: number;
   byTemplateFunctionList = new Array<ByTemplateFunction>();
@@ -60,12 +53,9 @@ export class ByTemplateCreatorComponent {
     forthCtrl: ['', Validators.required],
   });
   stepperOrientation: Observable<StepperOrientation>;
-  metricSlice: Metric[];
   isSendingRequest: boolean;
   utilityFunction: any;
-  // }
   changeText: boolean;
-  //   this.highValue = endIndex;
   value: any;
 
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private functionService: FunctionService,
@@ -98,15 +88,6 @@ export class ByTemplateCreatorComponent {
   formatLabel(value: number) {
     return value;
   }
-
-  // OnPageChange($event: PageEvent) {
-  //   const startIndex = $event.pageIndex * $event.pageSize;
-  //   let endIndex = startIndex + $event.pageSize;
-  //   if (endIndex > this.metricList.length) {
-  //     endIndex = this.metricList.length;
-  //   }
-  //   this.lowValue = startIndex;
-
   firstStepComplete(firstStepValue: string) {
     this.isCompositeMetricsLoading = true;
     this.isRawMetricsLoading = true;
@@ -121,7 +102,6 @@ export class ByTemplateCreatorComponent {
             this.isRawMetricsLoading = false;
             this.metricList = this.rawMetricList.concat(this.compositeMetricList).sort((a, b) => a.name.localeCompare(b.name));
             this.selectedCamelModel = firstStepValue;
-            // this.length = this.metricList.length;
             console.log(response)
           },
           (error: HttpErrorResponse) => {

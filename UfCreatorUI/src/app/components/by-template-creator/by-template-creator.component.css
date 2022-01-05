@@ -21,3 +21,6 @@ mat-progress-spinner {
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: transparent;
 }
+mat-selection-list{
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
 import {StepperOrientation} from "@angular/cdk/stepper";
@@ -23,8 +23,8 @@ import {FunctionService} from "../../service/function.service";
   templateUrl: './by-function-creator.component.html',
   styleUrls: ['./by-function-creator.component.css']
 })
-export class ByFunctionCreatorComponent implements OnInit {
 
+export class ByFunctionCreatorComponent implements OnInit {
   camelModelList: Array<string>
   compositeMetricList: Array<Metric>
   rawMetricList: Array<Metric>
@@ -54,6 +54,7 @@ export class ByFunctionCreatorComponent implements OnInit {
   forthFormGroup = this._formBuilder.group({
     forthCtrl: ['', Validators.required],
   });
+  something: string;
 
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private functionService: FunctionService,
               private camelModelService: CamelService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
@@ -63,6 +64,7 @@ export class ByFunctionCreatorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.something="x^3";
     this.camelModelService.getCamelModelList().subscribe(camelModelResponse => {
         this.isCamelModelListLoading = false;
         this.isVariablesLoading = true;
@@ -122,17 +124,15 @@ export class ByFunctionCreatorComponent implements OnInit {
     var constantsList1 = [new Constant("expected response time T^", "0"), new Constant("maximum acceptable response time T+", "0"), new Constant("default timeout time Td", "0")];
     var constantsListLocality = [new Constant("latitude of first component", "0"), new Constant("longitude of fist component", "0"), new Constant("latitude of second component", "0"), new Constant("latitude of second component", "0")];
     var variableListLocality = new Array<Variable>();
-    var rawMetricLocality = new Array<Metric>();
+    var metricsLocality = new Array<Metric>();
     var compositeMetricsLocality = new Array<Metric>();
-    var rawMetricsList = [new Metric("Minimum cores number", "", ""), new Metric("Simulations left", "", "")];
-    var rawMetricsList2 = [new Metric("Minimum cores number", "", ""), new Metric("Simulations left", "", "")];
-    var compositeMetricsList = [new Metric("Estimated Remaining Time", "", "")];
-    var compositeMetricsList2 = [new Metric("Estimated Remaining Time", "", "")];
+    var metricsList = [new Metric("Minimum cores number", "", ""), new Metric("Simulations left", "", ""),new Metric("Estimated Remaining Time", "", "")];
+    var metricsList2 = [new Metric("Minimum cores number", "", ""), new Metric("Simulations left", "", ""),new Metric("Estimated Remaining Time", "", "")];
 
 
-    var simulationOnTime = new PredefinedFunction("FinishSimulationOnTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables, constantsList, rawMetricsList, compositeMetricsList);
-    var secondFunction = new PredefinedFunction("ExpectedResponseTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables2, constantsList1, rawMetricsList2, compositeMetricsList2);
-    var localityUtility = new PredefinedFunction("LocalityUtility", "../../../assets/img/Udeadline.png", variableListLocality, constantsListLocality, rawMetricLocality, compositeMetricsLocality);
+    var simulationOnTime = new PredefinedFunction("FinishSimulationOnTime", "../../../assets/img/Utime.png", simulationOnTimeVariables, constantsList, metricsList);
+    var secondFunction = new PredefinedFunction("ExpectedResponseTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables2, constantsList1, metricsList2);
+    var localityUtility = new PredefinedFunction("LocalityUtility", "../../../assets/img/Ulocality.png", variableListLocality, constantsListLocality,metricsLocality);
 
     predefined.push(simulationOnTime);
     predefined.push(localityUtility);

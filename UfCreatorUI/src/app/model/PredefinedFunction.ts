@@ -7,16 +7,14 @@ export class PredefinedFunction {
   src: string
   variableList: Variable[]
   constantsList: Constant[]
-  rawMetricList: Metric[]
-  compositeMetricList: Metric[]
+  metricList: Metric[]
   weight: number
 
-  constructor(name: string, src: string, variableList: Variable[], constantsList: Constant[], rawMetricList: Metric[], compositeMetricList: Metric[]) {
+  constructor(name: string, src: string, variableList: Variable[], constantsList: Constant[], metricList: Metric[]) {
     this.name = name;
     this.src = src;
     this.variableList = variableList;
     this.constantsList = constantsList;
-    this.rawMetricList = rawMetricList;
-    this.compositeMetricList = compositeMetricList;
+    this.metricList = metricList;
   }
 }

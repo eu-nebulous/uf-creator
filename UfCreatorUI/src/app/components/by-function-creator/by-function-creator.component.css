@@ -4,3 +4,6 @@ mat-form-field{
 mat-progress-spinner{
   margin-left: 50px;
 }
+mat-selection-list{
+  text-align: center;
+}

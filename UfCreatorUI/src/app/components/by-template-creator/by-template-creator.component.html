@@ -88,8 +88,6 @@
             <mat-radio-button [value]="shape.shape" class="example-radio-button"
                               style="margin-right: 10px;margin-left: 10px;">
               {{shape.shape}}
-              <img alt="#" mat-card-image src="../assets/img/{{shape.src}}"
-                   style="margin-left:20px;margin-right:20px;height:200px;width:auto;">
             </mat-radio-button>
           </ng-container>
         </mat-radio-group>
@@ -140,10 +138,10 @@
     <button (click)="validateValuesFromSliders(stepper)" mat-button>Next</button>
 
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
+  <mat-step label="Done">
     <p>You Created Function:</p>
     {{this.utilityFunction}}
+    <app-mathplot [functionToBePlotted]="this.utilityFunction"></app-mathplot>
     <div>
       <button color="secondary" mat-button matStepperPrevious>Back</button>
       <button (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"

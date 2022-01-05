@@ -41,7 +41,8 @@ import {NgxMathFunctionPlotterModule} from "ngx-math-function-plotter";
     PredefinedFunctionDialogComponent,
     ByTemplateCreatorComponent,
     ByFunctionCreatorComponent,
-    ByPlottingComponent
+    ByPlottingComponent,
+    MathplotComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -124,6 +124,7 @@
     <ng-template matStepLabel>Done</ng-template>
     <p>You Created Function:</p>
     {{this.utilityFunction}}
+    <app-mathplot [functionToBePlotted]="this.something"></app-mathplot>
     <div>
       <button color="secondary" mat-button matStepperPrevious>Back</button>
       <button (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"

@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {Constant} from "../../model/Constant";
 import {Variable} from "../../model/Variable";
+import {Metric} from "../../model/Metric";
 
 @Component({
   selector: 'app-sidenav',
@@ -16,6 +17,7 @@ export class PredefinedFunctionDialogComponent {
   floatLabelControl = new FormControl('auto');
   constants: Constant[];
   variables: Variable[];
+  metricList: Metric[]
   selectedValue: string;
   firstName = new FormControl();
   dataFromFunctionCreator: any;
@@ -26,6 +28,7 @@ export class PredefinedFunctionDialogComponent {
     this.variablesFromFunctionCreator = this.data.selectedOptions.variables;
     this.constants = this.data.selectedOptions.constants;
     this.dataFromFunctionCreator = this.data.selectedOptions;
+    this.metricList=this.data.rawMetricList+this.data.compositeMetricList;
     console.log(this.dataFromFunctionCreator);
     this.options = fb.group({
       hideRequired: this.hideRequiredControl,
