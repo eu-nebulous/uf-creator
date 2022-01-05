@@ -33,6 +33,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {ByPlottingComponent} from './components/by-plotting/by-plotting.component';
 import {NgxMathFunctionPlotterModule} from "ngx-math-function-plotter";
+import functionPlot from "function-plot";
+import {MathplotComponent} from "./components/mathplot/mathplot.component";
 
 
 @NgModule({
@@ -79,8 +81,7 @@ import {NgxMathFunctionPlotterModule} from "ngx-math-function-plotter";
     MatSnackBarModule,
     MatPaginatorModule,
     MatRippleModule,
-    NgxMathFunctionPlotterModule,
-
+    NgxMathFunctionPlotterModule
 
   ],
   providers: [],

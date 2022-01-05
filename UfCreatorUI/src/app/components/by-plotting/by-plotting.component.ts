@@ -14,6 +14,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ByTemplateFunction} from "../../model/ByTemplateFunction";
 import {MatListOption} from "@angular/material/list";
 import {UtilityShape} from "../../model/UtilityShape";
+import * as d3 from 'd3';
+import functionPlot from 'function-plot';
+window.d3=d3;
 
 @Component({
   selector: 'app-by-plotting',
@@ -67,7 +70,8 @@ export class ByPlottingComponent implements OnInit{
   changeText: boolean;
   //   this.highValue = endIndex;
   value: any;
-  mathFunctionToBePlotted: string;
+  mathFunctionToBePlotted: string
+
 
   constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver, private functionService: FunctionService,
               private camelModelService: CamelService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
