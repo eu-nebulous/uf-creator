@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.ow2.paasage:melodic-commons:4.0.0-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-commons/4.0.0-SNAPSHOT/melodic-commons-4.0.0-20211119.093053-123.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-commons/4.0.0-SNAPSHOT/melodic-commons-4.0.0-20211222.101542-130.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-commons/4.0.0-SNAPSHOT/melodic-commons-4.0.0-20211119.093053-123-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-commons/4.0.0-SNAPSHOT/melodic-commons-4.0.0-20211222.101542-130-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-commons/4.0.0-SNAPSHOT/melodic-commons-4.0.0-20211119.093053-123-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/ow2/paasage/melodic-commons/4.0.0-SNAPSHOT/melodic-commons-4.0.0-20211222.101542-130-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
