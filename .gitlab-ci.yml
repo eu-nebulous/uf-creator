@@ -30,7 +30,7 @@ stages:
   - build-angular-ui
   - build-ui-docker
   - build-UfCreator
-  - deploy-UfCreatr
+  - deploy-UfCreator
 
 build-angular-ui:
   stage: build-angular-ui
