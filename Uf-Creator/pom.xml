@@ -14,8 +14,145 @@
     <name>ufcreator</name>
     <description>Uf-creator application</description>
     <properties>
+        <!--DOCKER plugin properties-->
+        <docker.push>false</docker.push>
+        <docker.repository>127.0.0.1:5000/</docker.repository>
+        <!--suppress UnresolvedMavenProperty -->
+        <docker.imageTag>${scmBranch}</docker.imageTag>
+        <docker.imagePrefix>melodic/</docker.imagePrefix>
+        <docker.imageName>uf-creator</docker.imageName>
+        <docker.jarToInclude>${project.build.finalName}.jar</docker.jarToInclude>
+        <docker.spotify-plugin.version>0.4.10</docker.spotify-plugin.version>
+        <!-- Versions for common plugins -->
+        <source-plugin.version>2.4</source-plugin.version>
+        <maven-compiler.version>3.2</maven-compiler.version>
+        <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
         <java.version>8</java.version>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${source-plugin.version}</version>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.spotify-plugin.version}</version>
+                <configuration>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <imageName>${docker.repository}${docker.imagePrefix}${docker.imageName}:latest</imageName>
+                    <pushImage>${docker.push}</pushImage>
+                    <serverId>ow2.melodic</serverId>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${docker.jarToInclude}</include>
+                        </resource>
+                    </resources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                        <version>1.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!--plugins for getting scmBranch value lowercase to use in docker images -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.groovy.maven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                import org.apache.commons.lang.StringUtils
+
+                                project.properties["scmBranch"] = StringUtils.lowerCase(project.properties["scmBranch"])
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,7 +177,6 @@
             <version>3.1.0-SNAPSHOT</version>
             <classifier>repackaged</classifier>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -56,8 +192,6 @@
             <version>3.1.0-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2 -->
-
-
     </dependencies>
 
     <repositories>
@@ -113,17 +247,5 @@
             <url>https://nexus.7bulls.eu:8443/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-
-    </build>
-
 </project>
 
