@@ -17,6 +17,7 @@ cache:
     - maven_repo/
     
 before_script:
+  - echo $HOME
   - mkdir -p /.m2
   - echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
