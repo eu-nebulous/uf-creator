@@ -17,13 +17,13 @@ cache:
     - maven_repo/
     
 before_script:
-  - mkdir -p $HOME/.m2
+  - mkdir -p /.m2
   - echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                             https://maven.apache.org/xsd/settings-1.0.0.xsd">
                 <localRepository>'$CI_PROJECT_DIR'/maven_repo</localRepository>
-          </settings>' > $HOME/.m2/settings.xml
+          </settings>' > /.m2/settings.xml
   - echo "MAVEN_OPTS=$MAVEN_OPTS" > $CI_PROJECT_DIR/.env.list
     
 stages:          
