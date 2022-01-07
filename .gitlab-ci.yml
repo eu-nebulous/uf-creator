@@ -72,7 +72,7 @@ build-UfCreator:
   artifacts:
     expire_in: 1 week
     paths:
-      - /builds/melodic/${CI_PROJECT_ID}/maven_repo/org/activeeon/scheduling-abstraction-layer/
+      - $CI_PROJECT_DIR/target
 
 deploy-UfCreator:
   stage: deploy-UfCreator
