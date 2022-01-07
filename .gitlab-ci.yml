@@ -43,7 +43,8 @@ build-angular-ui:
     - npm install --save-dev  --unsafe-perm node-sass@6.0.1
     - npm install
   script: 
-    - ng build UfCreatorUI/ --prod 
+    - cd UfCreatorUI
+    - ng build --prod 
 
 build-ui-docker:
   stage: build-ui-docker
