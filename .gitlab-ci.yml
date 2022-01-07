@@ -30,7 +30,7 @@ stages:
   - build-angular-ui
   - build-ui-docker
   - build-UfCreator
-  - deploy-UfCreatr
+  - deploy-UfCreator
 
 build-angular-ui:
   stage: build-angular-ui
@@ -39,11 +39,12 @@ build-angular-ui:
     paths:
       - dist/UfCreatorUI
   before_script:
+    - cd UfCreatorUI
     - npm install -g --save-dev @angular/cli@latest
-    - npm install --save-dev  --unsafe-perm node-sass@4.14.1
+    - npm install --save-dev  --unsafe-perm node-sass@6.0.1
     - npm install
   script: 
-    - ng build --prod
+    - ng build --prod 
 
 build-ui-docker:
   stage: build-ui-docker
