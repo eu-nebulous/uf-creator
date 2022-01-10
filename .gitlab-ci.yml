@@ -29,7 +29,7 @@ before_script:
     
 stages:          
   - build-angular-ui
-  - build-ui-docker
+  - deploy-angular-ui
   - build-UfCreator
   - deploy-UfCreator
 
@@ -47,11 +47,10 @@ build-angular-ui:
   script: 
     - ng build --prod 
 
-build-ui-docker:
+deploy-ui-docker:
   stage: build-ui-docker
   only:
     - main
-    
   image: docker:19.03.1
   services:
     - docker:19.03.1-dind
@@ -61,7 +60,7 @@ build-ui-docker:
     - build-angular-ui
   script:
     - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
-    - docker build --file ./UfCreatorUI/Dockerfile -t gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH .
+    - docker build -t gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH .
     - docker push gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH
 
 build-UfCreator:
