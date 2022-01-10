@@ -128,6 +128,12 @@
 
         <dependency>
             <groupId>org.ow2.paasage</groupId>
+            <artifactId>melodic-commons</artifactId>
+            <version>4.5.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ow2.paasage</groupId>
             <artifactId>upperware-metamodel</artifactId>
             <version>4.0.0-SNAPSHOT</version>
         </dependency>
