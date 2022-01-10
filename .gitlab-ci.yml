@@ -63,8 +63,8 @@ deploy-angular-ui:
     - docker pull nginx
     - cd UfCreatorUI
     - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
-    - docker build -t gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH .
-    - docker push gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH
+    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator:$CI_COMMIT_BRANCH .
+    - docker push gitlab.ow2.org:4567/melodic/uf-creator:$CI_COMMIT_BRANCH
 
 build-UfCreator:
   stage: build-UfCreator
