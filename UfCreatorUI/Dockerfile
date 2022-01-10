@@ -7,7 +7,7 @@ COPY . .
 RUN npm install
 RUN npm run build --prod
 
-
+CMD ls /
 
 FROM nginx:latest AS ngi
 
