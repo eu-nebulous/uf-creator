@@ -22,14 +22,6 @@
         <maven-compiler.version>3.2</maven-compiler.version>
         <javadoc-plugin.version>2.9.1</javadoc-plugin.version>
         <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
-
-        <docker.repository>127.0.0.1:5000/</docker.repository>
-        <!--suppress UnresolvedMavenProperty -->
-        <docker.imageTag>${scmBranch}</docker.imageTag>
-        <docker.imagePrefix>melodic/</docker.imagePrefix>
-        <docker.imageName>uf-creator</docker.imageName>
-        <docker.jarToInclude>${project.build.finalName}.jar</docker.jarToInclude>
-        <docker.spotify-plugin.version>0.4.10</docker.spotify-plugin.version>
         <!-- Versions for common plugins -->
         <source-plugin.version>2.4</source-plugin.version>
         <maven-compiler.version>3.2</maven-compiler.version>
