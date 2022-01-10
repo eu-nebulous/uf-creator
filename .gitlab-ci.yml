@@ -10,7 +10,7 @@ variables:
   DOCKER_TLS_CERTDIR: "/certs"
 
   DOCKER_CLI: "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $CI_PROJECT_DIR/maven_repo:/root/.m2 -w /usr/src/mymaven -v $CI_PROJECT_DIR:/usr/src/mymaven $MAVEN_IMAGE"
-  UF_CREATOR_CLI: "mvn --batch-mode -f Uf-Creator/pom.xml"
+  UF_CREATOR_CLI: "mvn --batch-mode -N -Dmaven.test.skip=true -f Uf-Creator/pom.xml"
 
 cache:
   paths:
