@@ -5,10 +5,8 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /usr/share/nginx/html
 RUN rm index.html
-RUN echo "$PWD"
-RUN pwd
+WORKDIR /UfCreatorUI
 COPY /dist/UfCreatorUI .
-
 
 WORKDIR /usr/share/nginx/html
 RUN rm index.html
