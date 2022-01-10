@@ -61,8 +61,8 @@ build-ui-docker:
     - build-angular-ui
   script:
     - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
-    - docker build -t gitlab.ow2.org:4567/melodic/UfCreator:$CI_COMMIT_BRANCH .
-    - docker push gitlab.ow2.org:4567/melodic/UfCreator:$CI_COMMIT_BRANCH
+    - docker build -t gitlab.ow2.org:4567/melodic/ufcreator:$CI_COMMIT_BRANCH .
+    - docker push gitlab.ow2.org:4567/melodic/ufcreator:$CI_COMMIT_BRANCH
 
 build-UfCreator:
   stage: build-UfCreator
