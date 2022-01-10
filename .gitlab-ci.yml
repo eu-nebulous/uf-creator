@@ -70,7 +70,8 @@ build-UfCreator:
   stage: build-UfCreator
   image: $MAVEN_IMAGE_JDK_8
   script:
-    - cd Uf-Creator
+    - ls
+    - cd ufcreator
     - $UF_CREATOR_CLI clean install
   artifacts:
     expire_in: 1 week
