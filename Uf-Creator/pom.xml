@@ -16,6 +16,7 @@
     <properties>
         <!--DOCKER plugin properties-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.spotify-plugin.version>0.4.10</docker.spotify-plugin.version>
 
         <!-- Versions for common plugins -->
         <source-plugin.version>2.4</source-plugin.version>
