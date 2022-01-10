@@ -63,6 +63,7 @@ deploy-angular-ui:
     - cd UfCreatorUI
     - docker build -t gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH .
     - docker push gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH
+    - cd ..
 
 build-UfCreator:
   stage: build-UfCreator
