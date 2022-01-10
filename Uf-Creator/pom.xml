@@ -23,16 +23,6 @@
         <javadoc-plugin.version>2.9.1</javadoc-plugin.version>
         <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
 
-        <docker.repository>127.0.0.1:5000/</docker.repository>
-        <!--suppress UnresolvedMavenProperty -->
-
-        <docker.imageTag>${scmBranch}</docker.imageTag>
-        <docker.imagePrefix>melodic/</docker.imagePrefix>
-        <docker.imageName>uf-creator</docker.imageName>
-        <docker.jarToInclude>${project.build.finalName}.jar</docker.jarToInclude>
-        <docker.spotify-plugin.version>0.4.10</docker.spotify-plugin.version>
-        <docker.push>false</docker.push>
-
         <!-- Versions for common plugins -->
         <source-plugin.version>2.4</source-plugin.version>
         <maven-compiler.version>3.2</maven-compiler.version>
@@ -79,40 +69,7 @@
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker.spotify-plugin.version}</version>
-                <configuration>
-                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <imageName>${docker.repository}${docker.imagePrefix}${docker.imageName}:latest</imageName>
-                    <pushImage>${docker.push}</pushImage>
-                    <serverId>ow2.melodic</serverId>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${docker.jarToInclude}</include>
-                        </resource>
-                    </resources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>execution</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>javax.activation</groupId>
-                        <artifactId>activation</artifactId>
-                        <version>1.1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+
             <!--plugins for getting scmBranch value lowercase to use in docker images -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -263,33 +220,5 @@
         <developerConnection>scm:https://gitlab.ow2.org/melodic/uf-creator.git</developerConnection>
     </scm>
 
-    <profiles>
-        <profile>
-            <id>without-docker</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.spotify</groupId>
-                        <artifactId>docker-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>execution</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>docker-remote</id>
-            <properties>
-                <docker.repository>gitlab.ow2.org:4567/</docker.repository>
-                <docker.push>true</docker.push>
-            </properties>
-        </profile>
-
-    </profiles>
 </project>
 
