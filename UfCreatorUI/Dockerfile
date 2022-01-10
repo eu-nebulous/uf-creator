@@ -3,11 +3,10 @@ WORKDIR /dist/src/app
 
 RUN npm cache clean --force
 COPY . .
+RUN ls
 RUN npm install
 RUN npm run build --prod
-RUN pwd
-RUN ls -la /
-RUN ls -la 
+
 
 
 FROM nginx:latest AS ngi
