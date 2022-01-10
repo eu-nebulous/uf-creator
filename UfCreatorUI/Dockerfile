@@ -2,7 +2,7 @@ FROM node:12.22-alpine AS build
 WORKDIR /dist/src/app
 
 RUN npm cache clean --force
-COPY . .
+COPY ./ .
 
 RUN npm install
 RUN npm run build --prod
