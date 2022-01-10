@@ -10,7 +10,7 @@ variables:
   DOCKER_TLS_CERTDIR: "/certs"
 
   DOCKER_CLI: "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $CI_PROJECT_DIR/maven_repo:/root/.m2 -w /usr/src/mymaven -v $CI_PROJECT_DIR:/usr/src/mymaven $MAVEN_IMAGE"
-  UF_CREATOR_CLI: "mvn --batch-mode -N -Dmaven.test.skip=$SKIP_TESTS -Ddocker push=false -f Uf-creator/pom.xml"
+  UF_CREATOR_CLI: "mvn --batch-mode -N -Dmaven.test.skip=$SKIP_TESTS -Ddocker push=false -f Uf-Creator/pom.xml"
 
 cache:
   paths:
@@ -43,9 +43,10 @@ build-angular-ui:
     - cd UfCreatorUI
     - npm install -g --save-dev @angular/cli@latest
     - npm install --save-dev  --unsafe-perm node-sass@6.0.1
-    - npm install
   script: 
-    - ng build --prod 
+    - ng build --configuration production 
+    - cd dist
+    - ls
 
 deploy-angular-ui:
   stage: deploy-angular-ui
@@ -59,16 +60,17 @@ deploy-angular-ui:
   dependencies:
     - build-angular-ui
   script:
+    - docker pull nginx
     - cd UfCreatorUI
     - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
-    - docker build -t gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH .
-    - docker push gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH
+    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH .
+    - docker push gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH
 
 build-UfCreator:
   stage: build-UfCreator
   image: $MAVEN_IMAGE_JDK_8
   script:
-    - cd Uf-Creator
+    - ls
     - $UF_CREATOR_CLI clean install
   artifacts:
     expire_in: 1 week
