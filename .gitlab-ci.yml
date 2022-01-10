@@ -43,7 +43,7 @@ build-angular-ui:
     - cd UfCreatorUI
     - npm install -g --save-dev @angular/cli@latest
     - npm install --save-dev  --unsafe-perm node-sass@6.0.1
-    - npm install
+    - npm installtrion/ng-cli
   script: 
     - ng build --prod 
 
@@ -59,6 +59,7 @@ deploy-angular-ui:
   dependencies:
     - build-angular-ui
   script:
+    - docker pull nginx
     - cd UfCreatorUI
     - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
     - docker build -t gitlab.ow2.org:4567/melodic/uf-creatorui:$CI_COMMIT_BRANCH .
