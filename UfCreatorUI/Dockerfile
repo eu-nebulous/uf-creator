@@ -5,13 +5,12 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /usr/share/nginx/html
 RUN rm index.html
-COPY dist/UfCreatorUI .
+COPY UfCreatorUI/dist/UfCreatorUI .
 
 
 WORKDIR /usr/share/nginx/html
 RUN rm index.html
-COPY dist/UfCreatorUI .
-
+COPY UfCreatorUI/dist/UfCreatorUI .
 
 COPY ./docker/run.sh .
 RUN bash -c 'chmod +rx run.sh'
