@@ -5,7 +5,7 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /usr/share/nginx/html
 RUN rm index.html
-COPY dist .
+COPY --from=build dist/UfCreatorUI .
 
 COPY ./Docker/run.sh .
 RUN bash -c 'chmod +rx run.sh'
