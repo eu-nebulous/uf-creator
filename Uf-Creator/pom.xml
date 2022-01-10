@@ -19,13 +19,10 @@
 
         <!-- Versions for common plugins -->
         <source-plugin.version>2.4</source-plugin.version>
-        <maven-compiler.version>3.2</maven-compiler.version>
         <javadoc-plugin.version>2.9.1</javadoc-plugin.version>
         <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
-
         <!-- Versions for common plugins -->
         <source-plugin.version>2.4</source-plugin.version>
-        <maven-compiler.version>3.2</maven-compiler.version>
         <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
         <java.version>8</java.version>
     </properties>
@@ -53,7 +50,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler.version}</version>
+                <version>3.8.1</version>
                 <inherited>true</inherited>
                 <configuration>
                     <source>1.8</source>
