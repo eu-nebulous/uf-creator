@@ -1,11 +1,18 @@
-FROM nginx:alpine
-RUN /bin/sh -c "apk add --no-cache bash"
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+FROM node:12.14-alpine AS build
+WORKDIR /dist/src/app
 
-WORKDIR /usr/share/nginx/html
-RUN rm index.html
-COPY --from=build dist/UfCreatorUI .
+RUN npm cache clean --force
+COPY . .
+RUN npm install
+RUN npm run build --prod
+
+
+FROM nginx:latest AS ngi
+
+COPY --from=build /dist/UfCreatorUI /usr/share/nginx/html
+COPY /nginx.conf  /etc/nginx/conf.d/default.conf
+
 
 COPY ./Docker/run.sh .
 RUN bash -c 'chmod +rx run.sh'
