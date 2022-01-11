@@ -1,5 +1,5 @@
 variables:
-  MAVEN_IMAGE: "maven:3.8.1-jdk-11"
+  MAVEN_IMAGE: "maven:3.5.2-jdk-8"
   MAVEN_IMAGE_JDK_8: "maven:3.5.2-jdk-8"
   LOCAL_REPO: "127.0.0.1:5000"
 
@@ -24,15 +24,6 @@ before_script:
                     xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                             https://maven.apache.org/xsd/settings-1.0.0.xsd">
                 <localRepository>'$CI_PROJECT_DIR'/maven_repo</localRepository>
-                <mirrors>
-                  <mirror> 
-                    <id>maven-default-http-blocker</id>
-                    <mirrorOf>external:http:*</mirrorOf> 
-                    <name>Pseudo repository to mirror external repositories initially using HTTP.</name> 
-                    <url>http://0.0.0.0/</url>
-                    <blocked>true</blocked> 
-                  </mirror>
-                </mirrors>
           </settings>' > /root/.m2/settings.xml
   - echo "MAVEN_OPTS=$MAVEN_OPTS" > $CI_PROJECT_DIR/.env.list
     
@@ -84,7 +75,9 @@ build-UfCreator:
   artifacts:
     expire_in: 1 week
     paths:
-      - $CI_PROJECT_DIR/target
+      - $CI_PROJECT_DIR/Uf-Creator/target
+      - $CI_PROJECT_DIR/Uf-Creator/
+
 
 deploy-UfCreator:
   stage: deploy-UfCreator
@@ -96,10 +89,14 @@ deploy-UfCreator:
   dependencies:
     - build-UfCreator
   script:
+    - cd Uf-Creator/src/main/Docker
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
-    - docker tag $LOCAL_REPO/melodic/uf-creator/backend:latest $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
-    - docker push $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
+    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .
+    - docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
+
+
+
 
 
 
