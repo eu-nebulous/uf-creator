@@ -87,15 +87,14 @@ deploy-UfCreator:
   services:
     - $DOCKER_DIND_SERVICE
   dependencies:
-    - build-UfCreator
+    - busld-UfCreator
   script:
-    - cd Uf-Creator
+    - cd Uf-Creator/src/main/Docker
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
-    #- docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .
-    #- docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
-    - docker tag $LOCAL_REPO/melodic/uf-creator/Uf-Creator/backend:latest $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
-    - docker push $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
+    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .
+    - docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
+
 
 
 
