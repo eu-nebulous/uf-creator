@@ -1,5 +1,5 @@
 variables:
-  MAVEN_IMAGE: "maven:3.8.1-jdk-11"
+  MAVEN_IMAGE: "maven:3.5.2-jdk-8"
   MAVEN_IMAGE_JDK_8: "maven:3.5.2-jdk-8"
   LOCAL_REPO: "127.0.0.1:5000"
 
@@ -24,15 +24,6 @@ before_script:
                     xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
                             https://maven.apache.org/xsd/settings-1.0.0.xsd">
                 <localRepository>'$CI_PROJECT_DIR'/maven_repo</localRepository>
-                <mirrors>
-                  <mirror> 
-                    <id>maven-default-http-blocker</id>
-                    <mirrorOf>external:http:*</mirrorOf> 
-                    <name>Pseudo repository to mirror external repositories initially using HTTP.</name> 
-                    <url>http://0.0.0.0/</url>
-                    <blocked>true</blocked> 
-                  </mirror>
-                </mirrors>
           </settings>' > /root/.m2/settings.xml
   - echo "MAVEN_OPTS=$MAVEN_OPTS" > $CI_PROJECT_DIR/.env.list
     
