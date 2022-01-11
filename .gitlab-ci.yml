@@ -70,12 +70,11 @@ build-UfCreator:
   image: $MAVEN_IMAGE_JDK_8
   script:
     - ls
-    - $UF_CREATOR_CLI clean install
+    - $PREDICTON_ORCHESTRATOR_CLI -Pwithout-docker clean install
   artifacts:
     expire_in: 1 week
     paths:
-      - $CI_PROJECT_DIR/Uf-Creator/target
-      - $CI_PROJECT_DIR/Uf-Creator/
+     - /builds/melodic/morphemic-preprocessor/maven_repo/eu/melodic/uf-creator/
 
 
 deploy-UfCreator:
@@ -86,16 +85,11 @@ deploy-UfCreator:
   services:
     - $DOCKER_DIND_SERVICE
   dependencies:
-    - build-UfCreator
+    - build:prediction_orchestrator
   script:
-    - cd Uf-Creator/src/main/docker
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
-    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .
-    - docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
-
-
-
-
+    - docker tag $LOCAL_REPO/melodic/uf-creator:latest $CI_REGISTRY_IMAGE/uf-creator:$CI_COMMIT_BRANCH
+    - docker push $CI_REGISTRY_IMAGE/uf-creator:$CI_COMMIT_BRANCH
 
 
