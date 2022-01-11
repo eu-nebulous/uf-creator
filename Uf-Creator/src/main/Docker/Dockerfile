@@ -1,6 +1,7 @@
 FROM java:8-alpine
 VOLUME /tmp
-ADD target/Uf-Creator.jar Uf-Creator.jar
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} Uf-Creator.jar
 RUN /bin/sh -c "apk add --no-cache bash"
 RUN bash -c 'touch /Uf-Creator.jar'
 
