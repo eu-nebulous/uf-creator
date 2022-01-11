@@ -87,7 +87,7 @@ deploy-UfCreator:
   services:
     - $DOCKER_DIND_SERVICE
   dependencies:
-    - busld-UfCreator
+    - build-UfCreator
   script:
     - cd Uf-Creator/src/main/Docker
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
