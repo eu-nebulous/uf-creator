@@ -26,7 +26,15 @@ before_script:
                 <localRepository>'$CI_PROJECT_DIR'/maven_repo</localRepository>
           </settings>' > /root/.m2/settings.xml
   - echo "MAVEN_OPTS=$MAVEN_OPTS" > $CI_PROJECT_DIR/.env.list
-    
+  - echo '=====================+BEFORE+============================================='
+  - docker image ls
+  - echo '=========================================================================='
+after_script:
+  - echo '======================+AFTER+============================================='
+  - docker image ls
+  - echo '=========================================================================='
+
+  
 stages:          
   - build-angular-ui
   - deploy-angular-ui
@@ -87,12 +95,13 @@ deploy-UfCreator:
   dependencies:
     - build-UfCreator
   script:
+    - cd $CI_PROJECT_DIR/target
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
-   # - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .#
-   # - docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
-    - docker tag $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
-    - docker push $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
+    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .#
+    - docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
+   # - docker tag $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
+   # - docker push $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
 
 
 
