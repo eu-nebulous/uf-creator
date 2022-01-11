@@ -75,7 +75,9 @@ build-UfCreator:
   artifacts:
     expire_in: 1 week
     paths:
-      - $CI_PROJECT_DIR/target
+      - $CI_PROJECT_DIR/Uf-Creator/target
+      - $CI_PROJECT_DIR/Uf-Creator/
+
 
 deploy-UfCreator:
   stage: deploy-UfCreator
@@ -90,8 +92,10 @@ deploy-UfCreator:
     - cd Uf-Creator
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
-    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .
-    - docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
+    #- docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .
+    #- docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
+    - docker tag $LOCAL_REPO/melodic/uf-creator/Uf-Creator/backend:latest $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
+    - docker push $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
 
 
 
