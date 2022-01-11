@@ -89,7 +89,7 @@ deploy-UfCreator:
   dependencies:
     - build-UfCreator
   script:
-    - cd Uf-Creator/src/main/Docker
+    - cd Uf-Creator/src/main/docker
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
     - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .
