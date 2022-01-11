@@ -91,8 +91,7 @@ deploy-UfCreator:
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
    # - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH .#
    # - docker push gitlab.ow2.org:4567/melodic/uf-creator/backend:$CI_COMMIT_BRANCH
-
-    - docker tag $LOCAL_REPO/melodic/uf-creator/backend:unknown $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
+    - docker tag $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
     - docker push $CI_REGISTRY_IMAGE/uf-creator/backend:$CI_COMMIT_BRANCH
 
 
