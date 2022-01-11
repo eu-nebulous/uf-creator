@@ -85,7 +85,7 @@ deploy-UfCreator:
   services:
     - $DOCKER_DIND_SERVICE
   dependencies:
-    - build:prediction_orchestrator
+    - build-UfCreator
   script:
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
