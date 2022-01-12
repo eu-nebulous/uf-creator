@@ -17,7 +17,7 @@
         <docker.push>false</docker.push>
         <docker.repository>127.0.0.1:5000/</docker.repository>
         <docker.imagePrefix>melodic/</docker.imagePrefix>
-        <docker.imageName>uf-creator</docker.imageName>
+        <docker.imageName>backend</docker.imageName>
         <docker.jarToInclude>${project.build.finalName}.jar</docker.jarToInclude>
         <docker.spotify-plugin.version>0.4.0</docker.spotify-plugin.version>
 
