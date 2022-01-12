@@ -28,44 +28,44 @@ before_script:
     </settings>' > $HOME/.m2/settings.xml
     
 stages:          
-  #- build-angular-ui
-  #- deploy-angular-ui
+  - build-angular-ui
+  - deploy-angular-ui
   - build-UfCreator
   - deploy-UfCreator
 
-#build-angular-ui:
-#  stage: build-angular-ui
-#  image: trion/ng-cli
-#  artifacts:
-#    expire_in: 1 week
-#    paths:
-#      - dist/UfCreatorUI
-#  before_script:
-#    - cd UfCreatorUI
-#    - npm install -g --save-dev @angular/cli@latest
-#    - npm install --save-dev  --unsafe-perm node-sass@6.0.1
-#  script: 
-#    - ng build --configuration production 
-#    - cd dist
-#    - ls
+build-angular-ui:
+ stage: build-angular-ui
+ image: trion/ng-cli
+ artifacts:
+   expire_in: 1 week
+   paths:
+     - dist/UfCreatorUI
+ before_script:
+   - cd UfCreatorUI
+   - npm install -g --save-dev @angular/cli@latest
+   - npm install --save-dev  --unsafe-perm node-sass@6.0.1
+ script: 
+   - ng build --configuration production 
+   - cd dist
+   - ls
 
-#deploy-angular-ui:
-#  stage: deploy-angular-ui
-#  only:
-#    - main
-#  image: docker:19.03.1
-#  services:
-#    - docker:19.03.1-dind
-#  variables:
-#    DOCKER_TLS_CERTDIR: "/certs"
-#  dependencies:
-#    - build-angular-ui
-#  script:
-#    - docker pull nginx
-#    - cd UfCreatorUI
-#    - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
-#    - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH .
-#    - docker push gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH
+deploy-angular-ui:
+ stage: deploy-angular-ui
+ only:
+   - main
+ image: docker:19.03.1
+ services:
+   - docker:19.03.1-dind
+ variables:
+   DOCKER_TLS_CERTDIR: "/certs"
+ dependencies:
+   - build-angular-ui
+ script:
+   - docker pull nginx
+   - cd UfCreatorUI
+   - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
+   - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH .
+   - docker push gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH
 
 build-UfCreator:
   stage: build-UfCreator
