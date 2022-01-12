@@ -70,7 +70,7 @@ build-UfCreator:
   image: $MAVEN_IMAGE_JDK_8
   script:
     - ls
-    - $PREDICTON_ORCHESTRATOR_CLI -Pwithout-docker clean install
+    - $UF_CREATOR_CLI -Pwithout-docker clean install
   artifacts:
     expire_in: 1 week
     paths:
