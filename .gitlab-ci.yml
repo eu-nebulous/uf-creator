@@ -76,7 +76,7 @@ build-UfCreator:
   artifacts:
     expire_in: 1 week
     paths:
-     - /builds/melodic/uf-creator/maven_repo/eu/morphemic/ufcreator/
+     - /builds/melodic/uf-creator/maven_repo/eu/melodic/ufcreator/
 
 
 deploy-UfCreator:
