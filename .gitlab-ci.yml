@@ -91,7 +91,7 @@ deploy-UfCreator:
   script:
     - $DOCKER_CLI $UF_CREATOR_CLI deploy
     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
-    - docker tag $LOCAL_REPO/melodic/uf-creator:UNKNOWN $CI_REGISTRY_IMAGE/uf-creator:$CI_COMMIT_BRANCH
-    - docker push $CI_REGISTRY_IMAGE/uf-creator:$CI_COMMIT_BRANCH
+    - docker tag $LOCAL_REPO/melodic/backend:latest $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_BRANCH
+    - docker push $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_BRANCH
 
 
