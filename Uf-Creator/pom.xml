@@ -278,6 +278,33 @@
         <connection>scm:git:https://gitlab.ow2.org/melodic/uf-creator.git</connection>
         <developerConnection>scm:https://gitlab.ow2.org/melodic/uf-creator.git</developerConnection>
     </scm>
+    <profiles>
+        <profile>
+            <id>without-docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>execution</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
+        <profile>
+            <id>docker-remote</id>
+            <properties>
+                <docker.repository>gitlab.ow2.org:4567/</docker.repository>
+                <docker.push>true</docker.push>
+            </properties>
+        </profile>
+
+    </profiles>
 </project>
 
