@@ -30,8 +30,8 @@ before_script:
 stages:          
  - build-angular-ui
  - deploy-angular-ui
-  - build-UfCreator
-  - deploy-UfCreator
+ - build-UfCreator
+ - deploy-UfCreator
 
 build-angular-ui:
 stage: build-angular-ui
