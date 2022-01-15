@@ -17,4 +17,4 @@ COPY /nginx.conf  /etc/nginx/conf.d/default.conf
 
 COPY ./Docker/run.sh .
 RUN bash -c 'chmod +rx run.sh'
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["UfCreatorUI/Docker/run.sh"]
