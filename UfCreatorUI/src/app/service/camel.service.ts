@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
+import {AppConfigService} from "../app-config/service/app-config.service";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -15,7 +16,8 @@ const httpOptions = {
 
 export class CamelService {
 
-  apiUrl = 'http://localhost:8080/camel-model';
+  apiUrl = `${AppConfigService.settings.apiUrl}/camel-model/`;
+
 
   constructor(private http: HttpClient) {
   }
