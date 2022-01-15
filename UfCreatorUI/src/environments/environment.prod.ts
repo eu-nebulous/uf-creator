@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  useRuntimeConfig: false,
+  href: '/',
+  apiUrl: 'https://localhost:8888',
 };
