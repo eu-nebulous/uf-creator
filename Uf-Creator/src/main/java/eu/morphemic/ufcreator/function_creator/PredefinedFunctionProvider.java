@@ -14,7 +14,7 @@ import static eu.morphemic.ufcreator.function_creator.FormulaProvider.*;
 @Slf4j
 public class PredefinedFunctionProvider {
 
-    public static String getTemplate(ArrayList<PredefinedFunctionDTO> predefinedFunctions) {
+    public static String getFunctionFormulaByPredefined(List<PredefinedFunctionDTO> predefinedFunctions) {
         List<String> utilityFunction = new ArrayList<>();
         for (PredefinedFunctionDTO predefinedFunction : predefinedFunctions) {
             log.info("{}", predefinedFunction);
@@ -24,7 +24,7 @@ public class PredefinedFunctionProvider {
         return getSum(utilityFunction);
     }
 
-    public static String getTemplate(List<ByTemplateFunctionDTO> byTemplateFunctionDTOList) {
+    public static String getFunctionFormulaByTemplate(List<ByTemplateFunctionDTO> byTemplateFunctionDTOList) {
         List<String> utilityFunction = new ArrayList<>();
         for (ByTemplateFunctionDTO byTemplateFunctionDTO : byTemplateFunctionDTOList) {
             log.info("{}", byTemplateFunctionDTO);

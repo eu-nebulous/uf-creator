@@ -16,6 +16,7 @@ import {Constant} from "../../model/Constant";
 import {MatListOption} from "@angular/material/list";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FunctionService} from "../../service/function.service";
+import {PlottingMetric} from "../../model/PlottingMetric";
 
 
 @Component({
@@ -64,7 +65,8 @@ export class ByFunctionCreatorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.something="x^3";
+    this.something="a x + b"
+    // this.something="((1.0*1/(1+cos(sin(1*pi/180)*sin(3*pi/180)+cos(1*pi/180)*cos(2*pi/180)+cos(4*pi/180 + 2*pi/180))*6371000)))";
     this.camelModelService.getCamelModelList().subscribe(camelModelResponse => {
         this.isCamelModelListLoading = false;
         this.isVariablesLoading = true;
@@ -126,8 +128,8 @@ export class ByFunctionCreatorComponent implements OnInit {
     var variableListLocality = new Array<Variable>();
     var metricsLocality = new Array<Metric>();
     var compositeMetricsLocality = new Array<Metric>();
-    var metricsList = [new Metric("Minimum cores number", "", ""), new Metric("Simulations left", "", ""),new Metric("Estimated Remaining Time", "", "")];
-    var metricsList2 = [new Metric("Minimum cores number", "", ""), new Metric("Simulations left", "", ""),new Metric("Estimated Remaining Time", "", "")];
+    var metricsList = [new Metric("Minimum cores number", ""), new Metric("Simulations left", ""),new Metric("Estimated Remaining Time", "")];
+    var metricsList2 = [new Metric("Minimum cores number", ""), new Metric("Simulations left", ""),new Metric("Estimated Remaining Time", "")];
 
 
     var simulationOnTime = new PredefinedFunction("FinishSimulationOnTime", "../../../assets/img/Utime.png", simulationOnTimeVariables, constantsList, metricsList);

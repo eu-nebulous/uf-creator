@@ -2,13 +2,12 @@
   <div *ngSwitchCase="'horizontal'"></div>
   <div *ngSwitchCase="'vertical'"></div>
 </ng-container>
-
+<h2 style="margin-left: 1rem">By function</h2>
 <mat-stepper
   #stepper
   [orientation]="(stepperOrientation | async)!" class="example-stepper">
   <mat-step [stepControl]="firstFormGroup" label="Choose camel model">
-
-    <form [formGroup]="firstFormGroup">
+    <form class="form-camel" [formGroup]="firstFormGroup">
       <mat-form-field appearance="fill">
         <mat-label>Select camel model</mat-label>
         <mat-select #firstStep [disabled]="isCamelModelListLoading"
@@ -18,6 +17,7 @@
                       [value]="camelModel">{{camelModel}}</mat-option>
         </mat-select>
       </mat-form-field>
+
       <div *ngIf="!isCamelModelListLoading">
         <div *ngIf="isVariablesLoading else elseBlockVariables"
              style="display: flex; justify-content: left; align-items: center;">
@@ -68,7 +68,7 @@
         </ng-template>
       </div>
       <div>
-        <button color="primary" mat-button matStepperNext>Next</button>
+        <button color="primary" mat-raised-button [disabled]="isCamelModelListLoading" matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -93,7 +93,7 @@
       <div>
 
         <button (click)="openDialog(predefinedFunctionSelectionList.selectedOptions.selected,stepper)" color="primary"
-                mat-button>Next
+                mat-raised-button>Next
         </button>
       </div>
     </form>
@@ -117,17 +117,23 @@
       </p>
     </ng-container>
     <mat-label>Current weights sum: {{this.sum}}</mat-label>
-    <button (click)="validateValuesFromSliders(stepper)" mat-button>Next</button>
+    <div>
+      <button (click)="validateValuesFromSliders(stepper)" mat-raised-button color="primary">Next</button>
+
+    </div>
 
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You Created Function:</p>
-    {{this.utilityFunction}}
-    <app-mathplot [functionToBePlotted]="this.something"></app-mathplot>
+    <mat-card >
+      <h2 style="text-align:center">{{this.utilityFunction}}</h2>
+      <div style="width: 500px" id="by-function-complete"></div>
+      <app-mathplot [functionToBePlotted]="'x / (1 + abs(x))'"  [id]="'#by-function-complete'"></app-mathplot>
+    </mat-card>
     <div>
-      <button color="secondary" mat-button matStepperPrevious>Back</button>
-      <button (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"
+      <button mat-raised-button matStepperPrevious color="primary">Back</button>
+      <button style="margin-left: 2rem;margin-top:1rem " (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"
               class="example-ripple-container mat-elevation-z4"
               mat-fab
               matRipple>

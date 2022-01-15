@@ -35,6 +35,8 @@ import {ByPlottingComponent} from './components/by-plotting/by-plotting.componen
 import {NgxMathFunctionPlotterModule} from "ngx-math-function-plotter";
 import functionPlot from "function-plot";
 import {MathplotComponent} from "./components/mathplot/mathplot.component";
+import { MapComponent } from './components/map/map.component';
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import {MathplotComponent} from "./components/mathplot/mathplot.component";
     ByTemplateCreatorComponent,
     ByFunctionCreatorComponent,
     ByPlottingComponent,
-    MathplotComponent
+    MathplotComponent,
+    MapComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -81,7 +84,8 @@ import {MathplotComponent} from "./components/mathplot/mathplot.component";
     MatSnackBarModule,
     MatPaginatorModule,
     MatRippleModule,
-    NgxMathFunctionPlotterModule
+    NgxMathFunctionPlotterModule,
+    LeafletModule
 
   ],
   providers: [],

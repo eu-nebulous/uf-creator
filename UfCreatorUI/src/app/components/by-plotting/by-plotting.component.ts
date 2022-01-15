@@ -81,7 +81,7 @@ export class ByPlottingComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.metricList = [new Metric("Test", "sdasa", ""), new Metric("Test2", "sdasa", "")];
+    this.metricList = [new Metric("Test", "sdasa"), new Metric("Test2", "sdasa")];
     this.camelModelService.getCamelModelList().subscribe(camelModelResponse => {
         this.isCamelModelListLoading = false;
         this._snackBar.open("List of camel models loaded!", "Close", {duration: 5 * 1000,});

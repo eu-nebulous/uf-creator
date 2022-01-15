@@ -2,7 +2,7 @@
   <div *ngSwitchCase="'horizontal'"></div>
   <div *ngSwitchCase="'vertical'"></div>
 </ng-container>
-
+<h2 style="margin-left: 1rem">By template</h2>
 <mat-stepper
   #stepper
   [orientation]="(stepperOrientation | async)!"
@@ -55,7 +55,7 @@
       </div>
 
       <div>
-        <button color="primary" mat-button matStepperNext>Next</button>
+        <button color="primary"  mat-raised-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -73,7 +73,7 @@
     <!--    <mat-paginator (page)="OnPageChange($event)" [length]="length"-->
     <!--                   [pageSize]=5>-->
     <!--    </mat-paginator>-->
-    <button (click)="saveSelected(selectedMetrics.selectedOptions.selected)" mat-button matStepperNext>Next</button>
+    <button (click)="saveSelected(selectedMetrics.selectedOptions.selected)" color="primary" mat-raised-button matStepperNext>Next</button>
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup" label="Specify template">
     <ng-container *ngFor="let selection of byTemplateFunctionList">
@@ -91,7 +91,10 @@
             </mat-radio-button>
           </ng-container>
         </mat-radio-group>
-        <p></p>
+        <ng-container *ngIf="selection.a!=null&&selection.b!=null">
+          <div id="s"></div>
+          <app-mathplot [id]="'#s'" [functionToBePlotted]="'x^2'" [a]="selection.a" [b]="selection.b"></app-mathplot>
+        </ng-container>
         <label id="utility-label">Define a and b:</label>
         <p>
           <mat-form-field appearance="fill" class="example-full-width">
@@ -108,8 +111,8 @@
 
       </mat-card>
     </ng-container>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext>Next</button>
+    <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+    <button mat-raised-button color="primary" matStepperNext>Next</button>
 
   </mat-step>
   <mat-step [stepControl]="forthFormGroup" label="Define weights">
@@ -131,19 +134,28 @@
         step="0.1"
         thumbLabel
         tickInterval="1000"></mat-slider>
-      <mat-divider></mat-divider>
     </ng-container>
-    <mat-label>Current weights sum: {{this.sum}}
-    </mat-label>
-    <button (click)="validateValuesFromSliders(stepper)" mat-button>Next</button>
+    <p>
+      <mat-label>Current weights sum: {{this.sum}}  </mat-label>
+    </p>
+
+    <button (click)="validateValuesFromSliders(stepper)" color="primary" mat-raised-button>Next</button>
 
   </mat-step>
   <mat-step label="Done">
     <p>You Created Function:</p>
     {{this.utilityFunction}}
-    <app-mathplot [functionToBePlotted]="this.utilityFunction"></app-mathplot>
+        <ng-container *ngFor="let plottingMetric of this.plottingMetrics">
+          <mat-label>{{plottingMetric.metric}}</mat-label>
+          <p>
+            <mat-form-field appearance="fill" class="example-full-width">
+              <input [(ngModel)]="plottingMetric.value" matInput required>
+            </mat-form-field>
+          </p>
+        </ng-container>
+{{this.plottingMetrics |json}}
     <div>
-      <button color="secondary" mat-button matStepperPrevious>Back</button>
+      <button color="primary" mat-raised-button matStepperPrevious>Back</button>
       <button (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"
               class="example-ripple-container mat-elevation-z4"
               mat-fab

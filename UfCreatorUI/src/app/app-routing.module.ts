@@ -6,12 +6,14 @@ import {ByFunctionCreatorComponent} from "./components/by-function-creator/by-fu
 import {ByTemplateCreatorComponent} from "./components/by-template-creator/by-template-creator.component";
 import {ByPlottingComponent} from "./components/by-plotting/by-plotting.component";
 import {MathplotComponent} from "./components/mathplot/mathplot.component";
+import {MapComponent} from "./components/map/map.component";
 
 const routes: Routes = [
   {path: 'app-by-function-creator', component: ByFunctionCreatorComponent},
   {path: 'app-by-template-creator', component: ByTemplateCreatorComponent},
   {path: 'app-by-plotting', component: ByPlottingComponent},
-  {path: 'app-mathplot', component: MathplotComponent}
+  {path: 'app-mathplot', component: MathplotComponent},
+  {path: 'app-map', component: MapComponent},
 ]
 
 

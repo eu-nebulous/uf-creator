@@ -13,6 +13,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {ByTemplateFunction} from "../../model/ByTemplateFunction";
 import {MatListOption} from "@angular/material/list";
 import {UtilityShape} from "../../model/UtilityShape";
+import {PlottingMetric} from "../../model/PlottingMetric";
+import {MatStepper} from "@angular/material/stepper";
+import {PredefinedFunctionDialogComponent} from "../predefined-function-dialog/predefined-function-dialog.component";
 
 @Component({
   selector: 'app-by-template-creator',
@@ -31,6 +34,7 @@ export class ByTemplateCreatorComponent {
   metrics = new FormControl();
   rawMetricList: Metric[];
   compositeMetrics = new FormControl();
+  plottingMetrics = new Array<PlottingMetric>();
   compositeMetricList: Metric[];
   isCamelModelListLoading = true;
   isCompositeMetricsLoading: any;
@@ -40,6 +44,7 @@ export class ByTemplateCreatorComponent {
   sliderValues = new Array<number>();
   sum: number;
   byTemplateFunctionList = new Array<ByTemplateFunction>();
+
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -66,7 +71,7 @@ export class ByTemplateCreatorComponent {
   }
 
   ngOnInit(): void {
-    this.metricList = [new Metric("Test", "sdasa", ""), new Metric("Test2", "sdasa", "")];
+    this.metricList = [new Metric("Test", "sdasa"), new Metric("Test2", "sdasa")];
     this.camelModelService.getCamelModelList().subscribe(camelModelResponse => {
         this.isCamelModelListLoading = false;
         this._snackBar.open("List of camel models loaded!", "Close", {duration: 5 * 1000,});
@@ -151,6 +156,7 @@ export class ByTemplateCreatorComponent {
     this.byTemplateFunctionList = new Array<ByTemplateFunction>();
     selections.forEach(x =>
       this.byTemplateFunctionList.push(new ByTemplateFunction(x.value.name)));
+    this.byTemplateFunctionList.forEach(x => this.plottingMetrics.push(new PlottingMetric(x.metricName, "")));
   }
 
   generateUtilityFunction() {

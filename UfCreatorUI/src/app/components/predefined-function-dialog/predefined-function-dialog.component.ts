@@ -17,7 +17,7 @@ export class PredefinedFunctionDialogComponent {
   floatLabelControl = new FormControl('auto');
   constants: Constant[];
   variables: Variable[];
-  metricList: Metric[]
+  metricList: Array<Metric>;
   selectedValue: string;
   firstName = new FormControl();
   dataFromFunctionCreator: any;
@@ -28,7 +28,7 @@ export class PredefinedFunctionDialogComponent {
     this.variablesFromFunctionCreator = this.data.selectedOptions.variables;
     this.constants = this.data.selectedOptions.constants;
     this.dataFromFunctionCreator = this.data.selectedOptions;
-    this.metricList=this.data.rawMetricList+this.data.compositeMetricList;
+    this.metricList=this.data.rawMetricList.concat(this.data.compositeMetricList);
     console.log(this.dataFromFunctionCreator);
     this.options = fb.group({
       hideRequired: this.hideRequiredControl,

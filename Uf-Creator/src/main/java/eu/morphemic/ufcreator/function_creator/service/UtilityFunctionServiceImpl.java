@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -14,12 +16,12 @@ import java.util.List;
 public class UtilityFunctionServiceImpl implements UtilityFunctionService {
     public String createUtilityFunctionPredefined(List<PredefinedFunctionDTO> predefinedFunctionDTOList) {
         log.info("{}", predefinedFunctionDTOList);
-        return PredefinedFunctionProvider.getTemplate((ArrayList<PredefinedFunctionDTO>) predefinedFunctionDTOList);
+        return PredefinedFunctionProvider.getFunctionFormulaByPredefined(predefinedFunctionDTOList);
     }
 
     public String createUtilityFunctionByTemplate(List<ByTemplateFunctionDTO> byTemplateFunctionDTOList) {
 
         log.info("{}", byTemplateFunctionDTOList);
-        return PredefinedFunctionProvider.getTemplate(byTemplateFunctionDTOList);
+        return PredefinedFunctionProvider.getFunctionFormulaByTemplate(byTemplateFunctionDTOList);
     }
 }
