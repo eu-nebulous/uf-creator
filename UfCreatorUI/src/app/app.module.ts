@@ -84,7 +84,6 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     MatSnackBarModule,
     MatPaginatorModule,
     MatRippleModule,
-    NgxMathFunctionPlotterModule,
     LeafletModule
 
   ],
