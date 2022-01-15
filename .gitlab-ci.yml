@@ -30,8 +30,8 @@ before_script:
 stages:          
  - build-angular-ui
  - deploy-angular-ui
- - build-UfCreator
- - deploy-UfCreator
+#  - build-UfCreator
+#  - deploy-UfCreator
 
 build-angular-ui:
   stage: build-angular-ui
@@ -68,29 +68,29 @@ deploy-angular-ui:
     - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH .
     - docker push gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH
 
-build-UfCreator:
-  stage: build-UfCreator
-  image: $MAVEN_IMAGE_JDK_8
-  script:
-    - ls
-    - $UF_CREATOR_CLI -Pwithout-docker clean install
-  artifacts:
-    expire_in: 1 week
-    paths:
-     - /builds/melodic/uf-creator/maven_repo/eu/melodic/ufcreator/
+# build-UfCreator:
+  # stage: build-UfCreator
+  # image: $MAVEN_IMAGE_JDK_8
+  # script:
+  #   - ls
+  #   - $UF_CREATOR_CLI -Pwithout-docker clean install
+  # artifacts:
+  #   expire_in: 1 week
+  #   paths:
+  #    - /builds/melodic/uf-creator/maven_repo/eu/melodic/ufcreator/
 
 
-deploy-UfCreator:
-  stage: deploy-UfCreator
-  image: $DOCKER_DIND_IMAGE
-  only:
-    - main
-  services:
-    - $DOCKER_DIND_SERVICE
-  dependencies:
-    - build-UfCreator
-  script:
-    - $DOCKER_CLI $UF_CREATOR_CLI deploy
-    - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
-    - docker tag $LOCAL_REPO/melodic/backend:latest $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_BRANCH
-    - docker push $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_BRANCH
+# deploy-UfCreator:
+#   stage: deploy-UfCreator
+#   image: $DOCKER_DIND_IMAGE
+#   only:
+#     - main
+#   services:
+#     - $DOCKER_DIND_SERVICE
+#   dependencies:
+#     - build-UfCreator
+#   script:
+#     - $DOCKER_CLI $UF_CREATOR_CLI deploy
+#     - echo "$K8S_SECRET_DOCKER_PASSWORD" | docker login $CI_REGISTRY -u $K8S_SECRET_DOCKER_USER --password-stdin
+#     - docker tag $LOCAL_REPO/melodic/backend:latest $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_BRANCH
+#     - docker push $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_BRANCH
