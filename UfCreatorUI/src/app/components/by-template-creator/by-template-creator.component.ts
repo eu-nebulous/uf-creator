@@ -93,6 +93,7 @@ export class ByTemplateCreatorComponent {
   formatLabel(value: number) {
     return value;
   }
+
   firstStepComplete(firstStepValue: string) {
     this.isCompositeMetricsLoading = true;
     this.isRawMetricsLoading = true;
@@ -175,5 +176,4 @@ export class ByTemplateCreatorComponent {
         this.isSendingRequest = false;
       });
   }
-
 }
