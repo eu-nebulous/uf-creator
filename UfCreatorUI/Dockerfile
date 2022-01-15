@@ -5,7 +5,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /usr/share/nginx/html
 RUN rm index.html
-RUN ls
+WORKDIR /dist/UfCreatorUI
 COPY /dist/src/app .
 
 COPY ./Docker/run.sh .
