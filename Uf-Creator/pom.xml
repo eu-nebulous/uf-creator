@@ -5,21 +5,65 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.6</version>
+        <version>2.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>eu.morphemic</groupId>
+    <groupId>eu.melodic</groupId>
     <artifactId>ufcreator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ufcreator</name>
     <description>Uf-creator application</description>
     <properties>
+        <docker.push>false</docker.push>
+        <docker.repository>127.0.0.1:5000/</docker.repository>
+        <docker.imagePrefix>melodic/</docker.imagePrefix>
+        <docker.imageName>backend</docker.imageName>
+        <docker.jarToInclude>${project.build.finalName}.jar</docker.jarToInclude>
+        <docker.spotify-plugin.version>0.4.0</docker.spotify-plugin.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Versions for common plugins -->
+        <source-plugin.version>2.4</source-plugin.version>
+        <javadoc-plugin.version>2.9.1</javadoc-plugin.version>
+        <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
+        <!-- Versions for common plugins -->
+        <source-plugin.version>2.4</source-plugin.version>
+        <maven-assembly-plugin.version>2.5.3</maven-assembly-plugin.version>
         <java.version>8</java.version>
     </properties>
+
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.4.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.4.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.2</version>
         </dependency>
 
         <dependency>
@@ -31,7 +75,7 @@
         <dependency>
             <groupId>org.ow2.paasage</groupId>
             <artifactId>melodic-commons</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <version>4.5.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -48,11 +92,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -62,9 +101,130 @@
             <version>3.1.0-SNAPSHOT</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2 -->
-
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${source-plugin.version}</version>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.10</version>
+                <configuration>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <imageName>${docker.repository}${docker.imagePrefix}${docker.imageName}:latest</imageName>
+                    <pushImage>${docker.push}</pushImage>
+                    <serverId>ow2.melodic</serverId>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${docker.jarToInclude}</include>
+                        </resource>
+                    </resources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>javax.activation</groupId>
+                        <artifactId>activation</artifactId>
+                        <version>1.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!--plugins for getting scmBranch value lowercase to use in docker images -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.groovy.maven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                import org.apache.commons.lang.StringUtils
+
+                                project.properties["scmBranch"] = StringUtils.lowerCase(project.properties["scmBranch"])
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
@@ -87,7 +247,7 @@
         <repository>
             <id>ow2</id>
             <name>OW2 repository</name>
-            <url>http://repository.ow2.org/nexus/content/repositories/public/</url>
+            <url>https://repository.ow2.org/nexus/content/repositories/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -120,16 +280,37 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <scm>
+        <connection>scm:git:https://gitlab.ow2.org/melodic/uf-creator.git</connection>
+        <developerConnection>scm:https://gitlab.ow2.org/melodic/uf-creator.git</developerConnection>
+    </scm>
+    <profiles>
+        <profile>
+            <id>without-docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>execution</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <profile>
+            <id>docker-remote</id>
+            <properties>
+                <docker.repository>gitlab.ow2.org:4567/</docker.repository>
+                <docker.push>true</docker.push>
+            </properties>
+        </profile>
 
-    </build>
-
+    </profiles>
 </project>
 
