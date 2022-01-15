@@ -7,7 +7,7 @@ import camel.metric.MetricModel;
 import camel.metric.RawMetric;
 import camel.metric.impl.MetricTypeModelImpl;
 import camel.metric.impl.MetricVariableImpl;
-import com.google.errorprone.annotations.Var;
+import camel.mms.MmsObject;
 import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.common.util.EList;
 import org.jclouds.rest.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,22 @@ public class CamelModelServiceImpl implements CamelModelService {
     private CdoServerApi cdoServerApi;
     private CdoService cdoService;
 
+    public static String getAnnotationOfMetricVariable(MetricVariableImpl metricVariable) {
+        EList<MmsObject> annotations = metricVariable.getMetricTemplate().getAttribute().getAnnotations();
+        if (annotations.isEmpty()) {
+            log.warn("Metric Variable {} has not definied annotation, returning empty String", metricVariable.getName());
+            return "";
+        }
+        String annotation = annotations.get(0).getId();
+        log.debug("Found annotation {} for metric: {}", metricVariable.getName(), annotation);
+        return annotation;
+    }
+
     public List<String> getCamelModelNames() {
         List<String> allXmiModels = cdoService.getAllXmi();
         allXmiModels.sort(String::compareTo);
         return allXmiModels;
     }
-
 
     @Override
     public MetricVariableImpl getVariable(CamelModel camelModel, String variableName) {
@@ -57,18 +68,29 @@ public class CamelModelServiceImpl implements CamelModelService {
     @Override
     public CompositeMetric getCompositeMetric(CamelModel camelModel, String metricName) {
         return CamelModelTool.getCompositeMetric(camelModel, metricName).orElseThrow(ResourceNotFoundException::new);
+
+    }
+
+    public void saveUtilityFunction(CamelModel camelModel, String formula) {
+        MetricVariableImpl utility = (MetricVariableImpl) getAllMetrics(camelModel)
+                .stream()
+                .filter(metricModel -> metricModel instanceof MetricVariableImpl)
+                .filter(x -> x.getName().equals("Utility"))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(""));
+        utility.setFormula(formula);
     }
 
     @Override
     public List<VariableDTO> getVariables(CamelModel camelModel) {
-        return  getAllMetrics(camelModel)
+
+        return getAllMetrics(camelModel)
                 .stream()
                 .filter(metricModel -> metricModel instanceof MetricVariableImpl)
                 .map(metricModel -> (MetricVariableImpl) metricModel)
                 .map(CamelModelMapper::variableToVariableDTO)
                 .collect(Collectors.toList());
     }
-
 
     @Override
     public List<RawMetricDTO> getRawMetrics(CamelModel camelModel) {
@@ -102,8 +124,6 @@ public class CamelModelServiceImpl implements CamelModelService {
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
-
-
 
     public List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName) {
         CDOSessionX cdoSessionX = cdoServerApi.openSession();
@@ -140,4 +160,26 @@ public class CamelModelServiceImpl implements CamelModelService {
         cdoSessionX.closeSession();
         return VariableDTOs;
     }
+
+    public void saveUtility(String resourceName, String formula) throws CommitException {
+        CDOSessionX cdoSessionX = cdoServerApi.openSession();
+        CDOTransaction cdoTransaction = cdoServerApi.openTransaction(cdoSessionX);
+        log.info("Loading camel model {}", resourceName);
+        CamelModel camelModel;
+        camelModel = cdoService.getCamelModel(resourceName, cdoTransaction);
+        this.saveUtilityFunction(camelModel, formula);
+        cdoTransaction.commit();
+        cdoSessionX.closeTransaction(cdoTransaction);
+        cdoSessionX.closeSession();
+    }
+//    public static String getAnnotationOfRawMetric(RawMetricImpl rawMetric) {
+//        EList<MmsObject> annotations = rawMetric.getMetricTemplate().getAttribute().getAnnotations();
+//        if (annotations.isEmpty()) {
+//            log.warn("Metric Variable {} has not definied annotation, returning empty String", rawMetric.getName());
+//            return "";
+//        }
+//        String annotation = annotations.get(0).getId();
+//        log.debug("Found annotation {} for metric: {}", rawMetric.getName(), annotation);
+//        return annotation;
+//    }
 }

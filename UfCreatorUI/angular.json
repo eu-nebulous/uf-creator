@@ -17,6 +17,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "function-plot",
+              "is-safe-integer",
+              "nextafter"
+            ],
             "outputPath": "dist/UfCreatorUI",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -29,6 +34,7 @@
             "styles": [
               "src/theme.scss",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/leaflet/dist/leaflet.css",
               "src/styles.css"
             ],
             "scripts": [

@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
-import {CompositeMetric} from "../model/compositeMetric";
-import {RawMetric} from "../model/rawMetric";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -23,8 +21,8 @@ export class CamelService {
   }
 
   getCamelModelList(): Observable<any> {
-      return this.http.get(`${this.apiUrl}`, httpOptions);
-    }
+    return this.http.get(`${this.apiUrl}`, httpOptions);
+  }
 
   getRawMetricList(resourceName: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${resourceName}/rawMetrics`, httpOptions);
@@ -36,6 +34,16 @@ export class CamelService {
 
   getVariableMetricList(resourceName: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/${resourceName}/variables`, httpOptions);
+  }
+
+  saveUtilityFunction(resourceName: any, utilityFunction: string): Observable<any> {
+    let requestUrl = this.apiUrl + "/" + resourceName + "/saveUtility/" + utilityFunction;
+
+    return this.http.post<any>(requestUrl, "").pipe(
+      tap((response: any) => {
+          console.log(`Saving utility function request OK`);
+        },
+        e => console.log('Error by saving utility function', e)));
   }
 
 }

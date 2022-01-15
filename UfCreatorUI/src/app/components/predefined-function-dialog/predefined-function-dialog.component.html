@@ -1,0 +1,73 @@
+<h1 mat-dialog-title>Specify variables and metrics</h1>
+<mat-dialog-content class="mat-typography">
+
+  <ng-container *ngFor="let predefinedFunction of dataFromFunctionCreator,let index = index; trackBy:trackByIndex;">
+    <mat-card>
+      <h2>{{predefinedFunction.name}}:</h2>
+      <img src="{{predefinedFunction.src}}" alt="#">
+      <ng-container *ngIf="predefinedFunction.variableList.length!=0">
+        <p>
+          <mat-label>Variables:</mat-label>
+        </p>
+      </ng-container>
+      <ng-container
+        *ngFor="let variable of dataFromFunctionCreator[index].variableList,let index2 = index; trackBy:trackByIndex;">
+        <mat-form-field appearance="fill">
+          <mat-label>{{variable.name}}</mat-label>
+          <mat-select [(ngModel)]="dataFromFunctionCreator[index].variableList[index2].value">
+            <ng-container *ngFor="let variableFromCamel of data.variables,let index3 = index; trackBy:trackByIndex;">
+              <ng-container
+                *ngIf="dataFromFunctionCreator[index].variableList[index2].type==data.variables[index3].type">
+                <mat-option [value]="data.variables[index3].name">
+                  {{data.variables[index3].name}}
+                </mat-option>
+              </ng-container>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+<ng-container *ngIf="predefinedFunction.metricList.length!=0">
+  <p>
+    <mat-label>Metrics:</mat-label>
+  </p>
+</ng-container>
+      <div class="example-wrapper">
+
+        <ng-container
+          *ngFor="let rawMetric of dataFromFunctionCreator[index].metricList,let index2 = index; trackBy:trackByIndex;">
+          <mat-form-field appearance="fill">
+            <mat-label>{{rawMetric.name}}</mat-label>
+            <mat-select [(ngModel)]="dataFromFunctionCreator[index].metricList[index2].value">
+              <ng-container
+                *ngFor="let rawMetricFromCamel of this.metricList,let index3 = index; trackBy:trackByIndex;">
+                <mat-option [value]="this.metricList[index3].name">
+                  {{this.metricList[index3].name}}
+                </mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="predefinedFunction.constantsList.length!=0">
+        <p>
+          <mat-label>Constants:</mat-label>
+        </p>
+      </ng-container>
+
+      <div class="example-container">
+        <mat-form-field
+          *ngFor="let constant of dataFromFunctionCreator[index].constantsList; let index2 = index; trackBy:trackByIndex;"
+          appearance="fill">
+          <mat-label>{{constant.name}}</mat-label>
+          <input [(ngModel)]="dataFromFunctionCreator[index].constantsList[index2].value" matInput/>
+        </mat-form-field>
+      </div>
+
+    </mat-card>
+  </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button [mat-dialog-close]="true" cdkFocusInitial  mat-raised-button color="primary">Next</button>
+</mat-dialog-actions>
+
