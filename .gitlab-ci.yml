@@ -62,8 +62,8 @@ deploy-angular-ui:
   dependencies:
     - build-angular-ui
   script:
-    - docker pull nginx
     - cd UfCreatorUI
+    - ls        
     - docker login gitlab.ow2.org:4567 -u $K8S_SECRET_DOCKER_USER -p $K8S_SECRET_DOCKER_PASSWORD
     - docker build -t gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH .
     - docker push gitlab.ow2.org:4567/melodic/uf-creator/front:$CI_COMMIT_BRANCH
