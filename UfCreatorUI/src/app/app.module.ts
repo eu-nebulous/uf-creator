@@ -1,67 +1,93 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-// @ts-ignore
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MatNativeDateModule, MatRippleModule} from "@angular/material/core";
 import {MatStepperModule} from "@angular/material/stepper";
-import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from '@angular/material/button';
-import {MatToolbar, MatToolbarModule} from "@angular/material/toolbar";
+import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatIcon, MatIconModule} from "@angular/material/icon";
+import {MatIconModule} from "@angular/material/icon";
 import {MatDividerModule} from "@angular/material/divider";
-import {MatListModule, MatNavList} from "@angular/material/list";
+import {MatListModule} from "@angular/material/list";
 import {RouterModule} from "@angular/router";
-import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { ByTemplateCreatorComponent } from './components/by-template-creator/by-template-creator.component';
-import { ByFunctionCreatorComponent } from './components/by-function-creator/by-function-creator.component';
+import {PredefinedFunctionDialogComponent} from './components/predefined-function-dialog/predefined-function-dialog.component';
+import {ByTemplateCreatorComponent} from './components/by-template-creator/by-template-creator.component';
+import {ByFunctionCreatorComponent} from './components/by-function-creator/by-function-creator.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {MatSelectModule} from "@angular/material/select";
 import {MatDialogModule} from "@angular/material/dialog";
-import {MatRadioButton, MatRadioModule} from "@angular/material/radio";
+import {MatRadioModule} from "@angular/material/radio";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatCardModule} from "@angular/material/card";
+import {MatSliderModule} from "@angular/material/slider";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {ByPlottingComponent} from './components/by-plotting/by-plotting.component';
+import functionPlot from "function-plot";
+import {MathplotComponent} from "./components/mathplot/mathplot.component";
+import { MapComponent } from './components/map/map.component';
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidenavComponent,
+    PredefinedFunctionDialogComponent,
     ByTemplateCreatorComponent,
     ByFunctionCreatorComponent,
+    ByPlottingComponent,
+    MathplotComponent,
+    MapComponent
   ],
-    imports: [
-        BrowserAnimationsModule,
-        BrowserAnimationsModule,
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        MatNativeDateModule,
-        ReactiveFormsModule,
-        MatStepperModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatDividerModule,
-        MatListModule,
-        RouterModule,
-        AppRoutingModule,
-        MatIconModule,
-        MatSelectModule,
-        MatDialogModule,
-        MatRadioModule,
-        HttpClientModule,
-        MatSlideToggleModule
+  imports: [
+    BrowserAnimationsModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatStepperModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatDividerModule,
+    MatListModule,
+    RouterModule,
+    AppRoutingModule,
+    MatIconModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatRadioModule,
+    HttpClientModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatGridListModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatSliderModule,
+    MatButtonToggleModule,
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatRippleModule,
+    LeafletModule
 
-    ],
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

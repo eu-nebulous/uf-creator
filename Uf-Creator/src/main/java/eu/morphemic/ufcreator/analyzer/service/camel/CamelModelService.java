@@ -8,6 +8,7 @@ import camel.metric.impl.MetricVariableImpl;
 import eu.morphemic.ufcreator.analyzer.model.CompositeMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.RawMetricDTO;
 import eu.morphemic.ufcreator.analyzer.model.VariableDTO;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface CamelModelService {
     List<CompositeMetricDTO> getCompositeMetricsFromCDO(String resourceName);
 
     List<VariableDTO> getVariablesFromCDO(String resourceName);
+
+    void saveUtility(String resourceName, String formula) throws CommitException;
 }
