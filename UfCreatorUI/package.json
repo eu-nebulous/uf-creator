@@ -37,7 +37,6 @@
     "leaflet": "^1.7.1",
     "materialize-css": "^1.0.0-rc.2",
     "ngx-bootstrap": "^7.1.0",
-    "ngx-math-function-plotter": "^1.0.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
