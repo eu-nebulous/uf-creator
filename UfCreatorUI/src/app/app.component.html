@@ -4,34 +4,56 @@
       <mat-icon>menu</mat-icon>
     </button>
     <mat-list-item routerLink="/by-function-creator">
-      <img src="https://www.morphemic.cloud/wp-content/uploads/2020/04/logo_morphemic.png" width="62" height="50"  alt="">
+      <img src="https://www.morphemic.cloud/wp-content/uploads/2020/04/logo_morphemic.png" width="62" height="50" style="margin-left:50vw"  alt="">
     </mat-list-item>
     <span class="example-spacer"></span>
-    <span>UF Creator</span>
     <span class="example-spacer"></span>
     <mat-icon class="mr-8">brightness_5</mat-icon>
     <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
     </mat-slide-toggle>
     <mat-icon>bedtime</mat-icon>
   </mat-toolbar>
-  <mat-sidenav-container color="primary" class="example-container">
-    <mat-sidenav #sidenav mode="side" opened="true" style="min-width:50px;" autosize fixedTopGap="56">
-      <mat-nav-list>
-        <a mat-list-item routerLink="/app-by-function-creator">
-          <h2><mat-icon>show_chart</mat-icon>By Function</h2>
-        </a>
-        <a mat-list-item routerLink="/app-by-template-creator">
-          <h2><mat-icon> layers</mat-icon>By Template</h2>
-        </a>
-        <a mat-list-item routerLink="/app-by-plotting">
-          <h2><mat-icon>timeline</mat-icon>By Plotting</h2>
-        </a>
-        </mat-nav-list>
+  <mat-sidenav-container color="primary">
+    <mat-sidenav #sidenav mode="side" opened="true" style="min-width:250px;" fixedTopGap="100">
+      <ul>
+        <li>
+          <a routerLink="/app-by-function-creator">
+            <mat-label style="font-size: 30px;font-weight: bold"><mat-icon>show_chart</mat-icon>By Function</mat-label>
+          </a>
+
+        </li>
+        <li>
+          <a  routerLink="/app-by-template-creator">
+            <p style="font-size: 30px;font-weight: bold"><mat-icon> layers</mat-icon>By Template</p>
+          </a>
+        </li>
+        <li>
+          <a  routerLink="/app-by-plotting">
+            <p style="font-size: 30px;font-weight: bold"><mat-icon>timeline</mat-icon>By Plotting</p>
+          </a>
+        </li>
+
+        </ul>
+      <div style="margin-top:65vh;font-size: 20px;text-align: center;font-weight: 1">Morphemic socials
+      </div>
+
+      <div class="socials">
+        <div class="socialdivs">
+          <div class="fb" >
+            <a href="https://www.facebook.com/MorphemicProject/"><fa-icon [icon]="faFacebook"></fa-icon></a>
+          </div>
+          <div class="in">
+            <a href=" https://www.linkedin.com/showcase/morphemic-project/"><fa-icon [icon]="faLinkedin"></fa-icon></a>
+          </div>
+          <div class="tw">
+            <a href="https://www.facebook.com/MorphemicProject/"><fa-icon [icon]="faTwitter"></fa-icon></a>
+          </div>
+
+        </div>
+      </div>
     </mat-sidenav>
     <mat-sidenav-content>
       <router-outlet></router-outlet>
-      <img src="https://www.morphemic.cloud/wp-content/uploads/2020/06/morphemic-home.svg" class="attachment-full size-full" alt="" loading="lazy">
-
     </mat-sidenav-content>
   </mat-sidenav-container>
 

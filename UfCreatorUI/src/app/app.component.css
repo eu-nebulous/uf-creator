@@ -1,3 +1,157 @@
+mat-icon {
+  transform: scale(1.5);
+  margin-right:10px ;
+}
 .example-spacer {
   flex: 1 1 auto;
 }
+.socials
+{
+  width:100%;
+  text-align: center;
+  margin-top:10px;
+  color:black;
+
+}
+ul{
+  list-style:none;
+  text-decoration: none;
+}
+ul li{
+  margin-top:40px;
+  text-underline: none;
+  height: auto;
+  width:auto;
+}
+ul li a{
+  color:black;
+  text-decoration: none;
+}
+ul li a:hover{
+  color:#6e6e6e ;
+}
+.socialdivs
+{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fb,.tw,.in
+{
+  height: 100px;
+  width: 75px;
+  font-size: 50px;
+  float: left;
+  padding-top: 10px;
+
+}
+.socialdivs a{
+  color:black;
+}
+.socialdivs a:hover{
+  color:#6e6e6e;
+}
+.mat-step-text-label{
+  font-size:20px;
+}
+
+/**, *:before, *:after {*/
+/*  box-sizing: border-box;*/
+/*}*/
+
+/*body {*/
+/*  font-family: poppins;*/
+/*  margin: 0;*/
+/*  display: grid;*/
+/*  font-size: 14px;*/
+/*}*/
+/*header p {*/
+/*  padding: 50px;*/
+/*  text-align: center;*/
+/*  color: #bebebe;*/
+/*  text-transform: uppercase;*/
+/*  font-size: 65px;*/
+/*  font-weight: 700;*/
+/*}*/
+/*.footer {*/
+/*  display: flex;*/
+/*  flex-flow: row wrap;*/
+/*  padding: 50px;*/
+/*  color: #fff;*/
+/*  background-color:#6e6e6e ;*/
+/*}*/
+
+/*.footer > * {*/
+/*  flex:  1 100%;*/
+/*}*/
+
+/*.l-footer {*/
+/*  margin-right: 1.25em;*/
+/*  margin-bottom: 1em;*/
+/*}*/
+
+/*h2 {*/
+/*  font-weight: 400;*/
+/*  font-size: 15px;*/
+/*}*/
+
+/*.footer ul {*/
+/*  list-style: none;*/
+/*  padding-left: 0;*/
+/*}*/
+
+/*.footer li {*/
+/*  line-height: 2em;*/
+/*}*/
+
+/*.footer a {*/
+/*  text-decoration: none;*/
+/*}*/
+
+/*.r-footer {*/
+/*  display: flex;*/
+/*  flex-flow: row wrap;*/
+/*}*/
+
+/*.r-footer > * {*/
+/*  flex: 1 50%;*/
+/*  margin-right: 1.25em;*/
+/*}*/
+
+/*.box a {*/
+/*  color: #ffffff;*/
+/*}*/
+
+/*.h-box {*/
+/*  column-count: 2;*/
+/*  column-gap: 1.25em;*/
+/*}*/
+
+/*.b-footer {*/
+/*  text-align: center;*/
+/*  color: #ffffff;*/
+/*  padding-top: 50px;*/
+/*}*/
+
+/*.l-footer p {*/
+/*  padding-right: 20%;*/
+/*  color: #ffffff;*/
+/*}*/
+
+/*@media screen and (min-width: 600px) {*/
+/*  .r-footer > * {*/
+/*    flex: 1;*/
+/*  }*/
+
+/*  .features {*/
+/*    flex-grow: 2;*/
+/*  }*/
+
+/*  .l-footer {*/
+/*    flex: 1 0px;*/
+/*  }*/
+
+/*  .r-footer {*/
+/*    flex: 2 0px;*/
+/*  }*/
+/*}*/

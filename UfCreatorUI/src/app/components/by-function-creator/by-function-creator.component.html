@@ -2,7 +2,7 @@
   <div *ngSwitchCase="'horizontal'"></div>
   <div *ngSwitchCase="'vertical'"></div>
 </ng-container>
-<h2 style="margin-left: 1rem">By function</h2>
+<p style="margin-left: 5rem;margin-top: 50px;font-size: xxx-large">By function</p>
 <mat-stepper
   #stepper
   [orientation]="(stepperOrientation | async)!" class="example-stepper">
@@ -17,19 +17,9 @@
                       [value]="camelModel">{{camelModel}}</mat-option>
         </mat-select>
       </mat-form-field>
-
       <div *ngIf="!isCamelModelListLoading">
-        <div *ngIf="isVariablesLoading else elseBlockVariables"
-             style="display: flex; justify-content: left; align-items: center;">
-          <mat-label>Variables</mat-label>
-          <mat-progress-spinner
-            color="accent"
-            diameter="50"
-            mode="indeterminate">
-          </mat-progress-spinner>
-        </div>
 
-        <div *ngIf="isCompositeMetricsLoading else elseBlockCompositeMetrics"
+        <div *ngIf="isCompositeMetricsLoading"
              style="display: flex; justify-content: left; align-items: center;">
           <mat-label>Composite Metrics</mat-label>
           <mat-progress-spinner
@@ -39,7 +29,7 @@
           </mat-progress-spinner>
         </div>
 
-        <div *ngIf="isRawMetricsLoading else elseBlockRawMetrics"
+        <div *ngIf="isRawMetricsLoading"
              style="display: flex; justify-content: left; align-items: center;">
           <mat-label>Raw Metrics</mat-label>
           <mat-progress-spinner
@@ -48,24 +38,33 @@
             mode="indeterminate">
           </mat-progress-spinner>
         </div>
-        <ng-template #elseBlockVariables>
-          <mat-list>
-            <mat-label>Variables</mat-label>
-            <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
-          </mat-list>
-        </ng-template>
-        <ng-template #elseBlockRawMetrics>
-          <mat-list>
-            <mat-label>Raw Metrics</mat-label>
-            <mat-list-item *ngFor="let rawMetric of rawMetricList">{{rawMetric.name}}</mat-list-item>
-          </mat-list>
-        </ng-template>
-        <ng-template #elseBlockCompositeMetrics>
-          <mat-list>
-            <mat-label>Composite Metrics</mat-label>
-            <mat-list-item *ngFor="let compositeMetric of compositeMetricList">{{compositeMetric.name}}</mat-list-item>
-          </mat-list>
-        </ng-template>
+      </div>
+      <div *ngIf="isVariablesLoading"
+           style="display: flex; justify-content: left; align-items: center;">
+        <mat-label>Variables</mat-label>
+        <mat-progress-spinner
+          color="accent"
+          diameter="50"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+      <div *ngIf="!isRawMetricsLoading && rawMetricList!=null">
+        <mat-list>
+          <mat-label>Raw Metrics</mat-label>
+          <mat-list-item *ngFor="let rawMetric of rawMetricList">{{rawMetric.name}}</mat-list-item>
+        </mat-list>
+      </div>
+      <div *ngIf="!isCompositeMetricsLoading && compositeMetricList!=null">
+        <mat-list>
+          <mat-label>Composite Metrics</mat-label>
+          <mat-list-item *ngFor="let compositeMetric of compositeMetricList">{{compositeMetric.name}}</mat-list-item>
+        </mat-list>
+      </div>
+      <div *ngIf="!isVariablesLoading && variableList!=null">
+        <mat-list>
+          <mat-label>Raw Metrics</mat-label>
+          <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
+        </mat-list>
       </div>
       <div>
         <button color="primary" mat-raised-button [disabled]="isCamelModelListLoading" matStepperNext>Next</button>
@@ -75,7 +74,7 @@
 
   <mat-step [stepControl]="thirdFormGroup" label="Choose function">
     <form [formGroup]="thirdFormGroup">
-      <label id="example-radio-group-label">Pick function:</label>
+      <mat-label id="example-radio-group-label">Pick function:</mat-label>
       <mat-selection-list #predefinedFunctionSelectionList>
         <mat-list-option *ngFor="let predefinedFunction of predefinedFunctions" [value]="predefinedFunction">
           <p>
@@ -128,8 +127,8 @@
     <p>You Created Function:</p>
     <mat-card >
       <h2 style="text-align:center">{{this.utilityFunction}}</h2>
-      <div style="width: 500px" id="by-function-complete"></div>
-      <app-mathplot [functionToBePlotted]="'x / (1 + abs(x))'"  [id]="'#by-function-complete'"></app-mathplot>
+      <div id="by-function-complete"></div>
+      <app-mathplot [functionToBePlotted]="'acos(-x)'"  [id]="'#by-function-complete'"></app-mathplot>
     </mat-card>
     <div>
       <button mat-raised-button matStepperPrevious color="primary">Back</button>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
 import {StepperOrientation} from "@angular/cdk/stepper";
@@ -16,7 +16,6 @@ import {Constant} from "../../model/Constant";
 import {MatListOption} from "@angular/material/list";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FunctionService} from "../../service/function.service";
-import {PlottingMetric} from "../../model/PlottingMetric";
 
 
 @Component({
@@ -65,8 +64,6 @@ export class ByFunctionCreatorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.something="a x + b"
-    // this.something="((1.0*1/(1+cos(sin(1*pi/180)*sin(3*pi/180)+cos(1*pi/180)*cos(2*pi/180)+cos(4*pi/180 + 2*pi/180))*6371000)))";
     this.camelModelService.getCamelModelList().subscribe(camelModelResponse => {
         this.isCamelModelListLoading = false;
         this.isVariablesLoading = true;

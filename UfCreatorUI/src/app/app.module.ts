@@ -32,10 +32,10 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {ByPlottingComponent} from './components/by-plotting/by-plotting.component';
-import functionPlot from "function-plot";
 import {MathplotComponent} from "./components/mathplot/mathplot.component";
-import { MapComponent } from './components/map/map.component';
+import {MapComponent} from './components/map/map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -83,7 +83,8 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     MatSnackBarModule,
     MatPaginatorModule,
     MatRippleModule,
-    LeafletModule
+    LeafletModule,
+    FontAwesomeModule
 
   ],
   providers: [],
