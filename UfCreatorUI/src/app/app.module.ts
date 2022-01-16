@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -32,11 +32,16 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {ByPlottingComponent} from './components/by-plotting/by-plotting.component';
-import functionPlot from "function-plot";
 import {MathplotComponent} from "./components/mathplot/mathplot.component";
 import { MapComponent } from './components/map/map.component';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {AppConfigService} from "./app-config/service/app-config.service";
 
+export function initializeApp(appConfigService: AppConfigService) {
+  return (): Promise<any> => {
+    return appConfigService.loadConfiguration();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -86,7 +91,9 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     LeafletModule
 
   ],
-  providers: [],
+  providers: [
+    {provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppConfigService], multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

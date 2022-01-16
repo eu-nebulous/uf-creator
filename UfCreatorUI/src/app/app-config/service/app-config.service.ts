@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AppConfig} from '../model/app-config';
-import {environment} from '../../../environments/environment';
 import {HttpBackend, HttpClient} from '@angular/common/http';
+import {environment} from "../../../environments/environment.prod";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class AppConfigService {
     return new Promise<void>((resolve, reject) => {
       if (environment.useRuntimeConfig) {
         console.log('Loading configuration from appConfig.json');
-        this.http.get(jsonFile).toPromise().then((response) => {
+        this.http.get(jsonFile).toPromise().then((response: any) => {
           AppConfigService.settings = <AppConfig> response;
           console.log('Config loaded: ', AppConfigService.settings);
           resolve();
