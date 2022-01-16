@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/UfCreatorUI/dist" />
       <excludeFolder url="file://$MODULE_DIR$/UfCreatorUI/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/UfCreatorUI/.angular/cache" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

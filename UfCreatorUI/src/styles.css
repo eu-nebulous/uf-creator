@@ -1,5 +1,23 @@
 html, body, mat-sidenav-container {
   min-height: 100vh;
-  height: auto;
+  height: 100%;
   margin: 0;
+  font-family: "Barlow Semi Condensed";
+}
+.mat-drawer-content{
+  background-image: url("https://www.morphemic.cloud/wp-content/uploads/2020/06/morphemic-home.svg");
+}
+mat-stepper{
+  margin-top:50px;
+  opacity:0.7;
+
+}
+.mat-body, .mat-body-1, .mat-typography, .mat-stepper-vertical, .mat-stepper-horizontal, mat-select{
+font-family: "Barlow Semi Condensed";
+}
+.mat-step-text-label{
+  font-size:20px;
+}
+p,mat-label{
+  font-size: 25px;
 }
