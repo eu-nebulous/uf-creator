@@ -2,7 +2,7 @@
   <div *ngSwitchCase="'horizontal'"></div>
   <div *ngSwitchCase="'vertical'"></div>
 </ng-container>
-<h2 style="margin-left: 1rem">By plotting</h2>
+<p style="margin-left: 5rem;margin-top: 50px;font-size: xxx-large">By plotting</p>
 <mat-stepper
   #stepper
   [orientation]="(stepperOrientation | async)!"
@@ -57,7 +57,7 @@
       </div>
 
       <div>
-        <button color="primary" mat-raised-button matStepperNext>Next</button>
+        <button color="primary" mat-raised-button matStepperNext [disabled]="isCamelModelListLoading">Next</button>
       </div>
     </form>
   </mat-step>
@@ -144,7 +144,7 @@
 <!--    <app-mathplot [functionToBePlotted]="this.utilityFunction"></app-mathplot>-->
     <div>
       <button color="primary" mat-raised-button matStepperPrevious>Back</button>
-      <button (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"
+      <button style="margin-left: 2rem;margin-top:1rem" (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"
               class="example-ripple-container mat-elevation-z4"
               mat-fab
               matRipple>

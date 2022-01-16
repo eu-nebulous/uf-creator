@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, HostListener, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import functionPlot from "function-plot";
 
 
@@ -14,16 +14,23 @@ export class MathplotComponent {
   @Input() id = "";
 
   func(): any {
-
     functionPlot({
       target: this.id,
-      grid: false,
+      grid: true,
       disableZoom: false,
       title: 'Plotted function',
       data: [
         {
-          fn: this.functionToBePlotted,
-        },
+          fn: 'acos(x)',
+          },
+        {
+          points: [
+            [this.a,Math.acos(this.a)],
+          ],
+          attr: { "stroke-width": 5 },
+          fnType: 'points',
+          graphType: 'polyline'
+        }
       ],
     });
   }
