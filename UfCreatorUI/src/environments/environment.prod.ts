@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  useRuntimeConfig: true,
+  href: '/',
+  apiUrl: 'https://uf-backend:8888',
 };

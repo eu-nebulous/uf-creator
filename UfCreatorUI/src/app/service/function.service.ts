@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
+import {AppConfigService} from "../app-config/service/app-config.service";
 
 
 const httpOptions = {
@@ -15,7 +16,8 @@ const httpOptions = {
 
 export class FunctionService {
 
-  apiUrl = 'http://localhost:8080/utility-function/';
+  apiUrl = `${AppConfigService.settings.apiUrl}/utility-function/`;
+
 
   constructor(private http: HttpClient) {
 
