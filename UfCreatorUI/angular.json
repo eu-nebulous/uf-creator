@@ -28,11 +28,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/leaflet/dist/images/",
-                "output": "./assets"
-              },
               "src/favicon.ico",
               "src/assets"
             ],
@@ -51,13 +46,6 @@
           },
           "configurations": {
             "production": {
-              "assets": [
-                {
-                  "glob": "**/*",
-                  "input": "node_modules/leaflet/dist/images/",
-                  "output": "./assets"
-                }
-              ],
               "budgets": [
                 {
                   "type": "initial",
