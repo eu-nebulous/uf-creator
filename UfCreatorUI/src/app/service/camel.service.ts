@@ -39,9 +39,9 @@ export class CamelService {
   }
 
   saveUtilityFunction(resourceName: any, utilityFunction: string): Observable<any> {
-    let requestUrl = this.apiUrl + "/" + resourceName + "/saveUtility/" + utilityFunction;
+    let requestUrl = this.apiUrl + "/" + resourceName + "/saveUtility";
 
-    return this.http.post<any>(requestUrl, "").pipe(
+    return this.http.post<any>(requestUrl, utilityFunction).pipe(
       tap((response: any) => {
           console.log(`Saving utility function request OK`);
         },

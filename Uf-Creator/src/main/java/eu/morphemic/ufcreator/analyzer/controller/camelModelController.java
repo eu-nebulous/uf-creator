@@ -49,9 +49,9 @@ public class camelModelController {
         return camelModelService.getVariablesFromCDO(resourceName);
     }
 
-    @PostMapping("/{resourceName}/saveUtility/{formula}")
+    @PostMapping("/{resourceName}/saveUtility")
     @ResponseStatus(HttpStatus.OK)
-    public void saveUtility(@PathVariable(value = "resourceName") String resourceName, @PathVariable(value = "formula") String formula) throws CommitException {
+    public void saveUtility(@PathVariable(value = "resourceName") String resourceName, @RequestBody String formula) throws CommitException {
         camelModelService.saveUtility(resourceName, formula);
     }
 }

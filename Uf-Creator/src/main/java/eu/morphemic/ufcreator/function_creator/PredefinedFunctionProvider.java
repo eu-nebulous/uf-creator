@@ -37,17 +37,15 @@ public class PredefinedFunctionProvider {
     private static String getByTemplateFunctionFormula(ByTemplateFunctionDTO byTemplateFunctionDTO) {
         switch (byTemplateFunctionDTO.getShape()) {
             case "S-Shaped":
-                return "1-" + FormulaProvider.add("1", "exponentialValue^(" + "prod(" + FormulaProvider.minus(byTemplateFunctionDTO.getMetricName(), String.valueOf(byTemplateFunctionDTO.getB())) + "(lnValue(" + "(div(" + minus("1", "exponentialValue") + ",exponentialValue))" + FormulaProvider.minus(String.valueOf(byTemplateFunctionDTO.getA()), String.valueOf(byTemplateFunctionDTO.getB()))) + ")^-1";
+                return FormulaProvider.getSShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
             case "U-Shaped":
-                return "1-exponentialValue^prod(-1,div(" + byTemplateFunctionDTO.getMetricName() + " + " + byTemplateFunctionDTO.getA() + ")," + byTemplateFunctionDTO.getB() + ")";
+                return FormulaProvider.getUShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
             case "Reverse S-Shaped":
-                return FormulaProvider.add("1", "exponentialValue^(" + "prod(" + FormulaProvider.minus(byTemplateFunctionDTO.getMetricName(), String.valueOf(byTemplateFunctionDTO.getB())) + "(lnValue(" + "(div(exponentialValue," + minus("1", "exponentialValue") + "))" + FormulaProvider.minus(String.valueOf(byTemplateFunctionDTO.getA()), String.valueOf(byTemplateFunctionDTO.getB()))) + ")^-1";
+                return FormulaProvider.getReversedSShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
             case "Reverse U-Shaped":
-                return "exponentialValue^prod(lnValue(exponentialValue),(" + byTemplateFunctionDTO.getMetricName() + "," + byTemplateFunctionDTO.getA() + "^2/(" + byTemplateFunctionDTO.getB() + byTemplateFunctionDTO.getA();
-            case "Linear":
-                return "5";
+                return FormulaProvider.getReversedUShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
             case "Constant Shaped":
-                return "6";
+                return FormulaProvider.getConstantShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
         }
         throw new RuntimeException("function type with shape:" + byTemplateFunctionDTO.getShape() + " is not supported yet");
     }
@@ -56,8 +54,16 @@ public class PredefinedFunctionProvider {
         switch (predefinedFunction.getName()) {
             case "ExpectedResponseTime":
                 return "2";
-            case "FinishSimulationOnTime":
-                return "1";
+            case "FinishOnTime":
+                return FormulaProvider.getFinishOnTime(
+                        predefinedFunction.getConstantsList().get(0).value,
+                        predefinedFunction.getConstantsList().get(1).value,
+                        predefinedFunction.getMetricList().get(0).value,
+                        predefinedFunction.getMetricList().get(1).value,
+                        predefinedFunction.getMetricList().get(2).value,
+                        predefinedFunction.getVariableList().get(0).value,
+                        predefinedFunction.getVariableList().get(1).value
+                        );
             case "LocalityUtility":
                 return FormulaProvider.getLocalityUtility(
                         predefinedFunction.getConstantsList().get(0).value,
