@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import functionPlot from "function-plot";
 
 
@@ -7,7 +7,7 @@ import functionPlot from "function-plot";
   templateUrl: './mathplot.component.html',
   styleUrls: ['./mathplot.component.css']
 })
-export class MathplotComponent {
+export class MathplotComponent implements OnChanges{
   @Input() functionToBePlotted = "";
   @Input() a:number;
   @Input() b:number;
@@ -15,23 +15,34 @@ export class MathplotComponent {
 
   func(): any {
     functionPlot({
+      yAxis: { domain: [-0.5, 1.5] },
+      xAxis: { domain: [-0.5,5] },
       target: this.id,
       grid: true,
       disableZoom: false,
       title: 'Plotted function',
       data: [
         {
-          fn: 'acos(x)',
+          fn: this.functionToBePlotted,
+          graphType: "polyline",
+          scope: {b:Number(this.b),e:Math.E,a:Number(this.a)}
+
+          // fn: this.functionToBePlotted,
+          // graphType: "polyline"
+          // attr: { "stroke-width": 5 }
+          // scope: {a: this.a,b: this.b,e:Math.E}
           },
-        {
-          points: [
-            [this.a,Math.acos(this.a)],
-          ],
-          attr: { "stroke-width": 5 },
-          fnType: 'points',
-          graphType: 'polyline'
-        }
+        // {
+        //   attr: { "stroke-width": 5 },
+        //   fnType: 'points',
+        //   graphType: 'polyline'
+        // }
+
       ],
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.func()
   }
 }

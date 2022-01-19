@@ -16,6 +16,7 @@ import {UtilityShape} from "../../model/UtilityShape";
 import {PlottingMetric} from "../../model/PlottingMetric";
 import {MatStepper} from "@angular/material/stepper";
 import {PredefinedFunctionDialogComponent} from "../predefined-function-dialog/predefined-function-dialog.component";
+import {MathplotComponent} from "../mathplot/mathplot.component";
 
 @Component({
   selector: 'app-by-template-creator',
@@ -23,9 +24,8 @@ import {PredefinedFunctionDialogComponent} from "../predefined-function-dialog/p
   styleUrls: ['./by-template-creator.component.css']
 })
 export class ByTemplateCreatorComponent {
-
   shape: string;
-  shapes: UtilityShape[] = [new UtilityShape('S-Shaped', "x^2"), new UtilityShape('U-Shaped', "x"), new UtilityShape('Reverse S-Shaped', "x"), new UtilityShape("Reverse U-Shaped", "x"), new UtilityShape("Linear", "x"), new UtilityShape('Constant Shaped', "x")];
+  shapes: UtilityShape[] = [new UtilityShape('S-Shaped', "x^2"), new UtilityShape('U-Shaped', "x"), new UtilityShape('Reverse S-Shaped', "x"), new UtilityShape("Reverse U-Shaped", "x"), new UtilityShape('Constant Shaped', "x")];
   camelModelList: Array<string>;
   mode = new FormControl('over');
   forthCtrl = new FormControl();
@@ -156,7 +156,7 @@ export class ByTemplateCreatorComponent {
   saveSelected(selections: MatListOption[]) {
     this.byTemplateFunctionList = new Array<ByTemplateFunction>();
     selections.forEach(x =>
-      this.byTemplateFunctionList.push(new ByTemplateFunction(x.value.name)));
+      this.byTemplateFunctionList.push(new ByTemplateFunction(x.value.name,0,0)));
     this.byTemplateFunctionList.forEach(x => this.plottingMetrics.push(new PlottingMetric(x.metricName, "")));
   }
 

@@ -12,7 +12,7 @@ public class ByTemplateFunctionDTO {
     @JsonProperty("a")
     public double a;
     @JsonProperty("b")
-    public int b;
+    public double b;
     @JsonProperty("weight")
     public double weight;
     @JsonProperty("shape")

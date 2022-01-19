@@ -81,10 +81,10 @@
         <h2>{{selection.metricName}}</h2>
 
         <p><label id="example-radio-group-label">Pick template:</label></p>
-        <mat-radio-group [(ngModel)]="selection.shape"
+        <mat-radio-group  [(ngModel)]="selection.shape"
                          aria-labelledby="example-radio-group-label"
                          class="example-radio-group">
-          <ng-container *ngFor="let shape of shapes">
+          <ng-container  *ngFor="let shape of shapes">
             <mat-radio-button [value]="shape.shape" class="example-radio-button"
                               style="margin-right: 10px;margin-left: 10px;">
               {{shape.shape}}
@@ -92,23 +92,41 @@
           </ng-container>
         </mat-radio-group>
         <ng-container *ngIf="selection.a!=null&&selection.b!=null">
-          <div id="s"></div>
-          <app-mathplot [id]="'#s'" [functionToBePlotted]="'x^2'" [a]="selection.a" [b]="selection.b"></app-mathplot>
+          <div id="{{selection.metricName}}"></div>
+          <ng-container *ngIf="selection.shape=='S-Shaped'">
+            <app-mathplot #sShaped [id]="'#'.concat(selection.metricName)" [functionToBePlotted]="'1-(1+e^((x - b )*6.90)/( a - b ))^-1'"  [a]="selection.a" [b]="selection.b"></app-mathplot>
+          </ng-container>
+          <ng-container *ngIf="selection.shape=='U-Shaped'">
+            <app-mathplot #uShaped [id]="'#'.concat(selection.metricName)" [functionToBePlotted]="'1-e^(-6.90*(x - a)^2/(b - a)^2)'"  [a]="selection.a" [b]="selection.b"></app-mathplot>
+          </ng-container>
+          <ng-container *ngIf="selection.shape=='Reverse S-Shaped'">
+          <app-mathplot #reverseSshaped [id]="'#'.concat(selection.metricName)" [functionToBePlotted]="'(1+e^((x - b )*6.90)/( a - b ))^-1'"  [a]="selection.a" [b]="selection.b"></app-mathplot>
+          </ng-container>
+          <ng-container *ngIf="selection.shape=='Reverse U-Shaped'">
+            <app-mathplot #reverseUShaped [id]="'#'.concat(selection.metricName)" [functionToBePlotted]="'e^(-6.90*(x - a)^2 / (b - a)^2)'"  [a]="selection.a" [b]="selection.b"></app-mathplot>
+          </ng-container>
+          <ng-container *ngIf="selection.shape=='Constant Shaped'">
+            <app-mathplot #constantShaped [id]="'#'.concat(selection.metricName)" [functionToBePlotted]="'a'"  [a]="selection.a" [b]="selection.b"></app-mathplot>
+          </ng-container>
         </ng-container>
-        <label id="utility-label">Define a and b:</label>
+
+        <p>
+          <label id="utility-label">Define a and b:</label>
+        </p>
         <p>
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>a</mat-label>
-            <input [(ngModel)]="selection.a" matInput required>
+            <input [(ngModel)]="selection.a"  matInput required>
           </mat-form-field>
         </p>
-        <p>
-          <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>b</mat-label>
-            <input [(ngModel)]="selection.b" matInput required>
-          </mat-form-field>
-        </p>
-
+        <ng-container *ngIf="selection.shape!=='Constant Shaped'">
+          <p>
+            <mat-form-field appearance="fill" class="example-full-width">
+              <mat-label>b</mat-label>
+              <input [(ngModel)]="selection.b" matInput required>
+            </mat-form-field>
+          </p>
+        </ng-container>
       </mat-card>
     </ng-container>
     <button mat-raised-button color="primary" matStepperPrevious>Back</button>
@@ -143,9 +161,13 @@
 
   </mat-step>
   <mat-step label="Done">
-    <p>You Created Function:</p>
-    {{this.utilityFunction}}
-        <ng-container *ngFor="let plottingMetric of this.plottingMetrics">
+    <p style="font-size: xx-large">You Created Function:</p>
+    <mat-card >
+      <h2 style="text-align:center">{{this.utilityFunction}}</h2>
+      <div id="by-template-complete"></div>
+      <app-mathplot #mathplotComponent [functionToBePlotted]="'acos(-x)'"  [id]="'#template-complete'"></app-mathplot>
+    </mat-card>
+        <ng-container *ngFor="let plottingMetric of this.plottingMetrics.slice(0,this.plottingMetrics.length-1)">
           <mat-label>{{plottingMetric.metric}}</mat-label>
           <p>
             <mat-form-field appearance="fill" class="example-full-width">
@@ -153,7 +175,6 @@
             </mat-form-field>
           </p>
         </ng-container>
-{{this.plottingMetrics |json}}
     <div>
       <button color="primary" mat-raised-button matStepperPrevious>Back</button>
       <button style="margin-left: 2rem;margin-top:1rem" (click)="saveToCamelModel(this.selectedCamelModel,this.utilityFunction)"

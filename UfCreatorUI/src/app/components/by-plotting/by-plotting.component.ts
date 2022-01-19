@@ -176,7 +176,7 @@ export class ByPlottingComponent implements OnInit{
   saveSelected(selections: MatListOption[]) {
     this.byTemplateFunctionList = new Array<ByTemplateFunction>();
     selections.forEach(x =>
-      this.byTemplateFunctionList.push(new ByTemplateFunction(x.value.name)));
+      this.byTemplateFunctionList.push(new ByTemplateFunction(x.value.name,0,0)));
   }
 
   generateUtilityFunction() {

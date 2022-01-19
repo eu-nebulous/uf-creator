@@ -62,7 +62,7 @@
       </div>
       <div *ngIf="!isVariablesLoading && variableList!=null">
         <mat-list>
-          <mat-label>Raw Metrics</mat-label>
+          <mat-label>Variables</mat-label>
           <mat-list-item *ngFor="let variable of variableList">{{variable.name}}</mat-list-item>
         </mat-list>
       </div>
@@ -124,11 +124,11 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>You Created Function:</p>
+    <p style="font-size: xx-large">You Created Function:</p>
     <mat-card >
       <h2 style="text-align:center">{{this.utilityFunction}}</h2>
       <div id="by-function-complete"></div>
-      <app-mathplot [functionToBePlotted]="'acos(-x)'"  [id]="'#by-function-complete'"></app-mathplot>
+      <app-mathplot #mathplotComponent [functionToBePlotted]="'acos(-x)'"  [id]="'#by-function-complete'"></app-mathplot>
     </mat-card>
     <div>
       <button mat-raised-button matStepperPrevious color="primary">Back</button>

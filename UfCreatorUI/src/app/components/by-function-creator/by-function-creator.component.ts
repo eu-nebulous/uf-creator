@@ -18,6 +18,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {FunctionService} from "../../service/function.service";
 
 
+
 @Component({
   selector: 'app-by-function-creator',
   templateUrl: './by-function-creator.component.html',
@@ -25,6 +26,9 @@ import {FunctionService} from "../../service/function.service";
 })
 
 export class ByFunctionCreatorComponent implements OnInit {
+  thirdStepCompleted=false;
+  secondStepCompleted=false;
+  firstStepCompleted=false;
   camelModelList: Array<string>
   compositeMetricList: Array<Metric>
   rawMetricList: Array<Metric>
@@ -33,9 +37,9 @@ export class ByFunctionCreatorComponent implements OnInit {
   mode = new FormControl('over');
   stepperOrientation: Observable<StepperOrientation>;
   isCamelModelListLoading = true;
-  isVariablesLoading: boolean;
-  isCompositeMetricsLoading: boolean;
-  isRawMetricsLoading: boolean;
+  isVariablesLoading: any;
+  isCompositeMetricsLoading: any;
+  isRawMetricsLoading: any;
   predefinedFunctions: Array<PredefinedFunction>;
   selected = new Array<PredefinedFunction>();
   sliderValues = new Array<number>();
@@ -66,9 +70,6 @@ export class ByFunctionCreatorComponent implements OnInit {
   ngOnInit(): void {
     this.camelModelService.getCamelModelList().subscribe(camelModelResponse => {
         this.isCamelModelListLoading = false;
-        this.isVariablesLoading = true;
-        this.isCompositeMetricsLoading = true;
-        this.isRawMetricsLoading = true;
         this._snackBar.open("List of camel models loaded!", "Close", {duration: 5 * 1000,});
         this.camelModelList = camelModelResponse;
       },
@@ -97,6 +98,7 @@ export class ByFunctionCreatorComponent implements OnInit {
                 this.isRawMetricsLoading = false;
                 this.rawMetricList = response;
                 this.selectedCamelModel = firstStepValue;
+                this.firstStepCompleted = true;
                 console.log(response)
               },
               (error: HttpErrorResponse) => {
@@ -116,26 +118,17 @@ export class ByFunctionCreatorComponent implements OnInit {
   }
 
   getPredefinedFunctions() {
-    var predefined = new Array<PredefinedFunction>();
-    var simulationOnTimeVariables = [new Variable("number of instances", "", "Cardinality"), new Variable("number of cores", "", "Cost")];
-    var simulationOnTimeVariables2 = [new Variable("number of instances", "", "Cardinality"), new Variable("number of cores", "", "Cost")];
-    var constantsList = [new Constant("expected response time T^", "0"), new Constant("maximum acceptable response time T+", "0"), new Constant("default timeout time Td", "0")];
-    var constantsList1 = [new Constant("expected response time T^", "0"), new Constant("maximum acceptable response time T+", "0"), new Constant("default timeout time Td", "0")];
-    var constantsListLocality = [new Constant("latitude of first component", "0"), new Constant("longitude of fist component", "0"), new Constant("latitude of second component", "0"), new Constant("latitude of second component", "0")];
-    var variableListLocality = new Array<Variable>();
-    var metricsLocality = new Array<Metric>();
-    var compositeMetricsLocality = new Array<Metric>();
-    var metricsList = [new Metric("Minimum cores number", ""), new Metric("Simulations left", ""),new Metric("Estimated Remaining Time", "")];
-    var metricsList2 = [new Metric("Minimum cores number", ""), new Metric("Simulations left", ""),new Metric("Estimated Remaining Time", "")];
-
-
-    var simulationOnTime = new PredefinedFunction("FinishSimulationOnTime", "../../../assets/img/Utime.png", simulationOnTimeVariables, constantsList, metricsList);
-    var secondFunction = new PredefinedFunction("ExpectedResponseTime", "../../../assets/img/Udeadline.png", simulationOnTimeVariables2, constantsList1, metricsList2);
-    var localityUtility = new PredefinedFunction("LocalityUtility", "../../../assets/img/Ulocality.png", variableListLocality, constantsListLocality,metricsLocality);
-
-    predefined.push(simulationOnTime);
+    const predefined = new Array<PredefinedFunction>();
+    const constantsListLocality = new Array<Constant>()
+    const variableListLocality = [new Variable("latitude of first component", "0","Latitude"), new Variable("longitude of first component", "0","Longitude"), new Variable("latitude of second component", "0","Latitude"), new Variable("longitude of second component", "0","Longitude")];
+    const metricsLocality = new Array<Metric>();
+    const localityUtility = new PredefinedFunction("LocalityUtility", "../../../assets/img/Ulocality.png", variableListLocality, constantsListLocality, metricsLocality);
+    const variableListFinishOnTime=[new Variable("number of worker VMs","","Cardinality"),new Variable("cores per worker","","Cardinality")];
+    const metricListFinishOnTime= [new Metric("number of remaining jobs",""),new Metric("upper quantile of job time distribution",""),new Metric("total time spent until now","")];
+    const constantsListFinishOnTime = [new Constant("deadline for all jobs", "0"), new Constant("scaling parameter", "0")];
+    const finishOnTimeUtility = new PredefinedFunction("FinishOnTime","../../../assets/img/Udeadline.png",variableListFinishOnTime,constantsListFinishOnTime,metricListFinishOnTime);
     predefined.push(localityUtility);
-
+    predefined.push(finishOnTimeUtility)
 
     return predefined;
   }
@@ -143,6 +136,7 @@ export class ByFunctionCreatorComponent implements OnInit {
 
   openDialog(selections: MatListOption[], stepper: MatStepper) {
     this.saveSelected(selections);
+    this.secondStepCompleted=true;
     const dialogRef = this.dialog.open(PredefinedFunctionDialogComponent, {
       data: {
         selectedOptions: this.selected,
