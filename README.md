@@ -25,6 +25,27 @@ Then, the user specifies the weights of each utility metrics. These weights shou
 - Testing the effectiveness of the ahp method
 - Calculating  the  weights  of  each  utility  dimension
 
+## Testing
+In melodic view during uploading xmi file (FCRProactive, Genom) you should click button with Uf-Creator redirection. 
+There are two possible ways of creating utility function:
+### By template
+1. First pick uploaded application.
+2. Wait for metrics to show up.
+3. Compare showed metrics with metrics which you declared in xmi or Camel model file.
+4. Now you should move to the next step.
+5. In the next step you should pick metrics of your choice.
+6. Now you should move to the next step in which for each metric you define the shape of function and a (minimal permissible utility) and b (maximal permissible utility).
+7. Now you should move to the next step in which you're setting up the weights of your dimensions (They should sum up to 1).
+8. Now you should move to the next step in which the utility formula will appear. It's possible to save the utility formula into Camel model by clicking the save button. Now you're ready for deployment. 
+### By function
+1. First pick uploaded application.
+2. Wait for metrics to show up.
+3. Compare showed metrics with metrics which you declared in xmi or Camel model file.
+4. Now you should move to the next step. In set of available functions check interesting ones.
+5. Now the modal with formulas, variables, constants and metrics will show up. Now you should define constants and match your camel model variables, metrics with the needed ones in formula.
+6. Now you should move to the next step in which you're setting up the weights of your dimensions (They should sum up to 1)
+7. Now you should move to the next step in which the utility formula will appear. It's possible to save the utility formula into Camel model by clicking the save button. Now you're ready for deployment. 
+
 ## Team:
 
 Jan Marchel (leader)
