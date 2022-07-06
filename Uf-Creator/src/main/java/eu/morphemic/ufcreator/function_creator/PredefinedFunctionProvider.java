@@ -19,7 +19,7 @@ public class PredefinedFunctionProvider {
         for (PredefinedFunctionDTO predefinedFunction : predefinedFunctions) {
             log.info("{}", predefinedFunction);
             String formula = getPredefinedFunctionFormula(predefinedFunction);
-            utilityFunction.add(multiply(formula, String.valueOf(predefinedFunction.weight)));
+            utilityFunction.add(multiply("(".concat(formula).concat(")"), String.valueOf(predefinedFunction.weight)));
         }
         return getSum(utilityFunction);
     }
@@ -29,7 +29,7 @@ public class PredefinedFunctionProvider {
         for (ByTemplateFunctionDTO byTemplateFunctionDTO : byTemplateFunctionDTOList) {
             log.info("{}", byTemplateFunctionDTO);
             String formula = getByTemplateFunctionFormula(byTemplateFunctionDTO);
-            utilityFunction.add(multiply(formula, String.valueOf(byTemplateFunctionDTO.weight)));
+            utilityFunction.add(multiply(("(".concat(formula).concat(")")), String.valueOf(byTemplateFunctionDTO.weight)));
         }
         return getSum(utilityFunction);
     }
@@ -37,15 +37,17 @@ public class PredefinedFunctionProvider {
     private static String getByTemplateFunctionFormula(ByTemplateFunctionDTO byTemplateFunctionDTO) {
         switch (byTemplateFunctionDTO.getShape()) {
             case "S-Shaped":
-                return FormulaProvider.getSShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
+                return "1-" + FormulaProvider.add("1", "exponentialValue^(" + "prod(" + FormulaProvider.minus(byTemplateFunctionDTO.getMetricName(), String.valueOf(byTemplateFunctionDTO.getB())) + "(lnValue(" + "(div(" + minus("1", "exponentialValue") + ",exponentialValue))" + FormulaProvider.minus(String.valueOf(byTemplateFunctionDTO.getA()), String.valueOf(byTemplateFunctionDTO.getB()))) + ")^-1";
             case "U-Shaped":
-                return FormulaProvider.getUShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
+                return "1-exponentialValue^prod(-1,div(" + byTemplateFunctionDTO.getMetricName() + " + " + byTemplateFunctionDTO.getA() + ")," + byTemplateFunctionDTO.getB() + ")";
             case "Reverse S-Shaped":
-                return FormulaProvider.getReversedSShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
+                return FormulaProvider.add("1", "exponentialValue^(" + "prod(" + FormulaProvider.minus(byTemplateFunctionDTO.getMetricName(), String.valueOf(byTemplateFunctionDTO.getB())) + "(lnValue(" + "(div(exponentialValue," + minus("1", "exponentialValue") + "))" + FormulaProvider.minus(String.valueOf(byTemplateFunctionDTO.getA()), String.valueOf(byTemplateFunctionDTO.getB()))) + ")^-1";
             case "Reverse U-Shaped":
-                return FormulaProvider.getReversedUShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
+                return "exponentialValue^prod(lnValue(exponentialValue),(" + byTemplateFunctionDTO.getMetricName() + "," + byTemplateFunctionDTO.getA() + "^2/(" + byTemplateFunctionDTO.getB() + byTemplateFunctionDTO.getA();
+            case "Linear":
+                return "5";
             case "Constant Shaped":
-                return FormulaProvider.getConstantShaped(byTemplateFunctionDTO.getMetricName(),String.valueOf(byTemplateFunctionDTO.getA()),String.valueOf(byTemplateFunctionDTO.getB()));
+                return "6";
         }
         throw new RuntimeException("function type with shape:" + byTemplateFunctionDTO.getShape() + " is not supported yet");
     }
@@ -54,23 +56,15 @@ public class PredefinedFunctionProvider {
         switch (predefinedFunction.getName()) {
             case "ExpectedResponseTime":
                 return "2";
-            case "FinishOnTime":
-                return FormulaProvider.getFinishOnTime(
-                        predefinedFunction.getConstantsList().get(0).value,
-                        predefinedFunction.getConstantsList().get(1).value,
-                        predefinedFunction.getMetricList().get(0).value,
-                        predefinedFunction.getMetricList().get(1).value,
-                        predefinedFunction.getMetricList().get(2).value,
-                        predefinedFunction.getVariableList().get(0).value,
-                        predefinedFunction.getVariableList().get(1).value
-                        );
+            case "FinishSimulationOnTime":
+                return "1";
             case "LocalityUtility":
                 return FormulaProvider.getLocalityUtility(
                         predefinedFunction.getConstantsList().get(0).value,
                         predefinedFunction.getConstantsList().get(1).value,
                         predefinedFunction.getConstantsList().get(2).value,
                         predefinedFunction.getConstantsList().get(3).value
-                        );
+                );
             case "RamUsage":
 
             case "CpuUsage":
