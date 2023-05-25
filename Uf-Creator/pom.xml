@@ -87,19 +87,16 @@
         <dependency>
             <groupId>eu.melodic.cdo</groupId>
             <artifactId>client</artifactId>
-            <version>3.1.0-SNAPSHOT</version>
+            <version>6.0.0-SNAPSHOT</version>
             <classifier>repackaged</classifier>
         </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <dependency>
-            <groupId>camel</groupId>
-            <artifactId>camel</artifactId>
-            <version>3.1.0-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -153,40 +150,40 @@
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.10</version>
-                <configuration>
-                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <imageName>${docker.repository}${docker.imagePrefix}${docker.imageName}:latest</imageName>
-                    <pushImage>${docker.push}</pushImage>
-                    <serverId>ow2.melodic</serverId>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${docker.jarToInclude}</include>
-                        </resource>
-                    </resources>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>execution</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>javax.activation</groupId>
-                        <artifactId>activation</artifactId>
-                        <version>1.1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>0.4.10</version>-->
+<!--                <configuration>-->
+<!--                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>-->
+<!--                    <imageName>${docker.repository}${docker.imagePrefix}${docker.imageName}:latest</imageName>-->
+<!--                    <pushImage>${docker.push}</pushImage>-->
+<!--                    <serverId>ow2.melodic</serverId>-->
+<!--                    <resources>-->
+<!--                        <resource>-->
+<!--                            <targetPath>/</targetPath>-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            <include>${docker.jarToInclude}</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>execution</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>build</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>javax.activation</groupId>-->
+<!--                        <artifactId>activation</artifactId>-->
+<!--                        <version>1.1</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--            </plugin>-->
             <!--plugins for getting scmBranch value lowercase to use in docker images -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -249,6 +246,11 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>gitlab-maven-cdo</id>
+            <url>https://gitlab.ow2.org/api/v4/projects/1228/packages/maven</url>
+        </repository>
+
 
         <repository>
             <id>maven-central</id>

@@ -1,5 +1,12 @@
 package eu.morphemic.ufcreator;
 
+import camel.deployment.DeploymentPackage;
+import camel.organisation.OrganisationPackage;
+import camel.type.TypePackage;
+import eu.paasage.mddb.cdo.client.exp.CDOClientX;
+import eu.paasage.mddb.cdo.client.exp.CDOClientXImpl;
+import eu.paasage.upperware.metamodel.cp.CpPackage;
+import eu.paasage.upperware.metamodel.types.TypesPackage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +22,12 @@ public class UfCreatorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(UfCreatorApplication.class, args);
+    }
+
+    @Bean
+    public CDOClientX getCdoClient() {
+        return new CDOClientXImpl(Arrays.asList(CpPackage.eINSTANCE, TypesPackage.eINSTANCE,
+                TypePackage.eINSTANCE, OrganisationPackage.eINSTANCE, DeploymentPackage.eINSTANCE));
     }
 
     @Bean
