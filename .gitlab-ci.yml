@@ -4,7 +4,7 @@ variables:
   LOCAL_REPO: "127.0.0.1:5000"
 
   DOCKER_REPO: "gitlab.ow2.org:4567"
-  DOCKER_DIND_IMAGE: "docker:19.03.1"
+  DOCKER_DIND_IMAGE: "docker:20.10.17"
   DOCKER_DIND_SERVICE: "$DOCKER_DIND_IMAGE-dind"
   DOCKER_DRIVER: overlay
   DOCKER_TLS_CERTDIR: "/certs"
@@ -44,7 +44,7 @@ build-angular-ui:
     - cd UfCreatorUI
     - npm install -g --save-dev @angular/cli@latest
     - npm install -g ngx
-    - npm install --save-dev  --unsafe-perm node-sass@6.0.1
+    - npm install --save-dev --legacy-peer-deps --unsafe-perm node-sass@6.0.1
   script: 
     - ng build --configuration production 
     - cd dist
