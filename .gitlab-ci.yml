@@ -1,46 +1,10 @@
-variables:
-  MAVEN_IMAGE: "maven:3.5.2-jdk-8"
-  MAVEN_IMAGE_JDK_8: "maven:3.5.2-jdk-8"
-  LOCAL_REPO: "127.0.0.1:5000"
+LOCAL_REPO: "127.0.0.1:5000"
 
   DOCKER_REPO: "gitlab.ow2.org:4567"
   DOCKER_DIND_IMAGE: "docker:20.10.17"
   DOCKER_DIND_SERVICE: "$DOCKER_DIND_IMAGE-dind"
   DOCKER_DRIVER: overlay
   DOCKER_TLS_CERTDIR: "/certs"
-
-  DOCKER_CLI: "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $CI_PROJECT_DIR/maven_repo:/root/.m2 -w /usr/src/mymaven -v $CI_PROJECT_DIR:/usr/src/mymaven $MAVEN_IMAGE"
-  #UF_CREATOR_CLI: "mvn --batch-mode -N -Dmaven.test.skip=true -f Uf-Creator/pom.xml"
-  UF_CREATOR_CLI: "mvn --batch-mode -N  -f Uf-Creator/pom.xml"
-
-cache:
-  paths:
-    - maven_repo/
-    
-before_script:
-  - echo $HOME
-  - mkdir -p $HOME/.m2
-  - echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-    https://maven.apache.org/xsd/settings-1.0.0.xsd">
-    <localRepository>'$CI_PROJECT_DIR'/maven_repo</localRepository>
-    </settings>' > $HOME/.m2/settings.xml
-    
-stages:          
- - build-angular-ui
- - deploy-angular-ui
- - build-UfCreator
- - deploy-UfCreator
-
-build-angular-ui:
-  stage: build-angular-ui
-  image: trion/ng-cli
-  artifacts:
-    expire_in: 1 week
-    paths:
-      - $CI_PROJECT_DIR/UfCreatorUI/dist/UfCreatorUI
-  before_script:
     - cd UfCreatorUI
     - npm install -g --save-dev @angular/cli@latest
     - npm install -g ngx
