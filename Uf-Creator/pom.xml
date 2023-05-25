@@ -282,14 +282,12 @@
     </repositories>
     <distributionManagement>
         <repository>
-            <id>eu.7bulls</id>
-            <name>Melodic 7bulls repository</name>
-            <url>https://nexus.7bulls.eu:8443/repository/maven-releases/</url>
+            <id>gitlab-uf</id>
+            <url>https://gitlab.ow2.org/api/v4/projects/1939/packages/maven</url>
         </repository>
         <snapshotRepository>
-            <id>eu.7bulls</id>
-            <name>Melodic 7bulls repository</name>
-            <url>https://nexus.7bulls.eu:8443/repository/maven-snapshots/</url>
+            <id>gitlab-uf</id>
+            <url>https://gitlab.ow2.org/api/v4/projects/1939/packages/maven</url>
         </snapshotRepository>
     </distributionManagement>
 
